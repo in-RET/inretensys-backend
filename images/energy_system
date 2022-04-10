@@ -1,0 +1,35 @@
+digraph {
+	electricity [color=lightgrey fixedsize=shape fontsize=10 height=0.3 shape=rectangle style=filled width=4.1]
+	natural_gas [color=lightgrey fixedsize=shape fontsize=10 height=0.3 shape=rectangle style=filled width=4.1]
+	natural_coal [color=lightgrey fixedsize=shape fontsize=10 height=0.3 shape=rectangle style=filled width=4.1]
+	wind [fontsize=10 shape=invtrapezium]
+	pv [fontsize=10 shape=invtrapezium]
+	rgas [fontsize=10 shape=invtrapezium]
+	rcoal [fontsize=10 shape=invtrapezium]
+	demand [fontsize=10 shape=trapezium]
+	excess_bel [fontsize=10 shape=trapezium]
+	pp_gas [fontsize=10 shape=rectangle]
+	pp_coal [fontsize=10 shape=rectangle]
+	pp_dings [fontsize=10 shape=rectangle]
+	storage [fontsize=10 shape=rectangle style=rounded]
+	"gas_storag
+e" [fontsize=10 shape=rectangle style=rounded]
+	storage -> electricity
+	pv -> electricity
+	pp_coal -> electricity
+	wind -> electricity
+	pp_gas -> electricity
+	electricity -> demand
+	electricity -> excess_bel
+	electricity -> storage
+	rgas -> natural_gas
+	"gas_storag
+e" -> natural_gas
+	natural_gas -> pp_gas
+	natural_gas -> pp_dings
+	natural_gas -> "gas_storag
+e"
+	pp_dings -> natural_coal
+	rcoal -> natural_coal
+	natural_coal -> pp_coal
+}
