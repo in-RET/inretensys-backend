@@ -8,6 +8,7 @@ class EnsysBus(HsnConfigContainer):
                  *args,
                  **kwargs
                  ):
+        super().__init__()
         set_init_function_args_as_instance_args(self, locals())
 
     format = {

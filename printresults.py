@@ -9,9 +9,6 @@ def PrintResultsFromDump(dpath, dumpfile):
     # ********** PART 2 - Processing the results *********************************
     # ****************************************************************************
     energysystem = solph.EnergySystem()
-    #energysystem.restore(dpath=None, filename=None)
-    print(dpath)
-    print(dumpfile)
     energysystem.restore(dpath=dpath, filename=dumpfile)
 
     # define an alias for shorter calls below (optional)

@@ -3,12 +3,12 @@ from hsncommon.config import HsnConfigContainer, set_init_function_args_as_insta
 
 class EnsysSink(HsnConfigContainer):
     def __init__(self,
-                 label: str = "Default Label",
+                 label: str = "Default Sink",
                  inputs=None,
-                 outputs=None,
                  *args,
                  **kwargs
                  ):
+        super().__init__()
         set_init_function_args_as_instance_args(self, locals())
 
     format = {

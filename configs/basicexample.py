@@ -1,9 +1,10 @@
 import pandas as pd
 from oemof import solph
 
-from ensys.components import source, sink, bus, genericstorage, transformer, energysystem
+from ensys import *
 
 
+# TODO: solph.Flow ersetzen durch flow.EnsysFlow
 def CreateSampleConfiguration(filename):
     data_file = "/Users/pyrokar/Documents/GitHub/python/oemof/examples/basic_example/basic_example.csv"
     data = pd.read_csv(data_file)
@@ -19,7 +20,7 @@ def CreateSampleConfiguration(filename):
 
     rgas = source.EnsysSource(
         label="rgas",
-        outputs={bgas.label: solph.Flow(
+        outputs={bgas.label: flow.EnsysFlow(
             nominal_value=29825293,
             summed_max=1
         )},
@@ -43,7 +44,7 @@ def CreateSampleConfiguration(filename):
 
     excess_bel = sink.EnsysSink(
         label="excess_bel",
-        inputs={bel.label: solph.Flow(
+        inputs={bel.label: flow.EnsysFlow(
             balanced=False
         )}
     )

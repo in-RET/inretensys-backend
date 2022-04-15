@@ -5,6 +5,7 @@ from oemof import solph
 from oemof_visio import ESGraphRenderer
 
 from ensys.components import energysystem
+from ensys.components.flow import EnsysFlow
 
 
 def FindUsedBus(name, busses):
@@ -30,18 +31,22 @@ def buildIOFlows(target, possibleBusses):
     IOFlows = {}
     for usedBus in usedBusses:
         # Build the parameter dictionary
-        IOFlows[usedBus] = target[usedBus.label]
+        # hier sollte im Target ein EnysysFlow sein, welcher nun gebaut werden müsste
+        if type(target[usedBus.label]) == EnsysFlow:
+            IOFlows[usedBus] = target[usedBus.label].to_oemof_flow()
+        else:
+            IOFlows[usedBus] = target[usedBus.label]
 
     return IOFlows
 
 
 class EnsysSystembuilder():
-
-    def __init__(self,
-                 es: energysystem.EnsysEnergysystem):
+    def __init__(self, es: energysystem.EnsysEnergysystem):
         # do the magic
 
-        # build an EnergySystem
+        ##########################################################################
+        # Build an Energysystem from the config
+        ##########################################################################
         oemof_es = solph.EnergySystem(
             label=es.label,
             timeindex=es.timeindex,
@@ -62,32 +67,18 @@ class EnsysSystembuilder():
 
         # Add sources to the EnergySystem
         for source in es.sources:
-            if source.inputs is None:
-                oemof_source = solph.Source(
-                                        label=source.label,
-                                        outputs=buildIOFlows(source.outputs, oemof_busses),
-                                    )
-            else:
-                oemof_source = solph.Source(
-                                        label=source.label,
-                                        inputs=buildIOFlows(source.inputs, oemof_busses),
-                                        outputs=buildIOFlows(source.outputs, oemof_busses),
-                                    )
+            oemof_source = solph.Source(
+                                    label=source.label,
+                                    outputs=buildIOFlows(source.outputs, oemof_busses),
+                                )
             oemof_es.add(oemof_source)
 
         # Add sinks to the EnergySystem
         for sink in es.sinks:
-            if sink.outputs is None:
-                oemof_sink = solph.Sink(
-                                        label=sink.label,
-                                        inputs=buildIOFlows(sink.inputs, oemof_busses),
-                                    )
-            else:
-                oemof_sink = solph.Sink(
-                                        label=sink.label,
-                                        inputs=buildIOFlows(sink.inputs, oemof_busses),
-                                        outputs=buildIOFlows(sink.outputs, oemof_busses),
-                                    )
+            oemof_sink = solph.Sink(
+                                    label=sink.label,
+                                    inputs=buildIOFlows(sink.inputs, oemof_busses),
+                                )
             oemof_es.add(oemof_sink)
 
         # Add transformers to the EnergySystem
