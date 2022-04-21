@@ -9,8 +9,8 @@ digraph {
 	pp_gas [fontsize=10 shape=rectangle]
 	storage [fontsize=10 shape=rectangle style=rounded]
 	wind -> electricity
-	storage -> electricity
 	pv -> electricity
+	storage -> electricity
 	pp_gas -> electricity
 	electricity -> demand
 	electricity -> excess_bel

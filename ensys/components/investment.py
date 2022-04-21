@@ -19,7 +19,12 @@ class EnsysInvestment(HsnConfigContainer):
 
     format = {
         # name : 0: 0: type: min: max: default
-        "param1": "0:0:int:0:10:5"
+        "label": "0:0:string:min:max:'Default Investment'",
+        "maximum": "0:0:float:0:1:0",
+        "minimum": "0:0:float:0:1:0",
+        "ep_costs": "0:0:float:0:1:0",
+        "nonconvex": "0:0:boolean:0:1:0",
+        "offset": "0:0:float:0:1:0"
     }
 
     def to_oemof(self):

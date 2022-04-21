@@ -3,7 +3,7 @@ from hsncommon.config import HsnConfigContainer, set_init_function_args_as_insta
 
 class EnsysTransformer(HsnConfigContainer):
     def __init__(self,
-                 label: str = "Default Label",
+                 label: str = "Default Transformer",
                  inputs=None,
                  outputs=None,
                  conversion_factors: dict = None,
@@ -15,8 +15,8 @@ class EnsysTransformer(HsnConfigContainer):
 
     format = {
         # name : 0: 0: type: min: max: default
-        "label": "0:0:string: ... ",
-        "input": "0:0:dict: ... ",
-        "output": "0:0:dict: ... ",
-        "conversion_factors": "0:0:dict: ... "
+        "label": "0:0:string: min : max :'Default Transformer'",
+        "input": "0:0:dict: min : max :None",
+        "output": "0:0:dict: min: max :None",
+        "conversion_factors": "0:0:dict: min : max :None"
     }

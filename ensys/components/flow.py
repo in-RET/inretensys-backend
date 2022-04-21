@@ -6,14 +6,17 @@ class EnsysFlow(HsnConfigContainer):
     def __init__(self,
                  label: str = "Default Flow",
                  nominal_value: float = None,
-                 fix: float = None,
-                 min: float = 0.0,
-                 max: float = 1.0,
+                 # numeric or sequence or None
+                 fix=None,
+                 # numeric or sequence
+                 min=0.0,
+                 # numeric or sequence
+                 max=1.0,
                  positive_gradient=None,
                  negative_gradient=None,
-                 summed_max: float = 1.0,
-                 summed_min: float = 0.0,
-                 variable_costs: float = 0.0,
+                 summed_max: float = None,
+                 summed_min=None,
+                 variable_costs=None,
                  investment: solph.Investment = None,
                  nonconvex: solph.NonConvex = None,
                  *args,
@@ -39,7 +42,19 @@ class EnsysFlow(HsnConfigContainer):
 
     format = {
         # name : 0: 0: type: min: max: default
-        "param1": "0:0:int:0:10:5"
+        "param1": "0:0:int:0:10:5",
+        "label": "0:0: type : min : max : 'Default Flow'",
+        "nominal_value": "0:0:float: min : max : None",
+        "fix": "0:0: type : min : max : None",
+        "min": "0:0: type : min : max : None",
+        "max": "0:0: type : min : max : None",
+        "positive_gradient": "0:0: min : max : None",
+        "negative_gradient": "0:0: min : max : None",
+        "summed_max": "0:0:float:0:1:None",
+        "summed_min": "0:0:float:0:1:None",
+        "variable_costs": "0:0:float: min : max : None",
+        "investment": "0:0: type : min : max :None",
+        "nonconvex": "0:0: type : min : max :None"
     }
 
 

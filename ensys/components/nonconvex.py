@@ -1,5 +1,4 @@
 from hsncommon.config import HsnConfigContainer, set_init_function_args_as_instance_args
-from oemof import solph
 
 
 class EnsysNonConvex(HsnConfigContainer):
@@ -35,5 +34,14 @@ class EnsysNonConvex(HsnConfigContainer):
 
     format = {
         # name : 0: 0: type: min: max: default
-        "param1": "0:0:int:0:10:5"
+        "label": "0:0:string: min : max : 'Default NonConvex'",
+        "startup_costs": "0:0: type : min : max :None",
+        "shutdown_costs": "0:0: type : min : max :None",
+        "activity_costs": "0:0: type : min : max :None",
+        "minimum_uptime": "0:0: type : min : max :None",
+        "minimum_downtime": "0:0: type : min : max :None",
+        "maximum_startups": "0:0: type : min : max :None",
+        "initial_status": "0:0: type : min : max :None",
+        "positive_gradient": "0:0: type : min : max :None",
+        "negative_gradient": "0:0: type : min : max :None"
     }

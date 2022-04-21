@@ -13,7 +13,6 @@ class EnsysSource(HsnConfigContainer):
 
     format = {
         # name : 0: 0: type: min: max: default
-        "label": "0:0:string: ... ",
-        "input": "0:0:dict: ... ",
-        "output": "0:0:dict: ... "
+        "label": "0:0:string: min : max : 'Default Source'",
+        "outputs": "0:0:dict: min : max : None"
     }

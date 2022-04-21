@@ -1,79 +1,77 @@
 import pandas as pd
-from oemof import solph
 
 from ensys import *
 
 
-# TODO: solph.Flow ersetzen durch flow.EnsysFlow
 def CreateSampleConfiguration(filename):
     data_file = "/Users/pyrokar/Documents/GitHub/python/oemof/examples/basic_example/basic_example.csv"
     data = pd.read_csv(data_file)
 
-    bel = bus.EnsysBus(
+    bel = EnsysBus(
         label="electricity",
         balanced=True
     )
 
-    bgas = bus.EnsysBus(
+    bgas = EnsysBus(
         label="natural_gas"
     )
 
-    rgas = source.EnsysSource(
+    rgas = EnsysSource(
         label="rgas",
-        outputs={bgas.label: flow.EnsysFlow(
+        outputs={bgas.label: EnsysFlow(
             nominal_value=29825293,
             summed_max=1
         )},
     )
 
-    pv = source.EnsysSource(
+    pv = EnsysSource(
         label="pv",
-        outputs={bel.label: solph.Flow(
+        outputs={bel.label: EnsysFlow(
             fix=data["pv"],
             nominal_value=582000
         )},
     )
 
-    wind = source.EnsysSource(
+    wind = EnsysSource(
         label="wind",
-        outputs={bel.label: solph.Flow(
+        outputs={bel.label: EnsysFlow(
             fix=data["wind"],
             nominal_value=1000000
         )},
     )
 
-    excess_bel = sink.EnsysSink(
+    excess_bel = EnsysSink(
         label="excess_bel",
-        inputs={bel.label: flow.EnsysFlow(
+        inputs={bel.label: EnsysFlow(
             balanced=False
         )}
     )
 
-    demand_bel = sink.EnsysSink(
+    demand_bel = EnsysSink(
         label="demand",
-        inputs={bel.label: solph.Flow(
+        inputs={bel.label: EnsysFlow(
             fix=data["demand_el"],
             nominal_value=1
         )},
     )
 
-    pp_gas = transformer.EnsysTransformer(
+    pp_gas = EnsysTransformer(
         label="pp_gas",
-        inputs={bgas.label: solph.Flow()},
-        outputs={bel.label: solph.Flow(
+        inputs={bgas.label: EnsysFlow()},
+        outputs={bel.label: EnsysFlow(
             nominal_value=10e10,
             variable_costs=50
         )},
         conversion_factors={bel: 0.58},
     )
 
-    storage = genericstorage.EnsysStorage(
+    storage = EnsysStorage(
         nominal_storage_capacity=10077997,
         label="storage",
-        inputs={bel.label: solph.Flow(
+        inputs={bel.label: EnsysFlow(
             nominal_value=10077997 / 6
         )},
-        outputs={bel.label: solph.Flow(
+        outputs={bel.label: EnsysFlow(
             nominal_value=10077997 / 6,
             variable_costs=0.001
         )
@@ -89,7 +87,7 @@ def CreateSampleConfiguration(filename):
         "1/1/2012", periods=number_of_time_steps, freq="H"
     )
 
-    es = energysystem.EnsysEnergysystem(
+    es = EnsysEnergysystem(
         label="ensys Energysystem",
         busses=[bel, bgas],
         sinks=[demand_bel, excess_bel],

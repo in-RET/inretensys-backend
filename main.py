@@ -1,28 +1,43 @@
 import os
 import printresults
 
-from ensys import systembuilder
-from hsncommon import config
-from configs import basicexample, modifiedexample
-
-
-def BuildEnergySystemFromConfiguration(filename):
-    es = config.config_object_from_file(filename)
-    systembuilder.EnsysSystembuilder(es)
-
+from configs import basicexample, modifiedexample, oemof_sample
+from ensys import EnsysOptimise, EnsysSystembuilder
+from verfication import verify
 
 if __name__ == "__main__":
     wkdir = os.path.join(os.getcwd(), "dumps")
-    filename = "EnergySystem"
+    filename = "energy_system"
 
-    if os.path.exists(os.path.join(wkdir, filename + ".dump")):
-        os.remove(os.path.join(wkdir, filename + ".dump"))
+    configfile = os.path.join(wkdir, filename + ".bin")
+    dumpfile = os.path.join(wkdir, filename + ".dump")
+    orig_dumpfile = os.path.join(wkdir, filename + "_orig.dump")
 
-    path_to_dump_config = os.path.join(wkdir, filename + ".bin")
-    print("Dumpfilepath:", path_to_dump_config)
+    if os.path.exists(configfile):
+        os.remove(configfile)
 
-    basicexample.CreateSampleConfiguration(path_to_dump_config)
-    #modifiedexample.CreateSampleConfiguration(path_to_dump_config)
+    if os.path.exists(dumpfile):
+        os.remove(dumpfile)
 
-    BuildEnergySystemFromConfiguration(path_to_dump_config)
-    printresults.PrintResultsFromDump(dpath=wkdir, dumpfile=os.path.join(filename + ".dump"))
+    ##########################################################################
+    # oemof-Beispiel
+    ##########################################################################
+    if not os.path.exists(orig_dumpfile):
+        oemof_sample.oemofSample(orig_dumpfile)
+
+    ##########################################################################
+    # ensys-Klassen
+    ##########################################################################
+
+    basicexample.CreateSampleConfiguration(configfile)
+    # modifiedexample.CreateSampleConfiguration(path_to_dump_config)
+
+    sb = EnsysSystembuilder()
+
+    es = sb.BuildConfiguration(configfile)
+    sb.BuildEnergySystem(es, dumpfile)
+
+    verify(dumpfile, orig_dumpfile)
+
+    #EnsysOptimise(dumpfile)
+    printresults.PrintResultsFromDump(dpath=wkdir, dumpfile=dumpfile)

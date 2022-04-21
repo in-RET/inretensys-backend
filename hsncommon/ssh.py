@@ -106,7 +106,7 @@ class HsnSshClientHandler(object):
         if success == True:
             o = ''
             for line in stdout:
-	            o += line            
+                o += line
             e = ''            
             for line in stderr:
                 e += line
@@ -114,15 +114,13 @@ class HsnSshClientHandler(object):
         else:
             return None, None, success, error
 
-        return self.__execute_cmd(cmd)
+        # return self.__execute_cmd(cmd)
 
     def connect(self):
         return self.__connect()
 
     def is_connected(self):
         return self.__connected
-
-
 
 
 class HsnSftpClientHandler(object):

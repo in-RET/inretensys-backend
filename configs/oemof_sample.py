@@ -1,11 +1,13 @@
 import os
 import pandas as pd
+import matplotlib.pyplot as plt
+import pprint as pp
 
 from oemof import solph
 
-def oemofSample():
+
+def oemofSample(dumpfile, withOutput=False):
     solver = "cbc"  # 'glpk', 'gurobi',....
-    debug = False  # Set number_of_timesteps to 3 to get a readable lp-file.
     number_of_time_steps = 24 * 7 * 8
     solver_verbose = False  # show/hide solver output
 
@@ -16,8 +18,7 @@ def oemofSample():
     energysystem = solph.EnergySystem(timeindex=date_time_index)
 
     # Read data file
-    filename = os.path.join(os.getcwd(), "/Users/pyrokar/Documents/GitHub/python/oemof/examples/basic_example/basic_example.csv")
-    data = pd.read_csv(filename)
+    data = pd.read_csv("/Users/pyrokar/Documents/GitHub/python/oemof/examples/basic_example/basic_example.csv")
 
     ##########################################################################
     # Create oemof object
@@ -113,5 +114,61 @@ def oemofSample():
     energysystem.results["meta"] = solph.processing.meta_results(model)
 
     # store energy system with results
-    energysystem.dump(dpath=None, filename=None)
-    
+    wdir = os.path.dirname(dumpfile)
+    dumpfilename = os.path.basename(dumpfile)
+    energysystem.dump(dpath=wdir, filename=dumpfilename)
+
+    if withOutput:
+        # ****************************************************************************
+        # ********** PART 2 - Processing the results *********************************
+        # ****************************************************************************
+        energysystem = solph.EnergySystem()
+        energysystem.restore(dpath=wdir, filename=dumpfilename)
+
+        # define an alias for shorter calls below (optional)
+        results = energysystem.results["main"]
+        storage = energysystem.groups["storage"]
+
+        # print a time slice of the state of charge
+        print("")
+        print("********* State of Charge (slice) *********")
+        print(results[(storage, None)]["sequences"]["2012-02-25 08:00:00":"2012-02-26 15:00:00"])
+        print("")
+
+        # get all variables of a specific component/bus
+        custom_storage = solph.views.node(results, "storage")
+        electricity_bus = solph.views.node(results, "electricity")
+
+        # plot the time series (sequences) of a specific component/bus
+        if plt is not None:
+            fig, ax = plt.subplots(figsize=(10, 5))
+            custom_storage["sequences"].plot(
+                ax=ax, kind="line", drawstyle="steps-post"
+            )
+            plt.legend(
+                loc="upper center",
+                prop={"size": 8},
+                bbox_to_anchor=(0.5, 1.25),
+                ncol=2,
+            )
+            fig.subplots_adjust(top=0.8)
+            plt.show()
+
+            fig, ax = plt.subplots(figsize=(10, 5))
+            electricity_bus["sequences"].plot(
+                ax=ax, kind="line", drawstyle="steps-post"
+            )
+            plt.legend(
+                loc="upper center", prop={"size": 8}, bbox_to_anchor=(0.5, 1.3), ncol=2
+            )
+            fig.subplots_adjust(top=0.8)
+            plt.show()
+
+        # print the solver results
+        print("********* Meta results *********")
+        pp.pprint(energysystem.results["meta"])
+        print("")
+
+        # print the sums of the flows around the electricity bus
+        print("********* Main results *********")
+        print(electricity_bus["sequences"].sum(axis=0))

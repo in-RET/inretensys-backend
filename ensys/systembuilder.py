@@ -1,14 +1,13 @@
-import os
 import logging
+import os.path
+import ensys
 
 from oemof import solph
 from oemof_visio import ESGraphRenderer
-
-from ensys.components import energysystem
-from ensys.components.flow import EnsysFlow
+from hsncommon import config
 
 
-def FindUsedBus(name, busses):
+def findUsedBus(name, busses):
     usedBus = None
 
     for bus in busses:
@@ -26,14 +25,12 @@ def buildIOFlows(target, possibleBusses):
     usedBusses = []
 
     for bus in busses:
-        usedBusses.append(FindUsedBus(bus, possibleBusses))
+        usedBusses.append(findUsedBus(bus, possibleBusses))
 
     IOFlows = {}
     for usedBus in usedBusses:
-        # Build the parameter dictionary
-        # hier sollte im Target ein EnysysFlow sein, welcher nun gebaut werden müsste
-        if type(target[usedBus.label]) == EnsysFlow:
-            IOFlows[usedBus] = target[usedBus.label].to_oemof_flow()
+        if type(target[usedBus.label]) == ensys.EnsysFlow:
+            IOFlows[usedBus] = target[usedBus.label].to_oemof()
         else:
             IOFlows[usedBus] = target[usedBus.label]
 
@@ -41,12 +38,20 @@ def buildIOFlows(target, possibleBusses):
 
 
 class EnsysSystembuilder():
-    def __init__(self, es: energysystem.EnsysEnergysystem):
-        # do the magic
+    def __init__(self):
+        pass
 
+    def BuildConfiguration(self, filename):
+        es = config.config_object_from_file(filename)
+        return es
+
+    def BuildEnergySystem(self, es, file):
         ##########################################################################
         # Build an Energysystem from the config
         ##########################################################################
+        filename = os.path.basename(file)
+        wdir = os.path.dirname(file)
+
         oemof_es = solph.EnergySystem(
             label=es.label,
             timeindex=es.timeindex,
@@ -58,9 +63,9 @@ class EnsysSystembuilder():
 
         for bus in es.busses:
             oemof_bus = solph.Bus(
-                            label=bus.label,
-                            balanced=bus.balanced
-                        )
+                label=bus.label,
+                balanced=bus.balanced
+            )
             oemof_es.add(oemof_bus)
             # create a better solution to get the possible Busses
             oemof_busses.append(oemof_bus)
@@ -68,63 +73,63 @@ class EnsysSystembuilder():
         # Add sources to the EnergySystem
         for source in es.sources:
             oemof_source = solph.Source(
-                                    label=source.label,
-                                    outputs=buildIOFlows(source.outputs, oemof_busses),
-                                )
+                label=source.label,
+                outputs=buildIOFlows(source.outputs, oemof_busses),
+            )
             oemof_es.add(oemof_source)
 
         # Add sinks to the EnergySystem
         for sink in es.sinks:
             oemof_sink = solph.Sink(
-                                    label=sink.label,
-                                    inputs=buildIOFlows(sink.inputs, oemof_busses),
-                                )
+                label=sink.label,
+                inputs=buildIOFlows(sink.inputs, oemof_busses),
+            )
             oemof_es.add(oemof_sink)
 
         # Add transformers to the EnergySystem
         for transformer in es.transformers:
             oemof_transformer = solph.Transformer(
-                                    label=transformer.label,
-                                    inputs=buildIOFlows(transformer.inputs, oemof_busses),
-                                    outputs=buildIOFlows(transformer.outputs, oemof_busses)
-                                )
+                label=transformer.label,
+                inputs=buildIOFlows(transformer.inputs, oemof_busses),
+                outputs=buildIOFlows(transformer.outputs, oemof_busses)
+            )
             oemof_es.add(oemof_transformer)
 
         # Add storages to the EnergySystem
         for storage in es.storages:
             oemof_storage = solph.GenericStorage(
-                                nominal_storage_capacity=storage.nominal_storage_capacity,
-                                label=storage.label,
-                                inputs=buildIOFlows(storage.inputs, oemof_busses),
-                                outputs=buildIOFlows(storage.outputs, oemof_busses),
-                                loss_rate=storage.loss_rate,
-                                initial_storage_level=storage.initial_storage_level,
-                                inflow_conversion_factor=storage.inflow_conversion_factor,
-                                outflow_conversion_factor=storage.outflow_conversion_factor
-                            )
+                nominal_storage_capacity=storage.nominal_storage_capacity,
+                label=storage.label,
+                inputs=buildIOFlows(storage.inputs, oemof_busses),
+                outputs=buildIOFlows(storage.outputs, oemof_busses),
+                loss_rate=storage.loss_rate,
+                initial_storage_level=storage.initial_storage_level,
+                inflow_conversion_factor=storage.inflow_conversion_factor,
+                outflow_conversion_factor=storage.outflow_conversion_factor
+            )
             oemof_es.add(oemof_storage)
 
         ##########################################################################
         # Print the EnergySystem as Graph
         ##########################################################################
         gr = ESGraphRenderer(energy_system=oemof_es, filepath="images/energy_system")
-        gr.view()
+        #gr.view()
+
+        # oemof_es.dump(dpath=wdir, filename=filename)
 
         ##########################################################################
         # Optimise the energy system and plot the results
         ##########################################################################
-
         logging.info("Optimise the energy system")
 
         # initialise the operational model
         model = solph.Model(oemof_es)
 
-        solver = "cbc"  # 'glpk', 'gurobi',....
-        solver_verbose = False  # show/hide solver output
+        solver_verbose = False
 
         # if tee_switch is true solver messages will be displayed
         logging.info("Solve the optimization problem")
-        model.solve(solver=solver, solve_kwargs={"tee": solver_verbose})
+        model.solve(solver="cbc", solve_kwargs={"tee": solver_verbose})
 
         logging.info("Store the energy system with the results.")
 
@@ -136,7 +141,7 @@ class EnsysSystembuilder():
         oemof_es.results["meta"] = solph.processing.meta_results(model)
 
         # store energy system with results
-        workdir = os.path.join(os.getcwd(), "dumps")
-        filename = "energySystem.dump"
+        oemof_es.dump(dpath=wdir, filename=filename)
 
-        oemof_es.dump(dpath=workdir, filename=filename)
+
+

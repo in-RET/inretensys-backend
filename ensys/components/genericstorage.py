@@ -4,14 +4,14 @@ from oemof import solph
 
 class EnsysStorage(HsnConfigContainer):
     def __init__(self,
-                 label: str = "Default Label",
+                 label: str = "Default Storage",
                  inputs=None,
                  outputs=None,
                  nominal_storage_capacity: float = 1.0,
                  invest_relation_capacity: float = None,
                  invest_relation_output_capacity: float = None,
                  invest_relation_input_output: float = None,
-                 initial_storage_level: float = 0.0,
+                 initial_storage_level: float = None,
                  balanced: bool = True,
                  loss_rate: float = 0.0,
                  fixed_losses_relative: float = 0.0,
@@ -29,5 +29,21 @@ class EnsysStorage(HsnConfigContainer):
 
     format = {
         # name : 0: 0: type: min: max: default
-        "param1": "0:0:int:0:10:5"
+        "label": "0:0:string: min : max :'Default Storage'",
+        "inputs": "0:0: type : min : max :None",
+        "outputs": "0:0: type : min : max :None",
+        "nominal_storage_capacity": "0:0:float:0:1:1",
+        "invest_relation_capacity": "0:0: type : min : max :None",
+        "invest_relation_output_capacity": "0:0: type : min : max :None",
+        "invest_relation_input_output": "0:0: type : min : max :None",
+        "initial_storage_level": "0:0: type : min : max :None",
+        "balanced": "0:0:boolean:0:1:1",
+        "loss_rate": "0:0:float:0:1:0",
+        "fixed_losses_relative": "0:0: type : min : max :None",
+        "fixed_losses_absolute": "0:0: type : min : max :None",
+        "inflow_conversion_factor": "0:0: type : min : max :None",
+        "outflow_conversion_factor": "0:0: type : min : max :None",
+        "min_storage_level": "0:0: type : min : max :None",
+        "max_storage_level": "0:0: type : min : max :None",
+        "investment": "0:0: type : min : max :None"
     }
