@@ -22,12 +22,15 @@ class EnsysEnergysystem(HsnConfigContainer):
 
     format = {
         # name : 0: 0: type: min: max: default
-        "label": "0:0:string: min : max : 'Default EnergySystem'",
-        "busses": "0:0: type : min : max :None",
-        "sinks": "0:0: type : min : max :None",
-        "sources": "0:0: type : min : max :None",
-        "transformers": "0:0: type : min : max :None",
-        "storages": "0:0: type : min : max :None",
-        "timeindex": "0:0: type : min : max :None",
-        "timeincrement": "0:0: type : min : max :None"
+        "label": "0:0:string:'Default EnergySystem'",
+        "busses": "0:0:EnsysBus:None",
+        "sinks": "0:0:EnsysSink:None",
+        "sources": "0:0:EnsysSource:None",
+        "transformers": "0:0:EnsysTransformer:None",
+        "storages": "0:0:EnsysStorage:None",
+        "timeindex": "0:0:pd.DateTimeIndex:None",
+        "timeincrement": "0:0:None"
     }
+
+    def get(self):
+        return     

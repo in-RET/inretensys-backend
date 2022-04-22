@@ -19,7 +19,8 @@ class HsnConfigContainer(object):
                 self,
                 f
             )
-           
+
+
 def config_object_from_file(filename='config.bin'):
     obj = None
     with open(filename, 'rb') as f:

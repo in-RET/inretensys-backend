@@ -1,5 +1,4 @@
 from oemof import solph
-
 from hsncommon.config import HsnConfigContainer, set_init_function_args_as_instance_args
 
 

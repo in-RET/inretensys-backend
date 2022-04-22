@@ -112,6 +112,9 @@ def oemofSample(dumpfile, withOutput=False):
     # add results to the energy system to make it possible to store them.
     energysystem.results["main"] = solph.processing.results(model)
     energysystem.results["meta"] = solph.processing.meta_results(model)
+    energysystem.results["compare"] = solph.processing.create_dataframe(model)
+
+    #print(energysystem.results["compare"])
 
     # store energy system with results
     wdir = os.path.dirname(dumpfile)

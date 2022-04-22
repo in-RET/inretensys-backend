@@ -5,6 +5,7 @@ import ensys
 from oemof import solph
 from oemof_visio import ESGraphRenderer
 from hsncommon import config
+from hsncommon.log import HsnLogger
 
 
 def findUsedBus(name, busses):
@@ -49,6 +50,9 @@ class EnsysSystembuilder():
         ##########################################################################
         # Build an Energysystem from the config
         ##########################################################################
+        logger = HsnLogger()
+
+        logger.info("Build an Energysystem from config file.")
         filename = os.path.basename(file)
         wdir = os.path.dirname(file)
 
@@ -61,6 +65,7 @@ class EnsysSystembuilder():
         # add busses to an EnergySystem
         oemof_busses = []
 
+        logger.info("Build busses")
         for bus in es.busses:
             oemof_bus = solph.Bus(
                 label=bus.label,
@@ -70,6 +75,7 @@ class EnsysSystembuilder():
             # create a better solution to get the possible Busses
             oemof_busses.append(oemof_bus)
 
+        logger.info("Build sources")
         # Add sources to the EnergySystem
         for source in es.sources:
             oemof_source = solph.Source(
@@ -78,6 +84,7 @@ class EnsysSystembuilder():
             )
             oemof_es.add(oemof_source)
 
+        logger.info("Build sinks")
         # Add sinks to the EnergySystem
         for sink in es.sinks:
             oemof_sink = solph.Sink(
@@ -86,6 +93,7 @@ class EnsysSystembuilder():
             )
             oemof_es.add(oemof_sink)
 
+        logger.info("Build transformers")
         # Add transformers to the EnergySystem
         for transformer in es.transformers:
             oemof_transformer = solph.Transformer(
@@ -95,6 +103,7 @@ class EnsysSystembuilder():
             )
             oemof_es.add(oemof_transformer)
 
+        logger.info("Build storages")
         # Add storages to the EnergySystem
         for storage in es.storages:
             oemof_storage = solph.GenericStorage(
@@ -112,7 +121,10 @@ class EnsysSystembuilder():
         ##########################################################################
         # Print the EnergySystem as Graph
         ##########################################################################
-        gr = ESGraphRenderer(energy_system=oemof_es, filepath="images/energy_system")
+        filepath = "images/energy_system"
+        logger.info("Print energysystem as graph")
+
+        gr = ESGraphRenderer(energy_system=oemof_es, filepath=filepath)
         #gr.view()
 
         # oemof_es.dump(dpath=wdir, filename=filename)
@@ -120,7 +132,7 @@ class EnsysSystembuilder():
         ##########################################################################
         # Optimise the energy system and plot the results
         ##########################################################################
-        logging.info("Optimise the energy system")
+        logger.info("Optimise the energy system")
 
         # initialise the operational model
         model = solph.Model(oemof_es)
@@ -128,10 +140,10 @@ class EnsysSystembuilder():
         solver_verbose = False
 
         # if tee_switch is true solver messages will be displayed
-        logging.info("Solve the optimization problem")
+        logger.info("Solve the optimization problem")
         model.solve(solver="cbc", solve_kwargs={"tee": solver_verbose})
 
-        logging.info("Store the energy system with the results.")
+        logger.info("Store the energy system with the results.")
 
         # The processing module of the outputlib can be used to extract the results
         # from the model transfer them into a homogeneous structured dictionary.
@@ -139,9 +151,11 @@ class EnsysSystembuilder():
         # add results to the energy system to make it possible to store them.
         oemof_es.results["main"] = solph.processing.results(model)
         oemof_es.results["meta"] = solph.processing.meta_results(model)
+        oemof_es.results["compare"] = solph.processing.create_dataframe(model)
 
+        # print(oemof_es.results["compare"])
+
+        logger.info("Dump file with results to: " + os.path.join(wdir, filename))
         # store energy system with results
         oemof_es.dump(dpath=wdir, filename=filename)
-
-
-
+        logger.info("Fin.")
