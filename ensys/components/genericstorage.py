@@ -1,12 +1,14 @@
-from hsncommon.config import HsnConfigContainer, set_init_function_args_as_instance_args
 from oemof import solph
 
+from ensys import EnsysFlow
+from ensys.config import EnsysConfigContainer, set_init_function_args_as_instance_args
 
-class EnsysStorage(HsnConfigContainer):
+
+class EnsysStorage(EnsysConfigContainer):
     def __init__(self,
                  label: str = "Default Storage",
-                 inputs=None,
-                 outputs=None,
+                 inputs: dict[EnsysFlow] = None,
+                 outputs: dict[EnsysFlow] = None,
                  nominal_storage_capacity: float = 1.0,
                  invest_relation_capacity: float = None,
                  invest_relation_output_capacity: float = None,

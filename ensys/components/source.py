@@ -1,10 +1,11 @@
-from hsncommon.config import HsnConfigContainer, set_init_function_args_as_instance_args
+from ensys import EnsysFlow
+from ensys.config import EnsysConfigContainer, set_init_function_args_as_instance_args
 
 
-class EnsysSource(HsnConfigContainer):
+class EnsysSource(EnsysConfigContainer):
     def __init__(self,
                  label: str = "Default Source",
-                 outputs=None,
+                 outputs: dict[EnsysFlow] = None,
                  *args,
                  **kwargs
                  ):

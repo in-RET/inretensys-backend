@@ -1,8 +1,9 @@
 from oemof import solph
-from hsncommon.config import HsnConfigContainer, set_init_function_args_as_instance_args
+
+from ensys.config import EnsysConfigContainer, set_init_function_args_as_instance_args
 
 
-class EnsysBus(HsnConfigContainer):
+class EnsysBus(EnsysConfigContainer):
     def __init__(self,
                  label: str = "Default Bus",
                  balanced: bool = True,
@@ -19,7 +20,17 @@ class EnsysBus(HsnConfigContainer):
     }
 
     def to_oemof(self):
-        return solph.bus(
-            label=self.label,
-            balanced=self.balanced
-        )
+        kwargs = {}
+
+        for attr_name in dir(self):
+            if not attr_name.startswith("__") and \
+                    not attr_name.startswith("to_") and \
+                    not attr_name == "format":
+                name = attr_name
+                value = getattr(self, attr_name)
+
+                kwargs[name] = value
+
+        oemof_obj = solph.Bus(kwargs)
+
+        return oemof_obj

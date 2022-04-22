@@ -1,11 +1,12 @@
-from hsncommon.config import HsnConfigContainer, set_init_function_args_as_instance_args
+from ensys import EnsysFlow
+from ensys.config import EnsysConfigContainer, set_init_function_args_as_instance_args
 
 
-class EnsysTransformer(HsnConfigContainer):
+class EnsysTransformer(EnsysConfigContainer):
     def __init__(self,
                  label: str = "Default Transformer",
-                 inputs=None,
-                 outputs=None,
+                 inputs: dict[EnsysFlow] = None,
+                 outputs: dict[EnsysFlow] = None,
                  conversion_factors: dict = None,
                  *args,
                  **kwargs

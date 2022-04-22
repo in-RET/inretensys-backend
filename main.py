@@ -1,13 +1,11 @@
 import os
-import inspect
 import pandas as pd
+from oemof import solph
 
-import printresults
-
-from configs import basicexample, modifiedexample, oemof_sample
-from ensys import EnsysOptimise, EnsysSystembuilder
+from configs import basicexample, oemof_sample
+from ensys import EnsysSystembuilder, EnsysBus
 from ensys.config import EnsysConfigContainer, set_init_function_args_as_instance_args
-
+from printresults import PrintResultsFromDump
 from verfication import verify
 
 
@@ -59,15 +57,47 @@ def oemof():
     verify([dumpfile, orig_dumpfile])
 
     #EnsysOptimise(dumpfile)
-    #printresults.PrintResultsFromDump(dpath=wkdir, dumpfile=dumpfile)
+    PrintResultsFromDump(dumpfile=dumpfile, output=os.path.join(os.getcwd(), "output", "ensys_out.txt"))
+    PrintResultsFromDump(dumpfile=orig_dumpfile, output=os.path.join(os.getcwd(), "output", "oemof_out.txt"))
+
+
+def testbed():
+    comp = solph.Bus(
+        label="Default Bus",
+        balanced=True
+    )
+    flow = EnsysBus()
+
+    custom_flow = flow.to_oemof()
+
+
+    print(comp)
+    print(type(comp))
+    print(flow)
+    print(type(flow))
+    print(custom_flow)
+    print(type(custom_flow))
 
 
 if __name__ == "__main__":
-    # oemof()
+    oemof()
+    #testbed()
 
-    test = TestObject(label="Hallo Welt", dataFrame=pd.DataFrame())
-    kwargs_str = ""
+    print(os.path.getsize("dumps/energy_system.dump"))
+    print(os.path.getsize("dumps/energy_system_orig.dump"))
 
-    for attr in test.__dir__():
-        if attr == "dataFrame":
-            print(getattr(test, attr))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

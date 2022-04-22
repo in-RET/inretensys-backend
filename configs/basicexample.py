@@ -8,8 +8,7 @@ def CreateSampleConfiguration(filename):
     data = pd.read_csv(data_file)
 
     bel = EnsysBus(
-        label="electricity",
-        balanced=True
+        label="electricity"
     )
 
     bgas = EnsysBus(

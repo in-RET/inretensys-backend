@@ -48,9 +48,10 @@ def verify(dfList):
         df1 = compSystems[0].reset_index(drop=True)
         df2 = compSystems[1].reset_index(drop=True)
 
-        result = df1.compare(df2)
+        # Vergleich der beiden DataFrames
+        # df1.compare(df2)
+        result = df1["value"].compare(df2["value"])
 
         print(result)
-        print("Debug")
         # print(df1.reset_index(drop=True).equals(df2.reset_index(drop=True)))
 

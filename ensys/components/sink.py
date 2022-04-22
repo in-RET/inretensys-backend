@@ -1,10 +1,11 @@
-from hsncommon.config import HsnConfigContainer, set_init_function_args_as_instance_args
+from ensys import EnsysFlow
+from ensys.config import EnsysConfigContainer, set_init_function_args_as_instance_args
 
 
-class EnsysSink(HsnConfigContainer):
+class EnsysSink(EnsysConfigContainer):
     def __init__(self,
                  label: str = "Default Sink",
-                 inputs=None,
+                 inputs: dict[EnsysFlow] = None,
                  *args,
                  **kwargs
                  ):

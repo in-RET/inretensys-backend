@@ -1,25 +1,29 @@
-import pprint as pp
+import os.path
+import random
 
 from matplotlib import pyplot as plt
 from oemof import solph
 
 
-def PrintResultsFromDump(dpath, dumpfile):
+def PrintResultsFromDump(dumpfile, output):
     # ****************************************************************************
     # ********** PART 2 - Processing the results *********************************
     # ****************************************************************************
     energysystem = solph.EnergySystem()
-    energysystem.restore(dpath=dpath, filename=dumpfile)
+    energysystem.restore(dpath=os.path.dirname(dumpfile), filename=os.path.basename(dumpfile))
 
     # define an alias for shorter calls below (optional)
     results = energysystem.results["main"]
     storage = energysystem.groups["storage"]
 
+    if os.path.exists(output):
+        os.remove(output)
+
+    xfile = open(os.path.join(output), 'at')
+
     # print a time slice of the state of charge
-    print("")
-    print("********* State of Charge (slice) *********")
-    print(results[(storage, None)]["sequences"]["2012-02-25 08:00:00":"2012-02-26 15:00:00"])
-    print("")
+    print("********* State of Charge (slice) *********", file=xfile)
+    print(results[(storage, None)]["sequences"]["2012-02-25 08:00:00":"2012-02-26 15:00:00"], file=xfile)
 
     # get all variables of a specific component/bus
     custom_storage = solph.views.node(results, "storage")
@@ -51,10 +55,16 @@ def PrintResultsFromDump(dpath, dumpfile):
         plt.show()
 
     # print the solver results
-    print("********* Meta results *********")
-    pp.pprint(energysystem.results["meta"])
-    print("")
+    print("********* Meta results *********", file=xfile)
+    print(energysystem.results["meta"], file=xfile)
 
     # print the sums of the flows around the electricity bus
-    print("********* Main results *********")
-    print(electricity_bus["sequences"].sum(axis=0))
+    print("********* Main results *********", file=xfile)
+    print(electricity_bus["sequences"].sum(axis=0), file=xfile)
+
+    xfile.close()
+
+
+
+
+

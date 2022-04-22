@@ -1,10 +1,10 @@
 import pandas as pd
 
 from ensys.components import source, sink, bus, transformer, genericstorage
-from hsncommon.config import HsnConfigContainer, set_init_function_args_as_instance_args
+from ensys.config import EnsysConfigContainer, set_init_function_args_as_instance_args
 
 
-class EnsysEnergysystem(HsnConfigContainer):
+class EnsysEnergysystem(EnsysConfigContainer):
     def __init__(self,
                  label: str = "Default Energysystem",
                  busses: list[bus.EnsysBus] = None,
@@ -31,6 +31,3 @@ class EnsysEnergysystem(HsnConfigContainer):
         "timeindex": "0:0:pd.DateTimeIndex:None",
         "timeincrement": "0:0:None"
     }
-
-    def get(self):
-        return     
