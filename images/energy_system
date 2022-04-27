@@ -1,19 +1,17 @@
 digraph {
 	electricity [color=lightgrey fixedsize=shape fontsize=10 height=0.3 shape=rectangle style=filled width=4.1]
 	natural_gas [color=lightgrey fixedsize=shape fontsize=10 height=0.3 shape=rectangle style=filled width=4.1]
-	wind [fontsize=10 shape=invtrapezium]
-	pv [fontsize=10 shape=invtrapezium]
-	rgas [fontsize=10 shape=invtrapezium]
-	demand [fontsize=10 shape=trapezium]
 	excess_bel [fontsize=10 shape=trapezium]
+	demand [fontsize=10 shape=trapezium]
+	rgas [fontsize=10 shape=invtrapezium]
+	import [fontsize=10 shape=invtrapezium]
 	pp_gas [fontsize=10 shape=rectangle]
 	storage [fontsize=10 shape=rectangle style=rounded]
-	wind -> electricity
-	pv -> electricity
+	import -> electricity
 	storage -> electricity
 	pp_gas -> electricity
-	electricity -> demand
 	electricity -> excess_bel
+	electricity -> demand
 	electricity -> storage
 	rgas -> natural_gas
 	natural_gas -> pp_gas

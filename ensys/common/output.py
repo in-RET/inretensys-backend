@@ -1,5 +1,4 @@
 import os.path
-import random
 
 from matplotlib import pyplot as plt
 from oemof import solph
@@ -56,7 +55,8 @@ def PrintResultsFromDump(dumpfile, output):
 
     # print the solver results
     print("********* Meta results *********", file=xfile)
-    print(energysystem.results["meta"], file=xfile)
+    # Meta results are others for every system e.g. wallclocktime
+    #print(energysystem.results["meta"], file=xfile)
 
     # print the sums of the flows around the electricity bus
     print("********* Main results *********", file=xfile)

@@ -1,7 +1,7 @@
 import pandas as pd
 
 from ensys.components import source, sink, bus, transformer, genericstorage
-from ensys.config import EnsysConfigContainer, set_init_function_args_as_instance_args
+from ensys.common.config import EnsysConfigContainer, set_init_function_args_as_instance_args
 
 
 class EnsysEnergysystem(EnsysConfigContainer):

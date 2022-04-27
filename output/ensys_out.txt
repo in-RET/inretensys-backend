@@ -1,29 +1,12 @@
 ********* State of Charge (slice) *********
-variable_name        storage_content
-2012-02-25 08:00:00        872708.22
-2012-02-25 09:00:00        675541.17
-2012-02-25 10:00:00        510871.08
-2012-02-25 11:00:00        335090.28
-2012-02-25 12:00:00        110411.60
-2012-02-25 13:00:00             0.00
-2012-02-25 14:00:00             0.00
-2012-02-25 15:00:00             0.00
-2012-02-25 16:00:00             0.00
-2012-02-25 17:00:00             0.00
-2012-02-25 18:00:00             0.00
-2012-02-25 19:00:00             0.00
-2012-02-25 20:00:00             0.00
-2012-02-25 21:00:00             0.00
-2012-02-25 22:00:00             0.00
-2012-02-25 23:00:00             0.00
+Empty DataFrame
+Columns: [storage_content]
+Index: []
 ********* Meta results *********
-{'objective': 864989812.9395435, 'problem': {'Name': 'unknown', 'Lower bound': 864989813.2, 'Upper bound': 864989813.2, 'Number of objectives': 1, 'Number of constraints': 5379, 'Number of variables': 9410, 'Number of nonzeros': 2688, 'Sense': <ProblemSense.minimize: 'minimize'>}, 'solver': {'Status': <SolverStatus.ok: 'ok'>, 'User time': -1.0, 'System time': 0.09, 'Wallclock time': 0.11, 'Termination condition': <TerminationCondition.optimal: 'optimal'>, 'Termination message': 'Model was solved to optimality (subject to tolerances), and an optimal solution is available.', 'Statistics': {'Branch and bound': {'Number of bounded subproblems': None, 'Number of created subproblems': None}, 'Black box': {'Number of function evaluations': '<undefined>', 'Number of gradient evaluations': '<undefined>', 'Number of iterations': 1476}}, 'Error rc': 0, 'Time': 0.13895201683044434}}
 ********* Main results *********
-((electricity, demand), flow)        3.692219e+08
-((electricity, excess_bel), flow)    4.138532e+08
-((electricity, storage), flow)       7.045918e+07
-((pp_gas, electricity), flow)        1.729867e+07
-((pv, electricity), flow)            4.320608e+07
-((storage, electricity), flow)       5.636734e+07
-((wind, electricity), flow)          7.366622e+08
+((electricity, demand), flow)        1.360849e+08
+((electricity, excess_bel), flow)    2.399862e+05
+((electricity, storage), flow)       3.802489e+06
+((import, electricity), flow)        1.397852e+08
+((storage, electricity), flow)       3.422240e+05
 dtype: float64

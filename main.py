@@ -1,25 +1,30 @@
 import os
 import pandas as pd
-from oemof import solph
 
-from configs import basicexample, oemof_sample
-from ensys import EnsysSystembuilder, EnsysBus
-from ensys.config import EnsysConfigContainer, set_init_function_args_as_instance_args
-from printresults import PrintResultsFromDump
-from verfication import verify
+from configs import basic_sample, oemof_sample, oemof_allround_sample, allround_sample
+from ensys import EnsysSystembuilder
+from ensys.common.config import EnsysConfigContainer, set_init_function_args_as_instance_args
+from ensys.common.output import PrintResultsFromDump
+from ensys.common.verfication import Verification
+from hsncommon.log import HsnLogger
+from pydantic import BaseModel
 
 
-class TestObject(EnsysConfigContainer):
+class TestObject(BaseModel, EnsysConfigContainer):
+    label: str
+    number: float
 
     def __init__(self,
                  label: str = "Default Label",
-                 number: float = 0.0,
-                 dataFrame: pd.DataFrame = None):
+                 number: float = 0.0):
         super().__init__()
+        self.label = label
+        self.number = number
+
         set_init_function_args_as_instance_args(self, locals())
 
 
-def oemof():
+def oemof(goOemof, goEnsys):
     wkdir = os.path.join(os.getcwd(), "dumps")
     filename = "energy_system"
 
@@ -36,68 +41,53 @@ def oemof():
     if os.path.exists(orig_dumpfile):
         os.remove(orig_dumpfile)
 
+    logger = HsnLogger()
+    verify = Verification
+
     ##########################################################################
     # oemof-Beispiel
     ##########################################################################
-    if not os.path.exists(orig_dumpfile):
-        oemof_sample.oemofSample(orig_dumpfile)
+    if goOemof:
+        # if not os.path.exists(orig_dumpfile):
+        #     oemof_sample.oemofSample(orig_dumpfile)
+
+        oemof_allround_sample.oemofAllroundSample(orig_dumpfile)
+
+        PrintResultsFromDump(dumpfile=orig_dumpfile, output=os.path.join(os.getcwd(), "output", "oemof_out.txt"))
+
 
     ##########################################################################
     # ensys-Klassen
     ##########################################################################
+    if goEnsys:
+        # basic_example.CreateSampleConfiguration(configfile)
+        # modifiedexample.CreateSampleConfiguration(path_to_dump_config)
+        allround_sample.CreateSampleConfiguration(configfile)
 
-    basicexample.CreateSampleConfiguration(configfile)
-    # modifiedexample.CreateSampleConfiguration(path_to_dump_config)
+        sb = EnsysSystembuilder()
 
-    sb = EnsysSystembuilder()
+        es = sb.BuildConfiguration(configfile)
+        sb.BuildEnergySystem(es, dumpfile)
 
-    es = sb.BuildConfiguration(configfile)
-    sb.BuildEnergySystem(es, dumpfile)
+        # EnsysOptimise(dumpfile)
 
-    verify([dumpfile, orig_dumpfile])
+        PrintResultsFromDump(dumpfile=dumpfile, output=os.path.join(os.getcwd(), "output", "ensys_out.txt"))
 
-    #EnsysOptimise(dumpfile)
-    PrintResultsFromDump(dumpfile=dumpfile, output=os.path.join(os.getcwd(), "output", "ensys_out.txt"))
-    PrintResultsFromDump(dumpfile=orig_dumpfile, output=os.path.join(os.getcwd(), "output", "oemof_out.txt"))
+    verify.files("output/ensys_out.txt", "output/oemof_out.txt")
+
+    # logger.info("Größe Ensys-Dumpfile: " + str(os.path.getsize("dumps/energy_system.dump")))
+    # logger.info("Größe Oemof-Dumpfile: " + str(os.path.getsize("dumps/energy_system_orig.dump")))
 
 
 def testbed():
-    comp = solph.Bus(
-        label="Default Bus",
-        balanced=True
-    )
-    flow = EnsysBus()
+    tobj = TestObject(label="Hallo Welt", number=42.42)
 
-    custom_flow = flow.to_oemof()
-
-
-    print(comp)
-    print(type(comp))
-    print(flow)
-    print(type(flow))
-    print(custom_flow)
-    print(type(custom_flow))
+    print(tobj)
+    print(tobj.json())
 
 
 if __name__ == "__main__":
-    oemof()
+    oemof(goOemof=False, goEnsys=True)
     #testbed()
-
-    print(os.path.getsize("dumps/energy_system.dump"))
-    print(os.path.getsize("dumps/energy_system_orig.dump"))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

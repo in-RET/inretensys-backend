@@ -28,14 +28,17 @@ class EnsysInvestment(HsnConfigContainer):
     }
 
     def to_oemof(self):
-        oemof_investment = solph.Investment(
-            label = self.label,
-            maximum=self.maximum,
-            minimum=self.minimum,
-            ep_costs=self.ep_costs,
-            existing=self.existing,
-            nonconvex=self.nonconvex,
-            offset=self.offset
-        )
+        kwargs = {}
 
-        return oemof_investment
+        for attr_name in dir(self):
+            if not attr_name.startswith("__") and \
+                    not attr_name.startswith("to_") and \
+                    not attr_name == "format":
+                name = attr_name
+                value = getattr(self, attr_name)
+
+                kwargs[name] = value
+
+        oemof_obj = solph.Investment(**kwargs)
+
+        return oemof_obj

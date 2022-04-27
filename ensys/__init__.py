@@ -1,5 +1,5 @@
 from ensys.systembuilder import EnsysSystembuilder
-from ensys.optimise import EnsysOptimise
+from ensys.common.optimise import EnsysOptimise
 from ensys.components.flow import EnsysFlow
 from ensys.components.sink import EnsysSink
 from ensys.components.source import EnsysSource

@@ -1,9 +1,9 @@
-import logging
 import os.path
-import ensys
 
 from oemof import solph
 from oemof_visio import ESGraphRenderer
+
+import ensys
 from hsncommon import config
 from hsncommon.log import HsnLogger
 
@@ -65,58 +65,66 @@ class EnsysSystembuilder():
         # add busses to an EnergySystem
         oemof_busses = []
 
-        logger.info("Build busses")
-        for bus in es.busses:
-            oemof_bus = solph.Bus(
-                label=bus.label,
-                balanced=bus.balanced
-            )
-            oemof_es.add(oemof_bus)
-            # create a better solution to get the possible Busses
-            oemof_busses.append(oemof_bus)
+        if hasattr(es, "busses"):
+            logger.info("Build busses")
+            for bus in es.busses:
+                oemof_bus = solph.Bus(
+                    label=bus.label,
+                    balanced=bus.balanced
+                )
+                oemof_es.add(oemof_bus)
+                # create a better solution to get the possible Busses
+                oemof_busses.append(oemof_bus)
 
-        logger.info("Build sources")
-        # Add sources to the EnergySystem
-        for source in es.sources:
-            oemof_source = solph.Source(
-                label=source.label,
-                outputs=buildIOFlows(source.outputs, oemof_busses),
-            )
-            oemof_es.add(oemof_source)
+        if hasattr(es, "sources"):
+            logger.info("Build sources")
+            # Add sources to the EnergySystem
+            for source in es.sources:
+                oemof_source = solph.Source(
+                    label=source.label,
+                    outputs=buildIOFlows(source.outputs, oemof_busses),
+                )
+                oemof_es.add(oemof_source)
 
-        logger.info("Build sinks")
-        # Add sinks to the EnergySystem
-        for sink in es.sinks:
-            oemof_sink = solph.Sink(
-                label=sink.label,
-                inputs=buildIOFlows(sink.inputs, oemof_busses),
-            )
-            oemof_es.add(oemof_sink)
+        if hasattr(es, "sinks"):
+            logger.info("Build sinks")
+            # Add sinks to the EnergySystem
+            for sink in es.sinks:
+                oemof_sink = solph.Sink(
+                    label=sink.label,
+                    inputs=buildIOFlows(sink.inputs, oemof_busses),
+                )
+                oemof_es.add(oemof_sink)
 
-        logger.info("Build transformers")
-        # Add transformers to the EnergySystem
-        for transformer in es.transformers:
-            oemof_transformer = solph.Transformer(
-                label=transformer.label,
-                inputs=buildIOFlows(transformer.inputs, oemof_busses),
-                outputs=buildIOFlows(transformer.outputs, oemof_busses)
-            )
-            oemof_es.add(oemof_transformer)
+        if hasattr(es, "transformers"):
+            logger.info("Build transformers")
+            # Add transformers to the EnergySystem
+            for transformer in es.transformers:
+                oemof_transformer = solph.Transformer(
+                    label=transformer.label,
+                    inputs=buildIOFlows(transformer.inputs, oemof_busses),
+                    outputs=buildIOFlows(transformer.outputs, oemof_busses)
+                )
+                oemof_es.add(oemof_transformer)
 
-        logger.info("Build storages")
-        # Add storages to the EnergySystem
-        for storage in es.storages:
-            oemof_storage = solph.GenericStorage(
-                nominal_storage_capacity=storage.nominal_storage_capacity,
-                label=storage.label,
-                inputs=buildIOFlows(storage.inputs, oemof_busses),
-                outputs=buildIOFlows(storage.outputs, oemof_busses),
-                loss_rate=storage.loss_rate,
-                initial_storage_level=storage.initial_storage_level,
-                inflow_conversion_factor=storage.inflow_conversion_factor,
-                outflow_conversion_factor=storage.outflow_conversion_factor
-            )
-            oemof_es.add(oemof_storage)
+        if hasattr(es, "storages"):
+            logger.info("Build storages")
+            # Add storages to the EnergySystem
+            for storage in es.storages:
+                oemof_storage = solph.GenericStorage(
+                    nominal_storage_capacity=storage.nominal_storage_capacity,
+                    label=storage.label,
+                    inputs=buildIOFlows(storage.inputs, oemof_busses),
+                    outputs=buildIOFlows(storage.outputs, oemof_busses),
+                    loss_rate=storage.loss_rate,
+                    initial_storage_level=storage.initial_storage_level,
+                    inflow_conversion_factor=storage.inflow_conversion_factor,
+                    outflow_conversion_factor=storage.outflow_conversion_factor,
+                    invest_relation_input_capacity=storage.invest_relation_input_capacity,
+                    invest_relation_output_capacity=storage.invest_relation_output_capacity,
+                    investment=storage.investment.to_oemof()
+                )
+                oemof_es.add(oemof_storage)
 
         ##########################################################################
         # Print the EnergySystem as Graph
@@ -125,7 +133,7 @@ class EnsysSystembuilder():
         logger.info("Print energysystem as graph")
 
         gr = ESGraphRenderer(energy_system=oemof_es, filepath=filepath)
-        #gr.view()
+        # gr.view()
 
         # oemof_es.dump(dpath=wdir, filename=filename)
 

@@ -1,7 +1,7 @@
 from oemof import solph
 
-from ensys import EnsysFlow
-from ensys.config import EnsysConfigContainer, set_init_function_args_as_instance_args
+from ensys import EnsysFlow, EnsysInvestment
+from ensys.common.config import EnsysConfigContainer, set_init_function_args_as_instance_args
 
 
 class EnsysStorage(EnsysConfigContainer):
@@ -10,7 +10,7 @@ class EnsysStorage(EnsysConfigContainer):
                  inputs: dict[EnsysFlow] = None,
                  outputs: dict[EnsysFlow] = None,
                  nominal_storage_capacity: float = 1.0,
-                 invest_relation_capacity: float = None,
+                 invest_relation_input_capacity: float = None,
                  invest_relation_output_capacity: float = None,
                  invest_relation_input_output: float = None,
                  initial_storage_level: float = None,
@@ -22,11 +22,15 @@ class EnsysStorage(EnsysConfigContainer):
                  outflow_conversion_factor: float = 1.0,
                  min_storage_level: float = 0.0,
                  max_storage_level: float = 1.0,
-                 investment: solph.Investment = None,
+                 investment: EnsysInvestment = None,
                  *args,
                  **kwargs
                  ):
         super().__init__()
+
+        if investment is not None:
+            nominal_storage_capacity = None
+
         set_init_function_args_as_instance_args(self, locals())
 
     format = {
@@ -49,3 +53,19 @@ class EnsysStorage(EnsysConfigContainer):
         "max_storage_level": "0:0: type : min : max :None",
         "investment": "0:0: type : min : max :None"
     }
+
+    def to_oemof(self):
+        kwargs = {}
+
+        for attr_name in dir(self):
+            if not attr_name.startswith("__") and \
+                    not attr_name.startswith("to_") and \
+                    not attr_name == "format":
+                name = attr_name
+                value = getattr(self, attr_name)
+
+                kwargs[name] = value
+
+        oemof_obj = solph.GenericStorage(**kwargs)
+
+        return oemof_obj

@@ -1,12 +1,10 @@
 import os
 import pandas as pd
-import matplotlib.pyplot as plt
-import pprint as pp
 
 from oemof import solph
 
 
-def oemofSample(dumpfile, withOutput=False):
+def oemofSample(dumpfile):
     solver = "cbc"  # 'glpk', 'gurobi',....
     number_of_time_steps = 24 * 7 * 8
     solver_verbose = False  # show/hide solver output

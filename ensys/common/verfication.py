@@ -1,16 +1,23 @@
 import os.path
-
+from hashlib import sha256
 from oemof import solph
-
 from hsncommon.log import HsnLogger
 
 
-def verify(filepathA, filepathB):
-    fileA = open(filepathA, 'r')
-    fileB = open(filepathB, 'r')
+def calculateSHA256(filepath):
+    sha256_hash = sha256()
+    with open(filepath, "rb") as f:
+        # Read and update hash string value in blocks of 4K
+        for byte_block in iter(lambda: f.read(4096), b""):
+            sha256_hash.update(byte_block)
+        hash = sha256_hash.hexdigest()
 
-    hashA = hash(fileA)
-    hashB = hash(fileB)
+    return hash
+
+
+def files(filepathA, filepathB):
+    hashA = calculateSHA256(filepathA)
+    hashB = calculateSHA256(filepathB)
 
     logger = HsnLogger()
 
@@ -24,7 +31,9 @@ def verify(filepathA, filepathB):
         logger.warn("B: " + str(hashB))
 
 
-def verify(dfList):
+def dataframes(dfList):
+    data = None
+
     compSystems = []
     logger = HsnLogger()
 
@@ -37,8 +46,8 @@ def verify(dfList):
             data = es.results["compare"]
         else:
             logger.critical("Kein DataFrame zum Vergleich gefunden! Bitte bei der Auswertung des Models "
-                         "die Methode 'solph.processing.create_dataframe(model)' nutzen um dies den Ergebnissen "
-                         "hinzuzufügen!")
+                            "die Methode 'solph.processing.create_dataframe(model)' nutzen um dies den Ergebnissen "
+                            "hinzuzufügen!")
 
         compSystems.append(data)
 
@@ -55,3 +64,12 @@ def verify(dfList):
         print(result)
         # print(df1.reset_index(drop=True).equals(df2.reset_index(drop=True)))
 
+
+class Verification:
+
+    def __init__(self):
+        pass
+
+    @classmethod
+    def files(cls, filepathA, filepathB):
+        files(filepathA, filepathB)
