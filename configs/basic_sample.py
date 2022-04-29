@@ -1,6 +1,6 @@
 import pandas as pd
 
-from ensys import *
+from ensys import EnsysBus, EnsysSource, EnsysFlow, EnsysSink, EnsysTransformer, EnsysEnergysystem, EnsysStorage
 
 
 def CreateSampleConfiguration(filename):

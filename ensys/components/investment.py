@@ -1,31 +1,31 @@
+import math
+
 from hsncommon.config import HsnConfigContainer, set_init_function_args_as_instance_args
 from oemof import solph
 
 
 class EnsysInvestment(HsnConfigContainer):
-    def __init__(self,
-                 label: str = "Default Investment",
-                 maximum: float = 0,
-                 minimum: float = 0,
-                 ep_costs: float = 0,
-                 existing: float = 0,
-                 nonconvex: bool = False,
-                 offset: float = 0,
-                 *args,
-                 **kwargs,
-                 ):
-        super().__init__()
-        set_init_function_args_as_instance_args(self, locals())
-
     format = {
         # name : 0: 0: type: min: max: default
-        "label": "0:0:string:min:max:'Default Investment'",
         "maximum": "0:0:float:0:1:0",
         "minimum": "0:0:float:0:1:0",
         "ep_costs": "0:0:float:0:1:0",
         "nonconvex": "0:0:boolean:0:1:0",
         "offset": "0:0:float:0:1:0"
     }
+
+    def __init__(self,
+                 maximum=float("+inf"),
+                 minimum=0,
+                 ep_costs=0,
+                 existing=0,
+                 nonconvex=False,
+                 offset=0,
+                 *args,
+                 **kwargs,
+                 ):
+        super().__init__()
+        set_init_function_args_as_instance_args(self, locals())
 
     def to_oemof(self):
         kwargs = {}

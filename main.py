@@ -1,13 +1,13 @@
 import os
-import pandas as pd
 
-from configs import basic_sample, oemof_sample, oemof_allround_sample, allround_sample
-from ensys import EnsysSystembuilder
-from ensys.common.config import EnsysConfigContainer, set_init_function_args_as_instance_args
-from ensys.common.output import PrintResultsFromDump
-from ensys.common.verfication import Verification
-from hsncommon.log import HsnLogger
+from oemof import solph
 from pydantic import BaseModel
+
+from configs import oemof_allround_sample, allround_sample
+from ensys import EnsysConfigContainer, Verification, PrintResultsFromDump, EnsysFlow, EnsysTransformer
+from ensys.common.config import set_init_function_args_as_instance_args
+from ensys.systembuilder import BuildConfiguration, BuildEnergySystem
+from hsncommon.log import HsnLogger
 
 
 class TestObject(BaseModel, EnsysConfigContainer):
@@ -47,47 +47,96 @@ def oemof(goOemof, goEnsys):
     ##########################################################################
     # oemof-Beispiel
     ##########################################################################
+    logger.info("Start oemof-Sample")
     if goOemof:
-        # if not os.path.exists(orig_dumpfile):
-        #     oemof_sample.oemofSample(orig_dumpfile)
-
+        # oemof_sample.oemofSample(orig_dumpfile)
         oemof_allround_sample.oemofAllroundSample(orig_dumpfile)
 
+        logger.info("Print results from sample.")
         PrintResultsFromDump(dumpfile=orig_dumpfile, output=os.path.join(os.getcwd(), "output", "oemof_out.txt"))
 
+    logger.info("Fin with oemof-Sample")
 
     ##########################################################################
     # ensys-Klassen
     ##########################################################################
     if goEnsys:
-        # basic_example.CreateSampleConfiguration(configfile)
+        # basic_sample.CreateSampleConfiguration(configfile)
         # modifiedexample.CreateSampleConfiguration(path_to_dump_config)
         allround_sample.CreateSampleConfiguration(configfile)
 
-        sb = EnsysSystembuilder()
-
-        es = sb.BuildConfiguration(configfile)
-        sb.BuildEnergySystem(es, dumpfile)
+        es = BuildConfiguration(configfile)
+        BuildEnergySystem(es, dumpfile)
 
         # EnsysOptimise(dumpfile)
 
         PrintResultsFromDump(dumpfile=dumpfile, output=os.path.join(os.getcwd(), "output", "ensys_out.txt"))
 
+    logger.info("Start verifying.")
     verify.files("output/ensys_out.txt", "output/oemof_out.txt")
+    logger.info("Fin.")
 
-    # logger.info("Größe Ensys-Dumpfile: " + str(os.path.getsize("dumps/energy_system.dump")))
-    # logger.info("Größe Oemof-Dumpfile: " + str(os.path.getsize("dumps/energy_system_orig.dump")))
+    logger.info("Größe Ensys-Dumpfile: " + str(os.path.getsize("dumps/energy_system.dump")))
+    logger.info("Größe Oemof-Dumpfile: " + str(os.path.getsize("dumps/energy_system_orig.dump")))
+
+
+def BuildIO(ensys_io, es):
+    oemof_io = {}
+    keys = list(ensys_io.keys())
+    print(keys)
+
+    for key in keys:
+        print("Key:", key)
+        for node in es.nodes:
+            print("Node:", node)
+
+            if node.label == key:
+                bus = es.nodes[es.nodes.index(node)]
+                oemof_io[bus] = ensys_io[key].to_oemof()
+
+    return oemof_io
 
 
 def testbed():
-    tobj = TestObject(label="Hallo Welt", number=42.42)
+    # tobj = TestObject(label="Hallo Welt", number=42.42)
 
-    print(tobj)
-    print(tobj.json())
+    es = solph.EnergySystem()
+
+    bel = solph.Bus(
+        label="electricity"
+    )
+
+    bgas = solph.Bus(
+        label="natural gas"
+    )
+
+    bexcess = solph.Bus(
+        label="excess_bel"
+    )
+
+    es.add(bel, bgas, bexcess)
+
+    for node in es.nodes:
+        if node.label == "natural gas":
+            bus = es.nodes[es.nodes.index(node)]
+
+    print("Der gesucht Bus ist:", bus)
+
+    test = EnsysTransformer(
+        inputs={"electricity": EnsysFlow(), "excess_bel": EnsysFlow()},
+        outputs={"natural_gas": EnsysFlow()}
+    )
+
+    pp_gas = solph.Transformer(
+        inputs=BuildIO(test.inputs, es),
+        outputs={bel: solph.Flow()}
+    )
+
+    es.add(pp_gas)
 
 
 if __name__ == "__main__":
-    oemof(goOemof=False, goEnsys=True)
+    oemof(goOemof=True, goEnsys=True)
     #testbed()
 
 

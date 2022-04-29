@@ -4,6 +4,20 @@ from hsncommon.config import HsnConfigContainer, set_init_function_args_as_insta
 
 
 class EnsysNonConvex(HsnConfigContainer):
+    format = {
+        # name : 0: 0: type: min: max: default
+        "label": "0:0:string: min : max : 'Default NonConvex'",
+        "startup_costs": "0:0: type : min : max :None",
+        "shutdown_costs": "0:0: type : min : max :None",
+        "activity_costs": "0:0: type : min : max :None",
+        "minimum_uptime": "0:0: type : min : max :None",
+        "minimum_downtime": "0:0: type : min : max :None",
+        "maximum_startups": "0:0: type : min : max :None",
+        "initial_status": "0:0: type : min : max :None",
+        "positive_gradient": "0:0: type : min : max :None",
+        "negative_gradient": "0:0: type : min : max :None"
+    }
+
     def __init__(self,
                  label: str = "Default NonConvex",
                  startup_costs=None,
@@ -14,8 +28,8 @@ class EnsysNonConvex(HsnConfigContainer):
                  maximum_startups: int = 0,
                  # 0/False = off, 1/True = on
                  initial_status: bool = False,
-                 positive_gradient=None,
-                 negative_gradient=None,
+                 positive_gradient: dict = None,
+                 negative_gradient: dict = None,
                  *args,
                  **kwargs
                  ):
@@ -33,20 +47,6 @@ class EnsysNonConvex(HsnConfigContainer):
             negative_gradient = {"ub": None, "costs": 0}
 
         set_init_function_args_as_instance_args(self, locals())
-
-    format = {
-        # name : 0: 0: type: min: max: default
-        "label": "0:0:string: min : max : 'Default NonConvex'",
-        "startup_costs": "0:0: type : min : max :None",
-        "shutdown_costs": "0:0: type : min : max :None",
-        "activity_costs": "0:0: type : min : max :None",
-        "minimum_uptime": "0:0: type : min : max :None",
-        "minimum_downtime": "0:0: type : min : max :None",
-        "maximum_startups": "0:0: type : min : max :None",
-        "initial_status": "0:0: type : min : max :None",
-        "positive_gradient": "0:0: type : min : max :None",
-        "negative_gradient": "0:0: type : min : max :None"
-    }
 
     def to_oemof(self):
         kwargs = {}

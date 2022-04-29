@@ -22,7 +22,6 @@ class EnsysFlow(EnsysConfigContainer):
     }
 
     def __init__(self,
-                 label: str = "Default Flow",
                  nominal_value: float = None,
                  # numeric or sequence or None
                  fix=None,
@@ -35,8 +34,8 @@ class EnsysFlow(EnsysConfigContainer):
                  summed_max: float = None,
                  summed_min=None,
                  variable_costs=None,
-                 investment: solph.Investment = None,
-                 nonconvex: solph.NonConvex = None,
+                 investment=None,
+                 nonconvex=None,
                  *args,
                  **kwargs
                  ):
@@ -52,14 +51,6 @@ class EnsysFlow(EnsysConfigContainer):
         if negative_gradient is None:
             negative_gradient = {"ub": None, "costs": 0}
 
-        # TODO: Hier sollte was sinnvolles sein
-        if nonconvex is not None:
-            investment = None
-
-        if investment is not None:
-            nominal_value = None
-            nonconvex = None
-
         set_init_function_args_as_instance_args(self, locals())
 
     def to_oemof(self):
@@ -72,7 +63,15 @@ class EnsysFlow(EnsysConfigContainer):
                 name = attr_name
                 value = getattr(self, attr_name)
 
-                kwargs[name] = value
+                if name == "investment" or name == "nonconvex":
+                    if value is False or value is True:
+                        kwargs[name] = value
+                    else:
+                        kwargs[name] = value.to_oemof()
+                else:
+                    kwargs[name] = value
+
+        # print(kwargs)
 
         oemof_obj = solph.Flow(**kwargs)
 

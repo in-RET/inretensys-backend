@@ -1,15 +1,15 @@
 digraph {
 	electricity [color=lightgrey fixedsize=shape fontsize=10 height=0.3 shape=rectangle style=filled width=4.1]
 	natural_gas [color=lightgrey fixedsize=shape fontsize=10 height=0.3 shape=rectangle style=filled width=4.1]
+	import [fontsize=10 shape=invtrapezium]
+	rgas [fontsize=10 shape=invtrapezium]
 	excess_bel [fontsize=10 shape=trapezium]
 	demand [fontsize=10 shape=trapezium]
-	rgas [fontsize=10 shape=invtrapezium]
-	import [fontsize=10 shape=invtrapezium]
 	pp_gas [fontsize=10 shape=rectangle]
 	storage [fontsize=10 shape=rectangle style=rounded]
+	pp_gas -> electricity
 	import -> electricity
 	storage -> electricity
-	pp_gas -> electricity
 	electricity -> excess_bel
 	electricity -> demand
 	electricity -> storage

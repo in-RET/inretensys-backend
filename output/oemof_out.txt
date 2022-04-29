@@ -1,13 +1,28 @@
 ********* State of Charge (slice) *********
-Empty DataFrame
-Columns: [storage_content]
-Index: []
-********* Meta results *********
+variable_name        storage_content
+2022-01-01 01:00:00        44840.743
+2022-01-01 02:00:00        38060.013
+2022-01-01 03:00:00        31583.453
+2022-01-01 04:00:00        25349.654
+2022-01-01 05:00:00        19284.793
+...                              ...
+2022-01-13 20:00:00       126596.490
+2022-01-13 21:00:00       120551.200
+2022-01-13 22:00:00       114349.490
+2022-01-13 23:00:00       107916.090
+2022-01-14 00:00:00       101187.250
+
+[312 rows x 1 columns]
 ********* Main results *********
-((electricity, demand), flow)        1.360849e+08
-((electricity, excess_bel), flow)    4.042476e+06
-((electricity, storage), flow)       0.000000e+00
-((import, electricity), flow)        1.397852e+08
-((pp_gas, electricity), flow)        3.422240e+05
-((storage, electricity), flow)       0.000000e+00
+((electricity, demand), flow)        1.156170e+08
+((electricity, excess_bel), flow)    1.425506e+06
+((electricity, storage), flow)       2.687385e+06
+((import, electricity), flow)        1.088671e+08
+((pp_gas, electricity), flow)        8.712854e+06
+((storage, electricity), flow)       2.149908e+06
 dtype: float64
+((electricity, storage), invest)    31331.232000
+((pp_gas, electricity), invest)     12812.366000
+((storage, electricity), invest)    31331.232000
+storage_invest_GWh                      0.187987
+Name: 2022-01-01 00:00:00, dtype: float64
