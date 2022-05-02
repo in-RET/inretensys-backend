@@ -3,7 +3,6 @@ import os
 
 import numpy as np
 import pandas as pd
-from matplotlib.pyplot import plot
 from oemof import solph
 from oemof.tools import economics
 from oemof_visio import ESGraphRenderer
@@ -34,7 +33,7 @@ def oemofAllroundSample(dumpfile):
 
     for x in range(0, number_of_time_steps):
         if number_of_time_steps / 3 < x < 2 * number_of_time_steps / 3:
-            demand_el[x] = 67000
+            demand_el[x] = 62000
         import_el.append(3000 * math.cos(1/10*x) * math.sin(1/10 * x) * math.cos(1/20*x)**3 + 54000)
 
     tmp = {'demand_el': demand_el, 'import_el': import_el}
@@ -100,18 +99,18 @@ def oemofAllroundSample(dumpfile):
     # create simple transformer object representing a gas power plant
     epc_pp_gas = economics.annuity(capex=2000, n=20, wacc=0.05)
     logger.info("epc_pp_gas: " + str(epc_pp_gas))
-    es.add(
-        solph.Transformer(
-            label="pp_gas",
-            inputs={bgas: solph.Flow()},
-            outputs={bel: solph.Flow(
-                # nominal_value=6000,
-                variable_costs=0.1,
-                investment=solph.Investment(ep_costs=epc_pp_gas)
-             )},
-            conversion_factors={bel: 0.3},
+    transformer = solph.Transformer(
+        label="pp_gas",
+        inputs={bgas: solph.Flow()},
+        outputs={bel: solph.Flow(
+            #nominal_value=8000,
+            variable_costs=0.1,
+            investment=solph.Investment(ep_costs=epc_pp_gas)
+        )},
+        conversion_factors={bel: 0.3},
         )
-    )
+
+    es.add(transformer)
 
     # If the period is one year the equivalent periodical costs (epc) of an
     # investment are equal to the annuity. Use oemof's economic tools.
@@ -120,13 +119,14 @@ def oemofAllroundSample(dumpfile):
 
     kwargs = {
         "label": "storage",
+        #"nominal_storage_capacity": 10000,
         "inputs": {
             bel: solph.Flow(
                 variable_costs=0.0001
             )
         },
         "outputs": {bel: solph.Flow()},
-        "loss_rate": 0.0,
+        "loss_rate": 0.01,
         "initial_storage_level": None,
         "inflow_conversion_factor": 1,
         "outflow_conversion_factor": 0.8,

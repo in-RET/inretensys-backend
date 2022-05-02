@@ -1,28 +1,31 @@
 ********* State of Charge (slice) *********
 variable_name        storage_content
-2022-01-01 01:00:00              0.0
-2022-01-01 02:00:00              0.0
-2022-01-01 03:00:00              0.0
-2022-01-01 04:00:00              0.0
-2022-01-01 05:00:00              0.0
+2022-01-01 01:00:00           0.0000
+2022-01-01 02:00:00           0.0000
+2022-01-01 03:00:00           0.0000
+2022-01-01 04:00:00           0.0000
+2022-01-01 05:00:00           0.0000
 ...                              ...
-2022-01-13 20:00:00              0.0
-2022-01-13 21:00:00              0.0
-2022-01-13 22:00:00              0.0
-2022-01-13 23:00:00              0.0
-2022-01-14 00:00:00              0.0
+2022-01-13 20:00:00        2517.6927
+2022-01-13 21:00:00           0.0000
+2022-01-13 22:00:00           0.0000
+2022-01-13 23:00:00           0.0000
+2022-01-14 00:00:00           0.0000
 
 [312 rows x 1 columns]
 ********* Main results *********
-((electricity, demand), flow)        1.156170e+08
-((electricity, excess_bel), flow)    3.700531e+06
-((electricity, storage), flow)       4.582075e+05
+((electricity, demand), flow)        1.122620e+08
+((electricity, excess_bel), flow)    3.051829e+06
+((electricity, storage), flow)       1.143574e+06
 ((import, electricity), flow)        1.088671e+08
-((pp_gas, electricity), flow)        1.054204e+07
-((storage, electricity), flow)       3.665660e+05
+((pp_gas, electricity), flow)        6.823137e+06
+((storage, electricity), flow)       7.671369e+05
 dtype: float64
-((electricity, storage), invest)     3851.60210
-((pp_gas, electricity), invest)     13045.86300
-((storage, electricity), invest)     3851.60210
-storage_invest_GWh                      0.02311
+((electricity, storage), invest)    10659.695000
+((pp_gas, electricity), invest)      8151.228300
+((storage, electricity), invest)    10659.695000
+storage_invest_GWh                      0.063958
+Name: 2022-01-01 00:00:00, dtype: float64
+((rgas, natural_gas), invest)    27170.761000
+gas_invest_GWh                       0.008151
 Name: 2022-01-01 00:00:00, dtype: float64

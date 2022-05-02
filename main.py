@@ -1,12 +1,10 @@
 import os
 
-from oemof import solph
 from pydantic import BaseModel
 
 from configs import oemof_allround_sample, allround_sample
-from ensys import EnsysConfigContainer, Verification, PrintResultsFromDump, EnsysFlow, EnsysTransformer
+from ensys import EnsysConfigContainer, Verification, PrintResultsFromDump, BuildConfiguration, BuildEnergySystem
 from ensys.common.config import set_init_function_args_as_instance_args
-from ensys.systembuilder import BuildConfiguration, BuildEnergySystem
 from hsncommon.log import HsnLogger
 
 
@@ -47,15 +45,16 @@ def oemof(goOemof, goEnsys):
     ##########################################################################
     # oemof-Beispiel
     ##########################################################################
-    logger.info("Start oemof-Sample")
     if goOemof:
+        logger.info("Start oemof-Sample")
+
         # oemof_sample.oemofSample(orig_dumpfile)
         oemof_allround_sample.oemofAllroundSample(orig_dumpfile)
 
         logger.info("Print results from sample.")
         PrintResultsFromDump(dumpfile=orig_dumpfile, output=os.path.join(os.getcwd(), "output", "oemof_out.txt"))
 
-    logger.info("Fin with oemof-Sample")
+        logger.info("Fin with oemof-Sample")
 
     ##########################################################################
     # ensys-Klassen
@@ -80,59 +79,9 @@ def oemof(goOemof, goEnsys):
     logger.info("Größe Oemof-Dumpfile: " + str(os.path.getsize("dumps/energy_system_orig.dump")))
 
 
-def BuildIO(ensys_io, es):
-    oemof_io = {}
-    keys = list(ensys_io.keys())
-    print(keys)
-
-    for key in keys:
-        print("Key:", key)
-        for node in es.nodes:
-            print("Node:", node)
-
-            if node.label == key:
-                bus = es.nodes[es.nodes.index(node)]
-                oemof_io[bus] = ensys_io[key].to_oemof()
-
-    return oemof_io
-
-
 def testbed():
-    # tobj = TestObject(label="Hallo Welt", number=42.42)
-
-    es = solph.EnergySystem()
-
-    bel = solph.Bus(
-        label="electricity"
-    )
-
-    bgas = solph.Bus(
-        label="natural gas"
-    )
-
-    bexcess = solph.Bus(
-        label="excess_bel"
-    )
-
-    es.add(bel, bgas, bexcess)
-
-    for node in es.nodes:
-        if node.label == "natural gas":
-            bus = es.nodes[es.nodes.index(node)]
-
-    print("Der gesucht Bus ist:", bus)
-
-    test = EnsysTransformer(
-        inputs={"electricity": EnsysFlow(), "excess_bel": EnsysFlow()},
-        outputs={"natural_gas": EnsysFlow()}
-    )
-
-    pp_gas = solph.Transformer(
-        inputs=BuildIO(test.inputs, es),
-        outputs={bel: solph.Flow()}
-    )
-
-    es.add(pp_gas)
+    tobj = TestObject(label="Hallo Welt", number=42.42)
+    print(tobj)
 
 
 if __name__ == "__main__":

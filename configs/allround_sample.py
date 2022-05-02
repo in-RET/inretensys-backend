@@ -29,7 +29,7 @@ def CreateSampleConfiguration(filename):
 
     for x in range(0, number_of_time_steps):
         if number_of_time_steps / 3 < x < 2 * number_of_time_steps / 3:
-            demand_el[x] = 67000
+            demand_el[x] = 62000
         import_el.append(3000 * math.cos(1/10*x) * math.sin(1/10 * x) * math.cos(1/20*x)**3 + 54000)
 
     tmp = {'demand_el': demand_el, 'import_el': import_el}
@@ -57,16 +57,16 @@ def CreateSampleConfiguration(filename):
         )}
     )
 
-
     price_gas = 0.04
     epc_rgas = economics.annuity(capex=1000, n=20, wacc=0.05)
     logger.info("epc_rgas: " + str(epc_rgas))
+
     rgas = EnsysSource(
         label="rgas",
         outputs={
             bgas.label: EnsysFlow(
                 variable_costs=price_gas,
-                investment=EnsysInvestment(ep_costs=epc_rgas) #TODO: Hier enstehen Datenabweichungen!
+                investment=solph.Investment(ep_costs=epc_rgas) #TODO: Hier enstehen Datenabweichungen!
             )
         }
     )
@@ -78,16 +78,16 @@ def CreateSampleConfiguration(filename):
         )}
     )
 
-
     epc_pp_gas = economics.annuity(capex=2000, n=20, wacc=0.05)
     logger.info("epc_pp_gas: " + str(epc_pp_gas))
+
     pp_gas = EnsysTransformer(
         label="pp_gas",
-        inputs={bgas.label: EnsysFlow()},
-        outputs={bel.label: EnsysFlow(
-            # nominal_value=6000,
+        inputs={bgas.label: solph.Flow()},
+        outputs={bel.label: solph.Flow(
+            #nominal_value=8000,
             variable_costs=0.1,
-            investment=EnsysInvestment(ep_costs=epc_pp_gas)
+            investment=solph.Investment(ep_costs=epc_pp_gas)
         )},
         conversion_factors={bel.label: 0.3}
     )
@@ -99,15 +99,16 @@ def CreateSampleConfiguration(filename):
 
     storage = EnsysStorage(
         label="storage",
+        #nominal_storage_capacity=10000,
         inputs={
-            bel.label: solph.Flow( #EnsysFlow(
+            bel.label: EnsysFlow(
                 variable_costs=0.0001
             )
         },
         outputs={
-            bel.label: solph.Flow() #EnsysFlow()
+            bel.label: EnsysFlow()
         },
-        loss_rate=0.0,
+        loss_rate=0.01,
         initial_storage_level=None,
         inflow_conversion_factor=1,
         outflow_conversion_factor=0.8,

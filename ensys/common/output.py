@@ -23,7 +23,6 @@ def PrintResultsFromDump(dumpfile, output):
     results = energysystem.results["main"]
     storage = energysystem.groups["storage"]
 
-
     bel = SearchNode(energysystem.nodes, "electricity")
     pp_gas = SearchNode(energysystem.nodes, "pp_gas")
 
@@ -76,17 +75,18 @@ def PrintResultsFromDump(dumpfile, output):
     print("********* Main results *********", file=xfile)
     print(electricity_bus["sequences"].sum(axis=0), file=xfile)
 
-    my_results = electricity_bus["scalars"]
+    if True is True:
+        my_results = electricity_bus["scalars"]
 
-    # installed capacity of storage in GWh
-    my_results["storage_invest_GWh"] = (
-            results[(storage, None)]["scalars"]["invest"] / 1e6
-    )
+        # installed capacity of storage in GWh
+        my_results["storage_invest_GWh"] = (
+                results[(storage, None)]["scalars"]["invest"] / 1e6
+        )
 
-    print(my_results, file=xfile)
+        print(my_results, file=xfile)
 
-    if True is False:
-        #my_results = natural_gas_bus["scalars"]
+    if True is True:
+        my_results = natural_gas_bus["scalars"]
 
         # installed capacity of storage in GWh
         my_results["gas_invest_GWh"] = (

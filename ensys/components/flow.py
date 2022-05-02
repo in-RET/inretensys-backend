@@ -22,6 +22,7 @@ class EnsysFlow(EnsysConfigContainer):
     }
 
     def __init__(self,
+                 label: str = "Default Flow",
                  nominal_value: float = None,
                  # numeric or sequence or None
                  fix=None,
@@ -63,15 +64,18 @@ class EnsysFlow(EnsysConfigContainer):
                 name = attr_name
                 value = getattr(self, attr_name)
 
-                if name == "investment" or name == "nonconvex":
+                if name == "nonconvex":
                     if value is False or value is True:
+                        kwargs[name] = value
+                    else:
+                        kwargs[name] = value.to_oemof()
+                elif name == "investment":
+                    if type(value) is solph.Investment:
                         kwargs[name] = value
                     else:
                         kwargs[name] = value.to_oemof()
                 else:
                     kwargs[name] = value
-
-        # print(kwargs)
 
         oemof_obj = solph.Flow(**kwargs)
 

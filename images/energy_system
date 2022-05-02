@@ -7,12 +7,12 @@ digraph {
 	demand [fontsize=10 shape=trapezium]
 	pp_gas [fontsize=10 shape=rectangle]
 	storage [fontsize=10 shape=rectangle style=rounded]
-	pp_gas -> electricity
 	import -> electricity
+	pp_gas -> electricity
 	storage -> electricity
+	electricity -> storage
 	electricity -> excess_bel
 	electricity -> demand
-	electricity -> storage
 	rgas -> natural_gas
 	natural_gas -> pp_gas
 }
