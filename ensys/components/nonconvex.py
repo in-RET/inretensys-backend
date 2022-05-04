@@ -23,22 +23,18 @@ class EnsysNonConvex(HsnConfigContainer):
                  startup_costs=None,
                  shutdown_costs=None,
                  activity_costs=None,
-                 minimum_uptime: int = 1,
-                 minimum_downtime: int = 1,
-                 maximum_startups: int = 0,
+                 minimum_uptime: int = None,
+                 minimum_downtime: int = None,
+                 maximum_startups: int = None,
+                 maximum_shutdowns: int = None,
                  # 0/False = off, 1/True = on
-                 initial_status: bool = False,
+                 initial_status: int = 0,
                  positive_gradient: dict = None,
                  negative_gradient: dict = None,
                  *args,
                  **kwargs
                  ):
         super().__init__()
-
-        if initial_status:
-            initial_status = 1
-        else:
-            initial_status = 0
 
         if positive_gradient is None:
             positive_gradient = {"ub": None, "costs": 0}

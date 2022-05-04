@@ -2,12 +2,10 @@ import math
 
 import numpy as np
 import pandas as pd
-from oemof import solph
-
 from oemof.tools import economics
 
 from ensys import EnsysBus, EnsysFlow, EnsysSink, EnsysSource, EnsysTransformer, EnsysStorage, EnsysInvestment, \
-    EnsysEnergysystem
+    EnsysEnergysystem, EnsysNonConvex
 from hsncommon.log import HsnLogger
 
 
@@ -53,7 +51,8 @@ def CreateSampleConfiguration(filename):
     demand_el = EnsysSink(
         label="demand",
         inputs={bel.label: EnsysFlow(
-            fix=data["demand_el"], nominal_value=1
+            fix=data["demand_el"],
+            nominal_value=1
         )}
     )
 
@@ -66,7 +65,7 @@ def CreateSampleConfiguration(filename):
         outputs={
             bgas.label: EnsysFlow(
                 variable_costs=price_gas,
-                investment=solph.Investment(ep_costs=epc_rgas) #TODO: Hier enstehen Datenabweichungen!
+                investment=EnsysInvestment(ep_costs=epc_rgas)
             )
         }
     )
@@ -74,7 +73,8 @@ def CreateSampleConfiguration(filename):
     import_el = EnsysSource(
         label="import",
         outputs={bel.label: EnsysFlow(
-            fix=data["import_el"], nominal_value=1
+            fix=data["import_el"],
+            nominal_value=1
         )}
     )
 
@@ -83,11 +83,17 @@ def CreateSampleConfiguration(filename):
 
     pp_gas = EnsysTransformer(
         label="pp_gas",
-        inputs={bgas.label: solph.Flow()},
-        outputs={bel.label: solph.Flow(
-            #nominal_value=8000,
+        inputs={bgas.label: EnsysFlow()},
+        outputs={bel.label: EnsysFlow(
+            #investment=EnsysInvestment(ep_costs=epc_pp_gas),
+            nominal_value=16000,
+            min=0.1,
+            max=0.8,
             variable_costs=0.1,
-            investment=solph.Investment(ep_costs=epc_pp_gas)
+            nonconvex=EnsysNonConvex(
+                minimum_uptime=20,
+                initial_status=0
+            )
         )},
         conversion_factors={bel.label: 0.3}
     )
@@ -108,7 +114,7 @@ def CreateSampleConfiguration(filename):
         outputs={
             bel.label: EnsysFlow()
         },
-        loss_rate=0.01,
+        loss_rate=0.0,
         initial_storage_level=None,
         inflow_conversion_factor=1,
         outflow_conversion_factor=0.8,

@@ -1,0 +1,15 @@
+:root > * {
+  --md-code-hl-string-color: #FFAA88;
+  --md-code-hl-special-color: #0000FF;
+  --md-code-hl-constant-color: #00DFAA;
+  --md-code-hl-keyword-color: #AAAAFF;
+  --md-code-hl-operator-color: #AAAAFF;
+  --md-code-hl-punctuation-color: #9F9F9F;
+  --md-code-hl-comment-color: #448844;
+  --md-code-hl-generic-color: #FF0000;
+  --md-code-hl-variable-color: #00FF00;
+}
+
+.highlight .kr .kd {
+  color: #0FF1CE;
+}

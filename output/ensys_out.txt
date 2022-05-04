@@ -1,31 +1,28 @@
 ********* State of Charge (slice) *********
 variable_name        storage_content
-2022-01-01 01:00:00           0.0000
-2022-01-01 02:00:00           0.0000
-2022-01-01 03:00:00           0.0000
-2022-01-01 04:00:00           0.0000
-2022-01-01 05:00:00           0.0000
+2022-01-01 01:00:00       121626.920
+2022-01-01 02:00:00       114846.190
+2022-01-01 03:00:00       108369.630
+2022-01-01 04:00:00       102135.830
+2022-01-01 05:00:00        96070.967
 ...                              ...
-2022-01-13 20:00:00        2517.6927
-2022-01-13 21:00:00           0.0000
-2022-01-13 22:00:00           0.0000
-2022-01-13 23:00:00           0.0000
-2022-01-14 00:00:00           0.0000
+2022-01-13 20:00:00       126596.490
+2022-01-13 21:00:00       120551.200
+2022-01-13 22:00:00       114349.490
+2022-01-13 23:00:00       107916.090
+2022-01-14 00:00:00       101187.250
 
 [312 rows x 1 columns]
 ********* Main results *********
 ((electricity, demand), flow)        1.122620e+08
-((electricity, excess_bel), flow)    3.051829e+06
-((electricity, storage), flow)       1.143574e+06
+((electricity, excess_bel), flow)    1.256965e+06
+((electricity, storage), flow)       2.867644e+06
 ((import, electricity), flow)        1.088671e+08
-((pp_gas, electricity), flow)        6.823137e+06
-((storage, electricity), flow)       7.671369e+05
+((pp_gas, electricity), flow)        5.225365e+06
+((pp_gas, electricity), status)      6.910000e+02
+((storage, electricity), flow)       2.294115e+06
 dtype: float64
-((electricity, storage), invest)    10659.695000
-((pp_gas, electricity), invest)      8151.228300
-((storage, electricity), invest)    10659.695000
-storage_invest_GWh                      0.063958
-Name: 2022-01-01 00:00:00, dtype: float64
-((rgas, natural_gas), invest)    27170.761000
-gas_invest_GWh                       0.008151
+((electricity, storage), invest)    44128.927000
+((storage, electricity), invest)    44128.927000
+storage_invest_GWh                      0.264774
 Name: 2022-01-01 00:00:00, dtype: float64

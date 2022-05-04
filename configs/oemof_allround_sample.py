@@ -1,5 +1,6 @@
 import math
 import os
+import time
 
 import numpy as np
 import pandas as pd
@@ -66,7 +67,8 @@ def oemofAllroundSample(dumpfile):
         solph.Sink(
             label="demand",
             inputs={bel: solph.Flow(
-                fix=data["demand_el"], nominal_value=1
+                fix=data["demand_el"],
+                nominal_value=1
             )},
         )
     )
@@ -91,7 +93,8 @@ def oemofAllroundSample(dumpfile):
         solph.Source(
             label="import",
             outputs={bel: solph.Flow(
-                fix=data["import_el"], nominal_value=1
+                fix=data["import_el"],
+                nominal_value=1
             )},
         )
     )
@@ -103,12 +106,19 @@ def oemofAllroundSample(dumpfile):
         label="pp_gas",
         inputs={bgas: solph.Flow()},
         outputs={bel: solph.Flow(
-            #nominal_value=8000,
+            #investment=solph.Investment(ep_costs=epc_pp_gas),
+            nominal_value=16000,
+            min=0.1,
+            max=0.8,
             variable_costs=0.1,
-            investment=solph.Investment(ep_costs=epc_pp_gas)
+            nonconvex=solph.NonConvex(
+                minimum_uptime=20,
+                initial_status=0
+            )
+
         )},
         conversion_factors={bel: 0.3},
-        )
+    )
 
     es.add(transformer)
 
@@ -126,7 +136,7 @@ def oemofAllroundSample(dumpfile):
             )
         },
         "outputs": {bel: solph.Flow()},
-        "loss_rate": 0.01,
+        "loss_rate": 0.0,
         "initial_storage_level": None,
         "inflow_conversion_factor": 1,
         "outflow_conversion_factor": 0.8,
@@ -147,16 +157,24 @@ def oemofAllroundSample(dumpfile):
     # Optimise the energy system and plot the results
     ##########################################################################
 
+    logger.info("Initialise operational model.")
     # initialise the operational model
     model = solph.Model(es)
 
+    logger.info("Start solving.")
+    t_start = time.time()
     # if tee_switch is true solver messages will be displayed
     model.solve(solver=solver, solve_kwargs={"tee": solver_verbose})
+    t_end = time.time()
 
+    logger.info("Completed after " + str(round(t_end - t_start, 2)) + " seconds.")
+
+    logger.info("Processing data.")
     # add results to the energy system to make it possible to store them.
     es.results["main"] = solph.processing.results(model)
     es.results["meta"] = solph.processing.meta_results(model)
 
+    logger.info("Dump files to filesystem.")
     # store energy system with results
     wdir = os.path.dirname(dumpfile)
     dumpfilename = os.path.basename(dumpfile)

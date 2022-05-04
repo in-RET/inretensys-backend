@@ -1,10 +1,10 @@
 import os.path
+import time
 
 from oemof import solph
-from oemof.tools import economics
 from oemof_visio import ESGraphRenderer
 
-from ensys import EnsysFlow, EnsysInvestment
+from ensys import EnsysFlow
 from hsncommon import config
 from hsncommon.log import HsnLogger
 
@@ -33,7 +33,7 @@ def BuildIO(ensys_io, es):
     return oemof_io
 
 
-def BuildKwargs(ensys_obj, oemof_es):
+def BuildKwargs(ensys_obj, oemof_es: solph.EnergySystem):
     kwargs = {}
 
     for attr_name in dir(ensys_obj):
@@ -163,7 +163,11 @@ def BuildEnergySystem(es, file):
 
     # if tee_switch is true solver messages will be displayed
     logger.info("Solve the optimization problem")
+    t_start = time.time()
     model.solve(solver="cbc", solve_kwargs={"tee": solver_verbose})
+    t_end = time.time()
+
+    logger.info("Completed after " + str(round(t_end - t_start, 2)) + " seconds.")
 
     logger.info("Store the energy system with the results.")
 

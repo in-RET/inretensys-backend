@@ -39,31 +39,35 @@ def PrintResultsFromDump(dumpfile, output):
     # get all variables of a specific component/bus
     custom_storage = solph.views.node(results, "storage")
     electricity_bus = solph.views.node(results, "electricity")
+    pp_gas = solph.views.node(results, "pp_gas")
+    excess_bel = solph.views.node(results, "excess_bel")
     natural_gas_bus = solph.views.node(results, "natural_gas")
 
     # plot the time series (sequences) of a specific component/bus
     if plt is not None:
-        fig, ax = plt.subplots(figsize=(10, 5))
-        custom_storage["sequences"].plot(
-            ax=ax, kind="line", drawstyle="steps-post"
-        )
-        plt.legend(
-            loc="upper center",
-            prop={"size": 8},
-            bbox_to_anchor=(0.5, 1.25),
-            ncol=2,
-        )
-        fig.subplots_adjust(top=0.8)
-        plt.show()
+        fig, axs = plt.subplots(nrows=4, ncols=1, sharex='all', figsize=(8, 11))
+        ax11, ax12, ax13, ax14 = axs
 
-        fig, ax = plt.subplots(figsize=(10, 5))
+        custom_storage["sequences"].plot(
+            ax=ax11, kind="line", drawstyle="steps-post", title="Speicher"
+        )
+
+        excess_bel["sequences"].plot(
+            ax=ax12, kind="line", drawstyle="steps-post", title="Überschüssiger Strom"
+        )
+
+        pp_gas["sequences"].plot(
+            ax=ax13, kind="line", drawstyle="steps-post", title="Transformator Gas > Strom"
+        )
+
         electricity_bus["sequences"].plot(
-            ax=ax, kind="line", drawstyle="steps-post"
+            ax=ax14, kind="line", drawstyle="steps-post", title="Strombus"
         )
-        plt.legend(
-            loc="upper center", prop={"size": 8}, bbox_to_anchor=(0.5, 1.3), ncol=2
-        )
-        fig.subplots_adjust(top=0.8)
+
+        for ax in axs:
+            ax.legend(bbox_to_anchor=(1, 1), loc="upper left", fontsize="8")
+
+        plt.tight_layout()
         plt.show()
 
     # print the solver results
@@ -85,7 +89,7 @@ def PrintResultsFromDump(dumpfile, output):
 
         print(my_results, file=xfile)
 
-    if True is True:
+    if True is False:
         my_results = natural_gas_bus["scalars"]
 
         # installed capacity of storage in GWh

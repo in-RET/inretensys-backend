@@ -1,3 +1,4 @@
+import inspect
 import os
 
 from pydantic import BaseModel
@@ -8,18 +9,19 @@ from ensys.common.config import set_init_function_args_as_instance_args
 from hsncommon.log import HsnLogger
 
 
-class TestObject(BaseModel, EnsysConfigContainer):
-    label: str
-    number: float
+class TestObject(BaseModel):
+    label: str = "testlabel"
+    number: float = 3.14
 
     def __init__(self,
-                 label: str = "Default Label",
-                 number: float = 0.0):
-        super().__init__()
+                 label: str,
+                 number: float,
+                 *args,
+                 **kwargs):
         self.label = label
         self.number = number
 
-        set_init_function_args_as_instance_args(self, locals())
+        super().__init__()
 
 
 def oemof(goOemof, goEnsys):
@@ -80,12 +82,14 @@ def oemof(goOemof, goEnsys):
 
 
 def testbed():
-    tobj = TestObject(label="Hallo Welt", number=42.42)
+    tobj = TestObject(
+        label="Hallo Welt!",
+        number=314.42)
     print(tobj)
 
 
 if __name__ == "__main__":
-    oemof(goOemof=True, goEnsys=True)
-    #testbed()
+    #oemof(goOemof=True, goEnsys=True)
+    testbed()
 
 

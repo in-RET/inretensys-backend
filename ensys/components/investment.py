@@ -14,12 +14,12 @@ class EnsysInvestment(HsnConfigContainer):
     }
 
     def __init__(self,
-                 maximum=float("+inf"),
-                 minimum=0,
-                 ep_costs=0,
-                 existing=0,
-                 nonconvex=False,
-                 offset=0,
+                 maximum: float = float("+inf"),
+                 minimum: float = 0.0,
+                 ep_costs: float = 0.0,
+                 existing: float = 0.0,
+                 nonconvex: bool = False,
+                 offset: float = 0.0,
                  *args,
                  **kwargs,
                  ):
