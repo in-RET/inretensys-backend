@@ -1,17 +1,24 @@
-from hsncommon.config import HsnConfigContainer, get_function_args
+from pydantic import BaseModel
 
 
-class EnsysConfigContainer(HsnConfigContainer):
+def BuildKwargs(obj):
+    kwargs = {}
+
+    for attr_name in dir(obj):
+        if not attr_name.startswith("__") and \
+                not attr_name.startswith("to_") and \
+                not attr_name == "format":
+            name = attr_name
+            value = getattr(obj, attr_name)
+
+            kwargs[name] = value
+
+    return kwargs
+
+
+class EnsysConfigContainer(BaseModel):
     def __init__(self):
         super().__init__()
 
     def to_oemof(self):
         pass
-
-
-def set_init_function_args_as_instance_args(s, l):
-    args_dict = get_function_args(s.__init__, l)
-    execpt_keys = ["timeincrement", "initial_storage_level"]
-    for key in args_dict:
-        if key in execpt_keys or args_dict[key] is not None:
-            setattr(s, key, args_dict[key])

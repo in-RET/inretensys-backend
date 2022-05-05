@@ -1,4 +1,6 @@
 import math
+import os
+import pickle
 
 import numpy as np
 import pandas as pd
@@ -44,7 +46,6 @@ def CreateSampleConfiguration(filename):
     excess_bel = EnsysSink(
         label="excess_bel",
         inputs={bel.label: EnsysFlow(
-            balanced=False
         )}
     )
 
@@ -133,4 +134,8 @@ def CreateSampleConfiguration(filename):
         timeindex=date_time_index
     )
 
-    es.to_file(filename)
+    dumps = pickle.dumps(es)
+
+    xf = open(filename, 'wb')
+    xf.write(dumps)
+    xf.close()

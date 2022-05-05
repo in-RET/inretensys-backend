@@ -1,27 +1,18 @@
-import inspect
 import os
 
 from pydantic import BaseModel
 
 from configs import oemof_allround_sample, allround_sample
-from ensys import EnsysConfigContainer, Verification, PrintResultsFromDump, BuildConfiguration, BuildEnergySystem
-from ensys.common.config import set_init_function_args_as_instance_args
+from ensys import Verification, PrintResultsFromDump, BuildConfiguration, BuildEnergySystem
 from hsncommon.log import HsnLogger
 
 
 class TestObject(BaseModel):
-    label: str = "testlabel"
+    label: str = "Testlabel"
     number: float = 3.14
 
-    def __init__(self,
-                 label: str,
-                 number: float,
-                 *args,
-                 **kwargs):
-        self.label = label
-        self.number = number
-
-        super().__init__()
+    def to_oemof(self):
+        return "Hallo Welt 42"
 
 
 def oemof(goOemof, goEnsys):
@@ -83,13 +74,16 @@ def oemof(goOemof, goEnsys):
 
 def testbed():
     tobj = TestObject(
-        label="Hallo Welt!",
+        label="Hallo xyz!",
         number=314.42)
     print(tobj)
+    x = tobj.to_oemof()
+
+    print(x)
 
 
 if __name__ == "__main__":
-    #oemof(goOemof=True, goEnsys=True)
-    testbed()
+    oemof(goOemof=False, goEnsys=True)
+    #testbed()
 
 

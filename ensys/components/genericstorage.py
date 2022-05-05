@@ -1,28 +1,25 @@
 from ensys import EnsysFlow, EnsysInvestment
-from ensys.common.config import EnsysConfigContainer, set_init_function_args_as_instance_args
+from ensys.common.config import EnsysConfigContainer
 
 
 class EnsysStorage(EnsysConfigContainer):
-    format = {
-        # name : 0: 0: type: min: max: default
-        "label": "0:0:string: min : max :'Default Storage'",
-        "inputs": "0:0: type : min : max :None",
-        "outputs": "0:0: type : min : max :None",
-        "nominal_storage_capacity": "0:0:float:0:1:1",
-        "invest_relation_capacity": "0:0: type : min : max :None",
-        "invest_relation_output_capacity": "0:0: type : min : max :None",
-        "invest_relation_input_output": "0:0: type : min : max :None",
-        "initial_storage_level": "0:0: type : min : max :None",
-        "balanced": "0:0:boolean:0:1:1",
-        "loss_rate": "0:0:float:0:1:0",
-        "fixed_losses_relative": "0:0: type : min : max :None",
-        "fixed_losses_absolute": "0:0: type : min : max :None",
-        "inflow_conversion_factor": "0:0: type : min : max :None",
-        "outflow_conversion_factor": "0:0: type : min : max :None",
-        "min_storage_level": "0:0: type : min : max :None",
-        "max_storage_level": "0:0: type : min : max :None",
-        "investment": "0:0: type : min : max :None"
-    }
+    label: str = "Default Storage"
+    inputs: dict = None
+    outputs: dict = None
+    nominal_storage_capacity: float = None
+    invest_relation_input_capacity: float = None
+    invest_relation_output_capacity: float = None
+    invest_relation_input_output: float = None
+    initial_storage_level: float = None
+    # balanced: bool = None
+    loss_rate: float = 0.0
+    fixed_losses_relative: float = None
+    fixed_losses_absolute: float = None
+    inflow_conversion_factor: float = 1
+    outflow_conversion_factor: float = 1
+    min_storage_level: float = None
+    max_storage_level: float = None
+    investment: EnsysInvestment = None
 
     def __init__(self,
                  label: str = "Default Storage",
@@ -41,10 +38,24 @@ class EnsysStorage(EnsysConfigContainer):
                  outflow_conversion_factor: float = 1,
                  min_storage_level: float = None,
                  max_storage_level: float = None,
-                 investment: EnsysInvestment = None,
-                 *args,
-                 **kwargs
+                 investment: EnsysInvestment = None
                  ):
         super().__init__()
 
-        set_init_function_args_as_instance_args(self, locals())
+        self.label = label
+        self.inputs = inputs
+        self.outputs = outputs
+        self.nominal_storage_capacity = nominal_storage_capacity
+        self.invest_relation_input_capacity = invest_relation_input_capacity
+        self.invest_relation_output_capacity = invest_relation_output_capacity
+        self.invest_relation_input_output = invest_relation_input_output
+        self.initial_storage_level = initial_storage_level
+        #self.balanced = balanced
+        self.loss_rate = loss_rate
+        self.fixed_losses_absolute = fixed_losses_absolute
+        self.fixed_losses_relative = fixed_losses_relative
+        self.inflow_conversion_factor = inflow_conversion_factor
+        self.outflow_conversion_factor = outflow_conversion_factor
+        self.min_storage_level = min_storage_level
+        self.max_storage_level = max_storage_level
+        self.investment = investment
