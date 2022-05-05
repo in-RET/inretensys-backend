@@ -164,7 +164,7 @@ def BuildEnergySystem(es, file):
     # if tee_switch is true solver messages will be displayed
     logger.info("Solve the optimization problem")
     t_start = time.time()
-    model.solve(solver="cbc", solve_kwargs={"tee": solver_verbose})
+    model.solve(solver="gurobi", solve_kwargs={"tee": solver_verbose})
     t_end = time.time()
 
     logger.info("Completed after " + str(round(t_end - t_start, 2)) + " seconds.")
