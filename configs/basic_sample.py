@@ -42,7 +42,6 @@ def CreateSampleConfiguration(filename):
     excess_bel = EnsysSink(
         label="excess_bel",
         inputs={bel.label: EnsysFlow(
-            balanced=False
         )}
     )
 

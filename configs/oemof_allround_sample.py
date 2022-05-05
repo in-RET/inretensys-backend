@@ -13,7 +13,7 @@ from hsncommon.log import HsnLogger
 
 def oemofAllroundSample(dumpfile):
     logger = HsnLogger()
-    solver = "cbc"
+    solver = "gurobi"
     number_of_time_steps = 24 * 7 * 12
     solver_verbose = False
 

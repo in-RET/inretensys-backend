@@ -1,30 +1,28 @@
-import inspect
 import os
 
 from pydantic import BaseModel
 
 from configs import oemof_allround_sample, allround_sample
-from ensys import EnsysConfigContainer, Verification, PrintResultsFromDump, BuildConfiguration, BuildEnergySystem
-from ensys.common.config import set_init_function_args_as_instance_args
+from ensys import Verification, PrintResultsFromDump, ModelBuilder
 from hsncommon.log import HsnLogger
 
 
 class TestObject(BaseModel):
-    label: str = "testlabel"
+    label: str = "Testlabel"
     number: float = 3.14
 
-    def __init__(self,
-                 label: str,
-                 number: float,
-                 *args,
-                 **kwargs):
-        self.label = label
-        self.number = number
+    def to_oemof(self):
+        return "Hallo Welt 42"
 
-        super().__init__()
+
+def CheckAndRemove(file):
+    if os.path.exists(file):
+        os.remove(file)
 
 
 def oemof(goOemof, goEnsys):
+    logger = HsnLogger()
+
     wkdir = os.path.join(os.getcwd(), "dumps")
     filename = "energy_system"
 
@@ -32,16 +30,9 @@ def oemof(goOemof, goEnsys):
     dumpfile = os.path.join(wkdir, filename + ".dump")
     orig_dumpfile = os.path.join(wkdir, filename + "_orig.dump")
 
-    if os.path.exists(configfile):
-        os.remove(configfile)
+    for file in [configfile, dumpfile, orig_dumpfile]:
+        CheckAndRemove(file)
 
-    if os.path.exists(dumpfile):
-        os.remove(dumpfile)
-
-    if os.path.exists(orig_dumpfile):
-        os.remove(orig_dumpfile)
-
-    logger = HsnLogger()
     verify = Verification
 
     ##########################################################################
@@ -54,7 +45,7 @@ def oemof(goOemof, goEnsys):
         oemof_allround_sample.oemofAllroundSample(orig_dumpfile)
 
         logger.info("Print results from sample.")
-        PrintResultsFromDump(dumpfile=orig_dumpfile, output=os.path.join(os.getcwd(), "output", "oemof_out.txt"))
+        PrintResultsFromDump(dumpfile=orig_dumpfile, output=os.path.join(os.getcwd(), "output", "oemof_out"))
 
         logger.info("Fin with oemof-Sample")
 
@@ -66,30 +57,30 @@ def oemof(goOemof, goEnsys):
         # modifiedexample.CreateSampleConfiguration(path_to_dump_config)
         allround_sample.CreateSampleConfiguration(configfile)
 
-        es = BuildConfiguration(configfile)
-        BuildEnergySystem(es, dumpfile)
+        ModelBuilder(configfile, dumpfile)
 
-        # EnsysOptimise(dumpfile)
-
-        PrintResultsFromDump(dumpfile=dumpfile, output=os.path.join(os.getcwd(), "output", "ensys_out.txt"))
+        #PrintResultsFromDump(dumpfile=dumpfile, output=os.path.join(os.getcwd(), "output", "ensys_out.txt"))
 
     logger.info("Start verifying.")
-    verify.files("output/ensys_out.txt", "output/oemof_out.txt")
+    verify.files("output/ensys_out", "output/oemof_out")
     logger.info("Fin.")
 
-    logger.info("Größe Ensys-Dumpfile: " + str(os.path.getsize("dumps/energy_system.dump")))
-    logger.info("Größe Oemof-Dumpfile: " + str(os.path.getsize("dumps/energy_system_orig.dump")))
+    #logger.info("Größe Ensys-Dumpfile: " + str(os.path.getsize("dumps/energy_system.dump")))
+    #logger.info("Größe Oemof-Dumpfile: " + str(os.path.getsize("dumps/energy_system_orig.dump")))
 
 
 def testbed():
     tobj = TestObject(
-        label="Hallo Welt!",
+        label="Hallo xyz!",
         number=314.42)
     print(tobj)
+    x = tobj.to_oemof()
+
+    print(x)
 
 
 if __name__ == "__main__":
-    #oemof(goOemof=True, goEnsys=True)
-    testbed()
+    oemof(goOemof=True, goEnsys=True)
+    #testbed()
 
 

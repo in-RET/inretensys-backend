@@ -1,60 +1,63 @@
 from oemof import solph
 
-from ensys.common.config import EnsysConfigContainer, set_init_function_args_as_instance_args
+from ensys import EnsysConfigContainer
+from ensys.components.investment import EnsysInvestment
+from ensys.components.nonconvex import EnsysNonConvex
 
 
 class EnsysFlow(EnsysConfigContainer):
-    format = {
-        # name : 0: 0: type: min: max: default
-        "param1": "0:0:int:0:10:5",
-        "label": "0:0: type : min : max : 'Default Flow'",
-        "nominal_value": "0:0:float: min : max : None",
-        "fix": "0:0: type : min : max : None",
-        "min": "0:0: type : min : max : None",
-        "max": "0:0: type : min : max : None",
-        "positive_gradient": "0:0: min : max : None",
-        "negative_gradient": "0:0: min : max : None",
-        "summed_max": "0:0:float:0:1:None",
-        "summed_min": "0:0:float:0:1:None",
-        "variable_costs": "0:0:float: min : max : None",
-        "investment": "0:0: type : min : max :None",
-        "nonconvex": "0:0: type : min : max :None"
-    }
+    label: str = "Default Flow"
+    nominal_value: float = None
+    # numeric or sequence or None
+    fix: float = None
+    # numeric or sequence
+    min: float = 0.0
+    # numeric or sequence
+    max: float = 1.0
+    positive_gradient: dict = None
+    negative_gradient: dict = None
+    summed_max: float = None
+    summed_min: float = None
+    variable_costs: float = None
+    investment: EnsysInvestment = None
+    nonconvex: EnsysNonConvex = None
 
     def __init__(self,
                  label: str = "Default Flow",
                  nominal_value: float = None,
                  # numeric or sequence or None
-                 fix=None,
+                 fix: float = None,
                  # numeric or sequence
-                 min=0.0,
+                 min: float = 0.0,
                  # numeric or sequence
-                 max=1.0,
-                 positive_gradient=None,
-                 negative_gradient=None,
+                 max: float = 1.0,
+                 positive_gradient: dict = None,
+                 negative_gradient: dict = None,
                  summed_max: float = None,
                  summed_min: float = None,
                  variable_costs: float = None,
-                 investment=None,
-                 nonconvex=None,
-                 *args,
-                 **kwargs
+                 investment: EnsysInvestment = None,
+                 nonconvex: EnsysNonConvex = None
                  ):
         super().__init__()
-
+        self.label = label
+        self.nominal_value = nominal_value
         if fix is not None:
-            min=None
-            max=None
+            self.fix = fix
+            self.min = None
+            self.max = None
+        else:
+            self.min = min
+            self.max = max
+        self.positive_gradient = positive_gradient
+        self.negative_gradient = negative_gradient
+        self.summed_min = summed_min
+        self.summed_max = summed_max
+        self.variable_costs = variable_costs
+        self.investment = investment
+        self.nonconvex = nonconvex
 
-        if positive_gradient is None:
-            positive_gradient = {"ub": None, "costs": 0}
-
-        if negative_gradient is None:
-            negative_gradient = {"ub": None, "costs": 0}
-
-        set_init_function_args_as_instance_args(self, locals())
-
-    def to_oemof(self):
+    def to_oemof(self) -> solph.Flow:
         kwargs = {}
 
         for attr_name in dir(self):
@@ -64,22 +67,20 @@ class EnsysFlow(EnsysConfigContainer):
                 name = attr_name
                 value = getattr(self, attr_name)
 
-                if name == "nonconvex":
-                    if value is False or value is True:
-                        kwargs[name] = value
-                    else:
-                        kwargs[name] = value.to_oemof()
-                elif name == "investment":
-                    if type(value) is solph.Investment:
-                        kwargs[name] = value
-                    else:
-                        kwargs[name] = value.to_oemof()
-                else:
+                if name.__contains__("nominal_storage"):
                     kwargs[name] = value
+                elif value is not None:
+                    if name == "nonconvex":
+                        if value is False or value is True:
+                            kwargs[name] = value
+                        else:
+                            kwargs[name] = value.to_oemof()
+                    elif name == "investment":
+                            kwargs[name] = value.to_oemof()
+                    else:
+                        kwargs[name] = value
 
-        oemof_obj = solph.Flow(**kwargs)
-
-        return oemof_obj
+        return solph.Flow(**kwargs)
 
 
 

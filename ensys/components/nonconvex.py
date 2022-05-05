@@ -1,22 +1,22 @@
 from oemof import solph
 
-from hsncommon.config import HsnConfigContainer, set_init_function_args_as_instance_args
+from ensys import EnsysConfigContainer
+from ensys.common.config import BuildKwargs
 
 
-class EnsysNonConvex(HsnConfigContainer):
-    format = {
-        # name : 0: 0: type: min: max: default
-        "label": "0:0:string: min : max : 'Default NonConvex'",
-        "startup_costs": "0:0: type : min : max :None",
-        "shutdown_costs": "0:0: type : min : max :None",
-        "activity_costs": "0:0: type : min : max :None",
-        "minimum_uptime": "0:0: type : min : max :None",
-        "minimum_downtime": "0:0: type : min : max :None",
-        "maximum_startups": "0:0: type : min : max :None",
-        "initial_status": "0:0: type : min : max :None",
-        "positive_gradient": "0:0: type : min : max :None",
-        "negative_gradient": "0:0: type : min : max :None"
-    }
+class EnsysNonConvex(EnsysConfigContainer):
+    label: str = "Default NonConvex"
+    startup_costs: float = None
+    shutdown_costs: float = None
+    activity_costs: float = None
+    minimum_uptime: int = None
+    minimum_downtime: int = None
+    maximum_startups: int = None
+    maximum_shutdowns: int = None
+    # 0/False = off, 1/True = on
+    initial_status: int = 0
+    positive_gradient: dict = None
+    negative_gradient: dict = None
 
     def __init__(self,
                  label: str = "Default NonConvex",
@@ -30,32 +30,30 @@ class EnsysNonConvex(HsnConfigContainer):
                  # 0/False = off, 1/True = on
                  initial_status: int = 0,
                  positive_gradient: dict = None,
-                 negative_gradient: dict = None,
-                 *args,
-                 **kwargs
+                 negative_gradient: dict = None
                  ):
         super().__init__()
+        self.label = label
+        self.startup_costs = startup_costs
+        self.shutdown_costs = shutdown_costs
+        self.activity_costs = activity_costs
+        self.minimum_uptime = minimum_uptime
+        self.minimum_downtime = minimum_downtime
+        self.maximum_startups = maximum_startups
+        self.maximum_shutdowns = maximum_shutdowns
+        self.initial_status = initial_status
 
         if positive_gradient is None:
-            positive_gradient = {"ub": None, "costs": 0}
+            self.positive_gradient = {"ub": None, "costs": 0}
+        else:
+            self.positive_gradient = positive_gradient
 
         if negative_gradient is None:
-            negative_gradient = {"ub": None, "costs": 0}
+            self.negative_gradient = {"ub": None, "costs": 0}
+        else:
+            self.negative_gradient = negative_gradient
 
-        set_init_function_args_as_instance_args(self, locals())
+    def to_oemof(self) -> solph.NonConvex:
+        kwargs = BuildKwargs(self)
 
-    def to_oemof(self):
-        kwargs = {}
-
-        for attr_name in dir(self):
-            if not attr_name.startswith("__") and \
-                    not attr_name.startswith("to_") and \
-                    not attr_name == "format":
-                name = attr_name
-                value = getattr(self, attr_name)
-
-                kwargs[name] = value
-
-        oemof_obj = solph.NonConvex(**kwargs)
-
-        return oemof_obj
+        return solph.NonConvex(**kwargs)
