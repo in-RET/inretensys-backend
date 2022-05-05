@@ -18,10 +18,9 @@ class TestObject(BaseModel):
                  number: float,
                  *args,
                  **kwargs):
+        super().__init__()
         self.label = label
         self.number = number
-
-        super().__init__()
 
 
 def oemof(goOemof, goEnsys):
@@ -89,7 +88,7 @@ def testbed():
 
 
 if __name__ == "__main__":
-    #oemof(goOemof=True, goEnsys=True)
-    testbed()
+    oemof(goOemof=True, goEnsys=True)
+    #testbed()
 
 

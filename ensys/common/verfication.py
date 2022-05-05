@@ -23,12 +23,11 @@ def files(filepathA, filepathB):
 
     if hashA == hashB:
         logger.info("Daten stimmen überein!")
-        logger.info("A: " + str(hashA))
-        logger.info("B: " + str(hashB))
     else:
         logger.warn("Daten stimmen nicht überein!")
-        logger.warn("A: " + str(hashA))
-        logger.warn("B: " + str(hashB))
+
+    logger.warn("A: " + str(hashA))
+    logger.warn("B: " + str(hashB))
 
 
 def dataframes(dfList):

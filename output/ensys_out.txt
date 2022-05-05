@@ -1,4 +1,4 @@
-********* State of Charge (slice) *********
+'********* State of Charge (slice) *********'
 variable_name        storage_content
 2022-01-01 01:00:00       121626.920
 2022-01-01 02:00:00       114846.190
@@ -13,7 +13,7 @@ variable_name        storage_content
 2022-01-14 00:00:00       101187.250
 
 [312 rows x 1 columns]
-********* Main results *********
+'********* Main results *********'
 ((electricity, demand), flow)        1.122620e+08
 ((electricity, excess_bel), flow)    1.256965e+06
 ((electricity, storage), flow)       2.867644e+06

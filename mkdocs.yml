@@ -1,0 +1,49 @@
+site_name: ENSYS
+site_url: https://lubojanski.com/documentation
+repo_name: pyrokar1993/ensys
+repo_url: https://github.com/pyrokar1993/ensys
+markdown_extensions:
+    - toc:
+        permalink: true
+    - pymdownx.highlight:
+          anchor_linenums: true
+          use_pygments: true
+    - pymdownx.inlinehilite
+    - pymdownx.snippets
+    - pymdownx.superfences
+nav:
+    - Home: index.md
+    - 'Common':
+        - 'Konfigurationscontainer': common/config.md
+        - 'Systembuilder': common/systembuilder.md
+    - 'Components':
+        - 'Energysystem': components/energysystem.md
+        - 'Bus': components/bus.md
+        - 'Flow': components/flow.md
+        - 'Sink': components/sink.md
+        - 'Source': components/source.md
+        - 'Storage': components/storage.md
+        - 'Transformer': components/transformer.md
+        - 'Investment': components/investment.md
+        - 'NonConvex': components/nonconvex.md
+    - 'About':
+        - 'About': about.md
+        - 'Release Notes': release-notes.md
+theme:
+    name: material
+    icon:
+        repo: fontawesome/brands/github
+    palette:
+        scheme: slate
+        primary: teal
+        accent: teal
+    language: de
+extra_css:
+  - stylesheets/extra.css
+extra:
+    social:
+        - icon: fontawesome/solid/envelope
+          link: mailto:andreas.lubojanski@hs-nordhausen.de
+    generator: true
+copyright: Copyright &copy; 2022 Andreas Lubojanski
+    
