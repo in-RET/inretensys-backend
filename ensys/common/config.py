@@ -15,14 +15,11 @@ def BuildKwargs(obj):
     kwargs = {}
 
     args = vars(obj)
-    except_keys = [""]
 
     for key in args:
-        if key is not None or key in except_keys:
+        if key is not None:
             value = args[key]
 
             kwargs[key] = value
-        else:
-            logging.warning("Is None: " + str(key) + ": " + str(args[key]))
 
     return kwargs

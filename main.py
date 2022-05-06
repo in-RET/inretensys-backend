@@ -59,14 +59,14 @@ def oemof(goOemof, goEnsys):
 
         ModelBuilder(configfile, dumpfile)
 
-        #PrintResultsFromDump(dumpfile=dumpfile, output=os.path.join(os.getcwd(), "output", "ensys_out.txt"))
+        PrintResultsFromDump(dumpfile=dumpfile, output=os.path.join(os.getcwd(), "output", "ensys_out"))
 
     logger.info("Start verifying.")
     verify.files("output/ensys_out", "output/oemof_out")
     logger.info("Fin.")
 
-    #logger.info("Größe Ensys-Dumpfile: " + str(os.path.getsize("dumps/energy_system.dump")))
-    #logger.info("Größe Oemof-Dumpfile: " + str(os.path.getsize("dumps/energy_system_orig.dump")))
+    logger.info("Größe Ensys-Dumpfile: " + str(os.path.getsize("dumps/energy_system.dump")))
+    logger.info("Größe Oemof-Dumpfile: " + str(os.path.getsize("dumps/energy_system_orig.dump")))
 
 
 def testbed():

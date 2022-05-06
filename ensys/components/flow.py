@@ -60,25 +60,23 @@ class EnsysFlow(EnsysConfigContainer):
     def to_oemof(self) -> solph.Flow:
         kwargs = {}
 
-        for attr_name in dir(self):
-            if not attr_name.startswith("__") and \
-                    not attr_name.startswith("to_") and \
-                    not attr_name == "format":
-                name = attr_name
-                value = getattr(self, attr_name)
+        args = vars(self)
 
-                if name.__contains__("nominal_storage"):
-                    kwargs[name] = value
-                elif value is not None:
-                    if name == "nonconvex":
-                        if value is False or value is True:
-                            kwargs[name] = value
-                        else:
-                            kwargs[name] = value.to_oemof()
-                    elif name == "investment":
-                            kwargs[name] = value.to_oemof()
+        for key in args:
+            value = args[key]
+
+            if key.__contains__("nominal_storage"):
+                kwargs[key] = value
+            elif value is not None:
+                if key == "nonconvex":
+                    if value is False or value is True:
+                        kwargs[key] = value
                     else:
-                        kwargs[name] = value
+                        kwargs[key] = value.to_oemof()
+                elif key == "investment":
+                        kwargs[key] = value.to_oemof()
+                else:
+                    kwargs[key] = value
 
         return solph.Flow(**kwargs)
 

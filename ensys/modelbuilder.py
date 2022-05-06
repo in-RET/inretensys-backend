@@ -11,7 +11,6 @@ logger = HsnLogger()
 
 
 class ModelBuilder:
-
     def __init__(self, ConfigFile, DumpFile):
         es = BuildConfiguration(ConfigFile)
         BuildEnergySystem(es, DumpFile)
@@ -156,7 +155,7 @@ def BuildEnergySystem(es, file):
     logger.info("Print energysystem as graph")
 
     gr = ESGraphRenderer(energy_system=oemof_es, filepath=filepath)
-    #gr.view()
+    # gr.view()
 
     # oemof_es.dump(dpath=wdir, filename=filename)
 
@@ -190,19 +189,5 @@ def BuildEnergySystem(es, file):
     logger.info("Dump file with results to: " + os.path.join(wdir, filename))
     # store energy system with results
 
-    # Todo: Hier ist ein böser export fehler!! Irgendwas mit pickle und pydantic -- son mist
-    # xf = open(os.path.join(wdir, filename), 'wb')
     oemof_es.dump(dpath=wdir, filename=filename)
-    # xf.close()
-    # oemof_es.dump(dpath=wdir, filename=filename)
     logger.info("Fin.")
-
-    PrintResultsFromDump(output=os.path.join(os.getcwd(), "output", "ensys_out"), energysystem=oemof_es)
-
-
-
-
-
-
-
-
