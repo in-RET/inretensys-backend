@@ -6,7 +6,6 @@ from ensys.components.nonconvex import EnsysNonConvex
 
 
 class EnsysFlow(EnsysConfigContainer):
-    label: str = "Default Flow"
     nominal_value: float = None
     # numeric or sequence or None
     fix: float = None
@@ -23,7 +22,6 @@ class EnsysFlow(EnsysConfigContainer):
     nonconvex: EnsysNonConvex = None
 
     def __init__(self,
-                 label: str = "Default Flow",
                  nominal_value: float = None,
                  # numeric or sequence or None
                  fix: float = None,
@@ -40,7 +38,6 @@ class EnsysFlow(EnsysConfigContainer):
                  nonconvex: EnsysNonConvex = None
                  ):
         super().__init__()
-        self.label = label
         self.nominal_value = nominal_value
         if fix is not None:
             self.fix = fix

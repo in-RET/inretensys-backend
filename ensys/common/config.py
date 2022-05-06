@@ -1,14 +1,4 @@
-import logging
-
 from pydantic import BaseModel
-
-
-class EnsysConfigContainer(BaseModel):
-    def __init__(self):
-        super().__init__()
-
-    def to_oemof(self):
-        pass
 
 
 def BuildKwargs(obj):
@@ -23,3 +13,11 @@ def BuildKwargs(obj):
             kwargs[key] = value
 
     return kwargs
+
+
+class EnsysConfigContainer(BaseModel):
+    def __init__(self):
+        super().__init__()
+
+    def to_oemof(self):
+        pass

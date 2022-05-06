@@ -10,7 +10,7 @@ class EnsysStorage(EnsysConfigContainer):
     invest_relation_output_capacity: float = None
     invest_relation_input_output: float = None
     initial_storage_level: float = None
-    # balanced: bool = None
+    balanced: bool = True
     loss_rate: float = 0.0
     fixed_losses_relative: float = None
     fixed_losses_absolute: float = None
@@ -29,7 +29,7 @@ class EnsysStorage(EnsysConfigContainer):
                  invest_relation_output_capacity: float = None,
                  invest_relation_input_output: float = None,
                  initial_storage_level: float = None,
-                 # balanced: bool = None,
+                 balanced: bool = True,
                  loss_rate: float = 0.0,
                  fixed_losses_relative: float = None,
                  fixed_losses_absolute: float = None,
@@ -49,7 +49,7 @@ class EnsysStorage(EnsysConfigContainer):
         self.invest_relation_output_capacity = invest_relation_output_capacity
         self.invest_relation_input_output = invest_relation_input_output
         self.initial_storage_level = initial_storage_level
-        #self.balanced = balanced
+        self.balanced = balanced
         self.loss_rate = loss_rate
         self.fixed_losses_absolute = fixed_losses_absolute
         self.fixed_losses_relative = fixed_losses_relative

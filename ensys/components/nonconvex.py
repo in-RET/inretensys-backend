@@ -5,7 +5,6 @@ from ensys.common.config import BuildKwargs
 
 
 class EnsysNonConvex(EnsysConfigContainer):
-    label: str = "Default NonConvex"
     startup_costs: float = None
     shutdown_costs: float = None
     activity_costs: float = None
@@ -19,7 +18,6 @@ class EnsysNonConvex(EnsysConfigContainer):
     negative_gradient: dict = None
 
     def __init__(self,
-                 label: str = "Default NonConvex",
                  startup_costs=None,
                  shutdown_costs=None,
                  activity_costs=None,
@@ -33,7 +31,6 @@ class EnsysNonConvex(EnsysConfigContainer):
                  negative_gradient: dict = None
                  ):
         super().__init__()
-        self.label = label
         self.startup_costs = startup_costs
         self.shutdown_costs = shutdown_costs
         self.activity_costs = activity_costs

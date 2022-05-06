@@ -1,19 +1,30 @@
 import os.path
-import time
 
+from pickle import load
 from oemof import solph
-from oemof_visio import ESGraphRenderer
 
-from ensys import EnsysFlow, PrintResultsFromDump
+from ensys import EnsysFlow, EnsysOptimise
 from hsncommon.log import HsnLogger
 
 logger = HsnLogger()
 
 
 class ModelBuilder:
-    def __init__(self, ConfigFile, DumpFile):
-        es = BuildConfiguration(ConfigFile)
-        BuildEnergySystem(es, DumpFile)
+    def __init__(self,
+                 ConfigFile,
+                 DumpFile,
+                 BuildModel=True,
+                 Optimise=True
+                 ):
+        if BuildModel:
+            xf = open(ConfigFile, 'rb')
+            es = load(xf)
+            xf.close()
+
+            BuildEnergySystem(es, DumpFile)
+
+        if Optimise:
+            EnsysOptimise(DumpFile)
 
 
 def SearchNode(nodeslist, nodename):
@@ -64,16 +75,6 @@ def BuildOemofKwargs(ensys_obj, oemof_es: solph.EnergySystem):
                 kwargs[key] = value
 
     return kwargs
-
-
-def BuildConfiguration(filename):
-    from pickle import load
-
-    xf = open(filename, 'rb')
-    es = load(xf)
-    xf.close()
-
-    return es
 
 
 def BuildEnergySystem(es, file):
@@ -148,46 +149,5 @@ def BuildEnergySystem(es, file):
                 oemof_storage = solph.GenericStorage(**kwargs)
                 oemof_es.add(oemof_storage)
 
-    ##########################################################################
-    # Print the EnergySystem as Graph
-    ##########################################################################
-    filepath = "images/energy_system"
-    logger.info("Print energysystem as graph")
-
-    gr = ESGraphRenderer(energy_system=oemof_es, filepath=filepath)
-    # gr.view()
-
-    # oemof_es.dump(dpath=wdir, filename=filename)
-
-    ##########################################################################
-    # Optimise the energy system and plot the results
-    ##########################################################################
-    logger.info("Optimise the energy system")
-
-    # initialise the operational model
-    model = solph.Model(oemof_es)
-
-    solver_verbose = False
-
-    # if tee_switch is true solver messages will be displayed
-    logger.info("Solve the optimization problem")
-    t_start = time.time()
-    model.solve(solver="gurobi", solve_kwargs={"tee": solver_verbose})
-    t_end = time.time()
-
-    logger.info("Completed after " + str(round(t_end - t_start, 2)) + " seconds.")
-
-    logger.info("Store the energy system with the results.")
-
-    # The processing module of the outputlib can be used to extract the results
-    # from the model transfer them into a homogeneous structured dictionary.
-
-    # add results to the energy system to make it possible to store them.
-    oemof_es.results["main"] = solph.processing.results(model)
-    oemof_es.results["meta"] = solph.processing.meta_results(model)
-
-    logger.info("Dump file with results to: " + os.path.join(wdir, filename))
-    # store energy system with results
-
+    logger.info("Building completed. Dump to file.")
     oemof_es.dump(dpath=wdir, filename=filename)
-    logger.info("Fin.")
