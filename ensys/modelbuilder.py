@@ -4,9 +4,16 @@ import time
 from oemof import solph
 from oemof_visio import ESGraphRenderer
 
-from ensys import EnsysFlow
-from hsncommon import config
+from ensys import EnsysFlow, PrintResultsFromDump
 from hsncommon.log import HsnLogger
+
+logger = HsnLogger()
+
+
+class ModelBuilder:
+    def __init__(self, ConfigFile, DumpFile):
+        es = BuildConfiguration(ConfigFile)
+        BuildEnergySystem(es, DumpFile)
 
 
 def SearchNode(nodeslist, nodename):
@@ -33,36 +40,39 @@ def BuildIO(ensys_io, es):
     return oemof_io
 
 
-def BuildKwargs(ensys_obj, oemof_es: solph.EnergySystem):
+def BuildOemofKwargs(ensys_obj, oemof_es: solph.EnergySystem):
     kwargs = {}
 
-    for attr_name in dir(ensys_obj):
-        if not attr_name.startswith("__") and \
-                not attr_name.startswith("to_") and \
-                not attr_name == "format":
-            name = attr_name
-            value = getattr(ensys_obj, attr_name)
+    args = vars(ensys_obj)
 
-            if name == "inputs" or name == "outputs" or name == "conversion_factors":
-                kwargs[name] = BuildIO(value, oemof_es)
-            elif name == "nonconvex":
+    for key in args:
+        value = args[key]
+        if value is not None:
+            if key == "inputs" or key == "outputs" or key == "conversion_factors":
+                kwargs[key] = BuildIO(value, oemof_es)
+            elif key == "nonconvex":
                 if value is False or value is True:
-                    kwargs[name] = value
+                    kwargs[key] = value
                 else:
-                    kwargs[name] = value.to_oemof()
-            elif name == "investment":
+                    kwargs[key] = value.to_oemof()
+            elif key == "investment":
                 if type(value) is solph.Investment:
-                    kwargs[name] = value
+                    kwargs[key] = value
                 else:
-                    kwargs[name] = value.to_oemof()
+                    kwargs[key] = value.to_oemof()
             else:
-                kwargs[name] = value
+                kwargs[key] = value
 
     return kwargs
 
 
 def BuildConfiguration(filename):
-    es = config.config_object_from_file(filename)
+    from pickle import load
+
+    xf = open(filename, 'rb')
+    es = load(xf)
+    xf.close()
+
     return es
 
 
@@ -70,8 +80,6 @@ def BuildEnergySystem(es, file):
     ##########################################################################
     # Build an Energysystem from the config
     ##########################################################################
-    logger = HsnLogger()
-
     logger.info("Build an Energysystem from config file.")
     filename = os.path.basename(file)
     wdir = os.path.dirname(file)
@@ -88,7 +96,7 @@ def BuildEnergySystem(es, file):
             if type(bus) is solph.Bus:
                 oemof_es.add(bus)
             else:
-                kwargs = BuildKwargs(bus, oemof_es)
+                kwargs = BuildOemofKwargs(bus, oemof_es)
                 oemof_bus = solph.Bus(**kwargs)
                 oemof_es.add(oemof_bus)
 
@@ -99,7 +107,7 @@ def BuildEnergySystem(es, file):
             if type(source) is solph.Source:
                 oemof_es.add(source)
             else:
-                kwargs = BuildKwargs(source, oemof_es)
+                kwargs = BuildOemofKwargs(source, oemof_es)
                 oemof_source = solph.Source(**kwargs)
 
                 oemof_es.add(oemof_source)
@@ -111,7 +119,7 @@ def BuildEnergySystem(es, file):
             if type(sink) is solph.Sink:
                 oemof_es.add(sink)
             else:
-                kwargs = BuildKwargs(sink, oemof_es)
+                kwargs = BuildOemofKwargs(sink, oemof_es)
                 oemof_sink = solph.Sink(**kwargs)
 
                 oemof_es.add(oemof_sink)
@@ -123,7 +131,7 @@ def BuildEnergySystem(es, file):
             if type(transformer) is solph.Transformer:
                 oemof_es.add(transformer)
             else:
-                kwargs = BuildKwargs(transformer, oemof_es)
+                kwargs = BuildOemofKwargs(transformer, oemof_es)
                 oemof_transformer = solph.Transformer(**kwargs)
 
                 oemof_es.add(oemof_transformer)
@@ -135,7 +143,7 @@ def BuildEnergySystem(es, file):
             if type(storage) is solph.GenericStorage:
                 oemof_es.add(storage)
             else:
-                kwargs = BuildKwargs(storage, oemof_es)
+                kwargs = BuildOemofKwargs(storage, oemof_es)
 
                 oemof_storage = solph.GenericStorage(**kwargs)
                 oemof_es.add(oemof_storage)
@@ -147,7 +155,7 @@ def BuildEnergySystem(es, file):
     logger.info("Print energysystem as graph")
 
     gr = ESGraphRenderer(energy_system=oemof_es, filepath=filepath)
-    #gr.view()
+    # gr.view()
 
     # oemof_es.dump(dpath=wdir, filename=filename)
 
@@ -180,5 +188,6 @@ def BuildEnergySystem(es, file):
 
     logger.info("Dump file with results to: " + os.path.join(wdir, filename))
     # store energy system with results
+
     oemof_es.dump(dpath=wdir, filename=filename)
     logger.info("Fin.")

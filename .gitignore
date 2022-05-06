@@ -128,4 +128,9 @@ dmypy.json
 # Pyre type checker
 .pyre/
 .DS_Store
+
+# Ensys Custom Folders
+/output/
 /dumps/
+/images/
+/backup/

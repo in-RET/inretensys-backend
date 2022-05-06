@@ -1,8 +1,7 @@
 import os.path
-from pprint import pprint
 
-from matplotlib import pyplot as plt
 from oemof import solph
+from matplotlib import pyplot as plt
 
 
 def SearchNode(nodeslist, nodename):
@@ -13,12 +12,13 @@ def SearchNode(nodeslist, nodename):
     return None
 
 
-def PrintResultsFromDump(dumpfile, output):
+def PrintResultsFromDump(output, dumpfile=None, energysystem=None):
     # ****************************************************************************
     # ********** PART 2 - Processing the results *********************************
     # ****************************************************************************
-    energysystem = solph.EnergySystem()
-    energysystem.restore(dpath=os.path.dirname(dumpfile), filename=os.path.basename(dumpfile))
+    if dumpfile is not None:
+        energysystem = solph.EnergySystem()
+        energysystem.restore(dpath=os.path.dirname(dumpfile), filename=os.path.basename(dumpfile))
 
     # define an alias for shorter calls below (optional)
     results = energysystem.results["main"]
@@ -33,9 +33,11 @@ def PrintResultsFromDump(dumpfile, output):
     xfile = open(os.path.join(output), 'at')
 
     # print a time slice of the state of charge
-    pprint("********* State of Charge (slice) *********", stream=xfile)
-    #"2012-02-25 08:00:00": "2012-02-26 15:00:00"
-    pprint(results[(storage, None)]["sequences"]["2022-01-01 01:00:00":"2022-01-14 00:00:00"], stream=xfile)
+    print("********* State of Charge (slice) *********", file=xfile)
+    data = results[(storage, None)]["sequences"]["2022-01-01 01:00:00":"2022-01-14 00:00:00"]
+
+    md_data = data.to_string(header=True, index=True)
+    print(md_data, file=xfile)
 
     # get all variables of a specific component/bus
     custom_storage = solph.views.node(results, "storage")
@@ -77,8 +79,8 @@ def PrintResultsFromDump(dumpfile, output):
     #print(energysystem.results["meta"], file=xfile)
 
     # print the sums of the flows around the electricity bus
-    pprint("********* Main results *********", stream=xfile)
-    pprint(electricity_bus["sequences"].sum(axis=0), stream=xfile)
+    print("********* Main results *********", file=xfile)
+    print(electricity_bus["sequences"].sum(axis=0), file=xfile)
 
     if True is True:
         my_results = electricity_bus["scalars"]
@@ -88,7 +90,7 @@ def PrintResultsFromDump(dumpfile, output):
                 results[(storage, None)]["scalars"]["invest"] / 1e6
         )
 
-        pprint(my_results, stream=xfile)
+        print(my_results, file=xfile)
 
     if True is False:
         my_results = natural_gas_bus["scalars"]
@@ -98,7 +100,7 @@ def PrintResultsFromDump(dumpfile, output):
                 results[(pp_gas, bel)]["scalars"]["invest"] / 1e6
         )
 
-        pprint(my_results, stream=xfile)
+        print(my_results, file=xfile)
 
     xfile.close()
 
