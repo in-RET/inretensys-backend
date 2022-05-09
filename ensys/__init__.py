@@ -1,4 +1,4 @@
-"""Init package for better import"""
+"""Init package for better import."""
 # Common
 from ensys.common.config import EnsysConfigContainer
 from ensys.common.output import PrintResultsFromDump

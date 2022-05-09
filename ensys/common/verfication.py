@@ -17,6 +17,7 @@ def calculateSHA256(filepath):
 
 class Verification:
     def __init__(self):
+        """init verification class."""
         pass
 
     @classmethod

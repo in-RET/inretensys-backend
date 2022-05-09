@@ -17,6 +17,7 @@ def BuildKwargs(obj):
 
 class EnsysConfigContainer(BaseModel):
     def __init__(self):
+        """Default config container."""
         super().__init__()
 
     def to_oemof(self):

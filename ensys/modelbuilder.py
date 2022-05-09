@@ -42,7 +42,7 @@ def BuildIO(ensys_io, es):
         for node in es.nodes:
             if node.label == key:
                 bus = es.nodes[es.nodes.index(node)]
-                if type(ensys_io[key]) is EnsysFlow:
+                if isinstance(ensys_io[key], EnsysFlow):
                     oemof_io[bus] = ensys_io[key].to_oemof()
                 else:
                     oemof_io[bus] = ensys_io[key]
@@ -53,13 +53,14 @@ def BuildIO(ensys_io, es):
 def BuildOemofKwargs(ensys_obj, oemof_es: solph.EnergySystem):
     """Build a dict of arguments for the init of the oemof objects."""
     kwargs = {}
+    io_keys = ["inputs", "outputs", "conversion_factors"]
 
     args = vars(ensys_obj)
 
     for key in args:
         value = args[key]
         if value is not None:
-            if key == "inputs" or key == "outputs" or key == "conversion_factors":
+            if key in io_keys:
                 kwargs[key] = BuildIO(value, oemof_es)
             elif key == "nonconvex":
                 if value is False or value is True:
@@ -67,7 +68,7 @@ def BuildOemofKwargs(ensys_obj, oemof_es: solph.EnergySystem):
                 else:
                     kwargs[key] = value.to_oemof()
             elif key == "investment":
-                if type(value) is solph.Investment:
+                if isinstance(value, solph.Investment):
                     kwargs[key] = value
                 else:
                     kwargs[key] = value.to_oemof()
@@ -106,15 +107,15 @@ def BuildEnergySystem(es, file, solver="gurobi", solver_verbose=False):
                 else:
                     kwargs = BuildOemofKwargs(value, oemof_es)
 
-                    if type(value) == EnsysBus:
+                    if isinstance(value, EnsysBus):
                         oemof_obj = solph.Bus(**kwargs)
-                    elif type(value) == EnsysSource:
+                    elif isinstance(value, EnsysSource):
                         oemof_obj = solph.Source(**kwargs)
-                    elif type(value) == EnsysSink:
+                    elif isinstance(value, EnsysSink):
                         oemof_obj = solph.Sink(**kwargs)
-                    elif type(value) == EnsysTransformer:
+                    elif isinstance(value, EnsysTransformer):
                         oemof_obj = solph.Transformer(**kwargs)
-                    elif type(value) == EnsysStorage:
+                    elif isinstance(value, EnsysStorage):
                         oemof_obj = solph.GenericStorage(**kwargs)
                     else:
                         oemof_obj = None

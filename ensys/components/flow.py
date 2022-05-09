@@ -37,7 +37,6 @@ class EnsysFlow(EnsysConfigContainer):
                  investment: EnsysInvestment = None,
                  nonconvex: EnsysNonConvex = None
                  ):
-
         """Init EnsysFlow-Object."""
 
         super().__init__()
