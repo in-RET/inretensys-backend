@@ -30,6 +30,7 @@ class EnsysNonConvex(EnsysConfigContainer):
                  positive_gradient: dict = None,
                  negative_gradient: dict = None
                  ):
+        """Init the EnsysNonconvex object."""
         super().__init__()
         self.startup_costs = startup_costs
         self.shutdown_costs = shutdown_costs
@@ -51,6 +52,7 @@ class EnsysNonConvex(EnsysConfigContainer):
             self.negative_gradient = negative_gradient
 
     def to_oemof(self) -> solph.NonConvex:
+        """Converts the given object to an oemof object."""
         kwargs = BuildKwargs(self)
 
         return solph.NonConvex(**kwargs)

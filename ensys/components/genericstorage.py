@@ -39,6 +39,7 @@ class EnsysStorage(EnsysConfigContainer):
                  max_storage_level: float = None,
                  investment: EnsysInvestment = None
                  ):
+        """Init the EnsysStorage."""
         super().__init__()
 
         self.label = label

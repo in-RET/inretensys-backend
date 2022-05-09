@@ -25,7 +25,6 @@ def PrintResultsFromDump(output, dumpfile=None, energysystem=None):
     storage = energysystem.groups["storage"]
 
     bel = SearchNode(energysystem.nodes, "electricity")
-    pp_gas = SearchNode(energysystem.nodes, "pp_gas")
 
     if os.path.exists(output):
         os.remove(output)

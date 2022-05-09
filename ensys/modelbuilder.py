@@ -1,9 +1,11 @@
 import os.path
-
+import time
 from pickle import load
-from oemof import solph
 
-from ensys import EnsysFlow, EnsysOptimise
+from oemof import solph
+from oemof_visio import ESGraphRenderer
+
+from ensys import EnsysFlow, EnsysBus, EnsysSource, EnsysSink, EnsysTransformer, EnsysStorage
 from hsncommon.log import HsnLogger
 
 logger = HsnLogger()
@@ -13,21 +15,17 @@ class ModelBuilder:
     def __init__(self,
                  ConfigFile,
                  DumpFile,
-                 BuildModel=True,
-                 Optimise=True
                  ):
-        if BuildModel:
-            xf = open(ConfigFile, 'rb')
-            es = load(xf)
-            xf.close()
+        """Init Modelbuilder and if given load and optimise the configuration."""
+        xf = open(ConfigFile, 'rb')
+        es = load(xf)
+        xf.close()
 
-            BuildEnergySystem(es, DumpFile)
-
-        if Optimise:
-            EnsysOptimise(DumpFile)
+        BuildEnergySystem(es, DumpFile)
 
 
 def SearchNode(nodeslist, nodename):
+    """Search a specific node in  list and return this Node."""
     for node in nodeslist:
         if node.label == nodename:
             return nodeslist[nodeslist.index(node)]
@@ -36,6 +34,7 @@ def SearchNode(nodeslist, nodename):
 
 
 def BuildIO(ensys_io, es):
+    """Build Input/Output-Dicts for oemof-Objects."""
     oemof_io = {}
     keys = list(ensys_io.keys())
 
@@ -52,6 +51,7 @@ def BuildIO(ensys_io, es):
 
 
 def BuildOemofKwargs(ensys_obj, oemof_es: solph.EnergySystem):
+    """Build a dict of arguments for the init of the oemof objects."""
     kwargs = {}
 
     args = vars(ensys_obj)
@@ -77,7 +77,7 @@ def BuildOemofKwargs(ensys_obj, oemof_es: solph.EnergySystem):
     return kwargs
 
 
-def BuildEnergySystem(es, file):
+def BuildEnergySystem(es, file, solver="gurobi", solver_verbose=False):
     ##########################################################################
     # Build an Energysystem from the config
     ##########################################################################
@@ -91,63 +91,71 @@ def BuildEnergySystem(es, file):
         timeincrement=es.timeincrement
     )
 
-    if hasattr(es, "busses"):
-        logger.info("Build busses")
-        for bus in es.busses:
-            if type(bus) is solph.Bus:
-                oemof_es.add(bus)
-            else:
-                kwargs = BuildOemofKwargs(bus, oemof_es)
-                oemof_bus = solph.Bus(**kwargs)
-                oemof_es.add(oemof_bus)
+    except_vars = ["label", "timeindex", "timeincrement"]
+    oemof_types = [solph.Bus, solph.GenericStorage, solph.Sink, solph.Source, solph.Transformer]
 
-    if hasattr(es, "sources"):
-        logger.info("Build sources")
-        # Add sources to the EnergySystem
-        for source in es.sources:
-            if type(source) is solph.Source:
-                oemof_es.add(source)
-            else:
-                kwargs = BuildOemofKwargs(source, oemof_es)
-                oemof_source = solph.Source(**kwargs)
+    for attr in vars(es):
+        if attr not in except_vars:
+            logger.info("Build " + attr)
 
-                oemof_es.add(oemof_source)
+            arg_value = getattr(es, attr)
 
-    if hasattr(es, "sinks"):
-        logger.info("Build sinks")
-        # Add sinks to the EnergySystem
-        for sink in es.sinks:
-            if type(sink) is solph.Sink:
-                oemof_es.add(sink)
-            else:
-                kwargs = BuildOemofKwargs(sink, oemof_es)
-                oemof_sink = solph.Sink(**kwargs)
+            for value in arg_value:
+                if type(value) in oemof_types:
+                    oemof_es.add(arg_value)
+                else:
+                    kwargs = BuildOemofKwargs(value, oemof_es)
 
-                oemof_es.add(oemof_sink)
+                    if type(value) == EnsysBus:
+                        oemof_obj = solph.Bus(**kwargs)
+                    elif type(value) == EnsysSource:
+                        oemof_obj = solph.Source(**kwargs)
+                    elif type(value) == EnsysSink:
+                        oemof_obj = solph.Sink(**kwargs)
+                    elif type(value) == EnsysTransformer:
+                        oemof_obj = solph.Transformer(**kwargs)
+                    elif type(value) == EnsysStorage:
+                        oemof_obj = solph.GenericStorage(**kwargs)
+                    else:
+                        oemof_obj = None
 
-    if hasattr(es, "transformers"):
-        logger.info("Build transformers")
-        # Add transformers to the EnergySystem
-        for transformer in es.transformers:
-            if type(transformer) is solph.Transformer:
-                oemof_es.add(transformer)
-            else:
-                kwargs = BuildOemofKwargs(transformer, oemof_es)
-                oemof_transformer = solph.Transformer(**kwargs)
+                    if oemof_obj is not None:
+                        oemof_es.add(oemof_obj)
 
-                oemof_es.add(oemof_transformer)
+    logger.info("Building completed.")
 
-    if hasattr(es, "storages"):
-        logger.info("Build storages")
-        # Add storages to the EnergySystem
-        for storage in es.storages:
-            if type(storage) is solph.GenericStorage:
-                oemof_es.add(storage)
-            else:
-                kwargs = BuildOemofKwargs(storage, oemof_es)
+    ##########################################################################
+    # Print the EnergySystem as Graph
+    ##########################################################################
+    filepath = "images/energy_system"
+    logger.info("Print energysystem as graph")
 
-                oemof_storage = solph.GenericStorage(**kwargs)
-                oemof_es.add(oemof_storage)
+    ESGraphRenderer(energy_system=oemof_es, filepath=filepath)
 
-    logger.info("Building completed. Dump to file.")
+    ##########################################################################
+    # Initiate the energy system model
+    ##########################################################################
+    logger.info("Initiate the energy system model.")
+    model = solph.Model(oemof_es)
+
+    logger.info("Solve the optimization problem.")
+    t_start = time.time()
+    model.solve(solver=solver, solve_kwargs={"tee": solver_verbose})
+    t_end = time.time()
+
+    logger.info("Completed after " + str(round(t_end - t_start, 2)) + " seconds.")
+
+    logger.info("Store the energy system with the results.")
+
+    ##########################################################################
+    # The processing module of the outputlib can be used to extract the results
+    # from the model transfer them into a homogeneous structured dictionary.
+    ##########################################################################
+    oemof_es.results["main"] = solph.processing.results(model)
+    oemof_es.results["meta"] = solph.processing.meta_results(model)
+    oemof_es.results["verification"] = solph.processing.create_dataframe(model)
+
+    logger.info("Dump file with results to: " + os.path.join(wdir, filename))
+
     oemof_es.dump(dpath=wdir, filename=filename)
+    logger.info("Fin.")

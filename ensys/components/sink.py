@@ -9,6 +9,7 @@ class EnsysSink(EnsysConfigContainer):
                  label: str = "Default Sink",
                  inputs: dict[EnsysFlow] = None
                  ):
+        """Init the EnsysSink object."""
         super().__init__()
         self.label = label
         self.inputs = inputs

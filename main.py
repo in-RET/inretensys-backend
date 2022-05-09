@@ -1,18 +1,8 @@
 import os
 
-from pydantic import BaseModel
-
 from configs import oemof_allround_sample, allround_sample
 from ensys import Verification, PrintResultsFromDump, ModelBuilder
 from hsncommon.log import HsnLogger
-
-
-class TestObject(BaseModel):
-    label: str = "Testlabel"
-    number: float = 3.14
-
-    def to_oemof(self):
-        return "Hallo Welt 42"
 
 
 def CheckAndRemove(file):
@@ -58,29 +48,21 @@ def oemof(goOemof, goEnsys):
         allround_sample.CreateSampleConfiguration(configfile)
 
         ModelBuilder(configfile, dumpfile)
-
         PrintResultsFromDump(dumpfile=dumpfile, output=os.path.join(os.getcwd(), "output", "ensys_out"))
 
+    ##########################################################################
+    # Verifiy results
+    ##########################################################################
     logger.info("Start verifying.")
+
+    verify.dataframes([orig_dumpfile, dumpfile])
     verify.files("output/ensys_out", "output/oemof_out")
+
     logger.info("Fin.")
 
     logger.info("Größe Ensys-Dumpfile: " + str(os.path.getsize("dumps/energy_system.dump")))
     logger.info("Größe Oemof-Dumpfile: " + str(os.path.getsize("dumps/energy_system_orig.dump")))
 
 
-def testbed():
-    tobj = TestObject(
-        label="Hallo xyz!",
-        number=314.42)
-    print(tobj)
-    x = tobj.to_oemof()
-
-    print(x)
-
-
 if __name__ == "__main__":
     oemof(goOemof=True, goEnsys=True)
-    #testbed()
-
-

@@ -150,8 +150,8 @@ def oemofAllroundSample(dumpfile):
     es.add(storage)
 
     filepath = "images/energy_system"
-    gr = ESGraphRenderer(energy_system=es, filepath=filepath)
-    #gr.view()
+    ESGraphRenderer(energy_system=es, filepath=filepath)
+
 
     ##########################################################################
     # Optimise the energy system and plot the results
@@ -173,6 +173,7 @@ def oemofAllroundSample(dumpfile):
     # add results to the energy system to make it possible to store them.
     es.results["main"] = solph.processing.results(model)
     es.results["meta"] = solph.processing.meta_results(model)
+    es.results["verification"] = solph.processing.create_dataframe(model)
 
     logger.info("Dump files to filesystem.")
     # store energy system with results

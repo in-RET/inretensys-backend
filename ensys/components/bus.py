@@ -12,6 +12,7 @@ class EnsysBus(EnsysConfigContainer):
                  label: str = "Default Bus",
                  balanced: bool = True
                  ):
+        """Init EnsysBus-Object."""
         super().__init__()
         self.label = label
         self.balanced = balanced
