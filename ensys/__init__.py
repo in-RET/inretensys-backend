@@ -1,7 +1,6 @@
 # Common
 from ensys.common.config import EnsysConfigContainer
 from ensys.common.output import PrintResultsFromDump
-from ensys.common.optimise import EnsysOptimise
 from ensys.common.verfication import Verification
 # Components
 from ensys.components.flow import EnsysFlow

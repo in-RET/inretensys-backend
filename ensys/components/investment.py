@@ -20,6 +20,7 @@ class EnsysInvestment(EnsysConfigContainer):
                  nonconvex: bool = False,
                  offset: float = 0.0
                  ):
+        """Init the EnsysInvestment object."""
         super().__init__()
         self.maximum = maximum
         self.minimum = minimum
@@ -29,6 +30,7 @@ class EnsysInvestment(EnsysConfigContainer):
         self.offset = offset
 
     def to_oemof(self) -> solph.Investment:
+        """Converts the given object to an oemof object."""
         kwargs = BuildKwargs(self)
 
         return solph.Investment(**kwargs)

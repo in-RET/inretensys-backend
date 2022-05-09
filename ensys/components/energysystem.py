@@ -26,6 +26,7 @@ class EnsysEnergysystem(EnsysConfigContainer):
                  timeindex: pd.DatetimeIndex = None,
                  timeincrement=None
                  ):
+        """Init the EnsysEnergysystem."""
         super().__init__()
         self.label = label
         self.busses = busses

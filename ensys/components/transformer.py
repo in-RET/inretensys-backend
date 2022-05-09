@@ -13,6 +13,7 @@ class EnsysTransformer(EnsysConfigContainer):
                  outputs: dict[EnsysFlow] = None,
                  conversion_factors=None
                  ):
+        """Init the EnsysTransformer object."""
         super().__init__()
         self.label = label
         self.inputs = inputs
