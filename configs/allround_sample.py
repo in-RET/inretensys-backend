@@ -6,7 +6,8 @@ import pandas as pd
 from oemof.tools import economics
 
 from ensys import EnsysBus, EnsysFlow, EnsysSink, EnsysSource, EnsysTransformer, EnsysStorage, EnsysInvestment, \
-    EnsysEnergysystem, EnsysNonConvex
+    EnsysEnergysystem, EnsysNonConvex, EnsysConstraints
+from ensys.types import CONSTRAINT_TYPES
 from hsncommon.log import HsnLogger
 
 
@@ -73,8 +74,10 @@ def CreateSampleConfiguration(filename):
     import_el = EnsysSource(
         label="import",
         outputs={bel.label: EnsysFlow(
-            fix=data["import_el"],
-            nominal_value=1
+            nonconvex=EnsysNonConvex(),
+            #fix=data["import_el"],
+            nominal_value=53000,
+            my_keyword=True
         )}
     )
 
@@ -123,6 +126,12 @@ def CreateSampleConfiguration(filename):
         investment=EnsysInvestment(ep_costs=epc_storage),
     )
 
+    constraint1 = EnsysConstraints(typ=CONSTRAINT_TYPES.investment_limit, limit=3100000) #2700900
+    constraint2 = EnsysConstraints(typ=CONSTRAINT_TYPES.limit_active_flow_count_by_keyword,
+                                   keyword="my_keyword",
+                                   lower_limit=0,
+                                   upper_limit=1)
+
     es = EnsysEnergysystem(
         label="ensys Energysystem",
         busses=[bel, bgas],
@@ -130,6 +139,7 @@ def CreateSampleConfiguration(filename):
         sources=[import_el, rgas],
         storages=[storage],
         transformers=[pp_gas],
+        constraints=[constraint1, constraint2],
         timeindex=date_time_index
     )
 

@@ -1,7 +1,6 @@
 from oemof import solph
 
 from ensys import EnsysConfigContainer
-from ensys.common.config import BuildKwargs
 
 
 class EnsysBus(EnsysConfigContainer):
@@ -17,7 +16,7 @@ class EnsysBus(EnsysConfigContainer):
         self.label = label
         self.balanced = balanced
 
-    def to_oemof(self) -> solph.Bus:
-        kwargs = BuildKwargs(self)
+    def to_oemof(self, energysystem: solph.EnergySystem) -> solph.Bus:
+        kwargs = self.build_kwargs(energysystem)
 
         return solph.Bus(**kwargs)

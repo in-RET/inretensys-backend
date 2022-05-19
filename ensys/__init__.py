@@ -13,5 +13,6 @@ from ensys.components.investment import EnsysInvestment
 from ensys.components.transformer import EnsysTransformer
 from ensys.components.energysystem import EnsysEnergysystem
 from ensys.components.genericstorage import EnsysStorage
+from ensys.components.constraints import EnsysConstraints
 # Systembuilder
 from ensys.modelbuilder import ModelBuilder

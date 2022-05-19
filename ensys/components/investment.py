@@ -1,7 +1,6 @@
 from oemof import solph
 
 from ensys import EnsysConfigContainer
-from ensys.common.config import BuildKwargs
 
 
 class EnsysInvestment(EnsysConfigContainer):
@@ -29,8 +28,8 @@ class EnsysInvestment(EnsysConfigContainer):
         self.nonconvex = nonconvex
         self.offset = offset
 
-    def to_oemof(self) -> solph.Investment:
+    def to_oemof(self, energysystem: solph.EnergySystem) -> solph.Investment:
         """Converts the given object to an oemof object."""
-        kwargs = BuildKwargs(self)
+        kwargs = self.build_kwargs(energysystem)
 
         return solph.Investment(**kwargs)

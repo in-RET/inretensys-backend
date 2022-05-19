@@ -4,14 +4,6 @@ from oemof import solph
 from matplotlib import pyplot as plt
 
 
-def SearchNode(nodeslist, nodename):
-    for node in nodeslist:
-        if node.label == nodename:
-            return nodeslist[nodeslist.index(node)]
-
-    return None
-
-
 def PrintResultsFromDump(output, dumpfile=None, energysystem=None):
     # ****************************************************************************
     # ********** PART 2 - Processing the results *********************************
@@ -24,7 +16,8 @@ def PrintResultsFromDump(output, dumpfile=None, energysystem=None):
     results = energysystem.results["main"]
     storage = energysystem.groups["storage"]
 
-    bel = SearchNode(energysystem.nodes, "electricity")
+    #bel = SearchNode(energysystem.nodes, "electricity")
+    bel = energysystem.groups["electricity"]
 
     if os.path.exists(output):
         os.remove(output)
@@ -51,19 +44,19 @@ def PrintResultsFromDump(output, dumpfile=None, energysystem=None):
         ax11, ax12, ax13, ax14 = axs
 
         custom_storage["sequences"].plot(
-            ax=ax11, kind="line", drawstyle="steps-post", title="Speicher"
+            fig=fig, ax=ax11, kind="line", drawstyle="steps-post", title="Speicher"
         )
 
         excess_bel["sequences"].plot(
-            ax=ax12, kind="line", drawstyle="steps-post", title="Überschüssiger Strom"
+            fig=fig, ax=ax12, kind="line", drawstyle="steps-post", title="Überschüssiger Strom"
         )
 
         pp_gas["sequences"].plot(
-            ax=ax13, kind="line", drawstyle="steps-post", title="Transformator Gas > Strom"
+            fig=fig, ax=ax13, kind="line", drawstyle="steps-post", title="Transformator Gas > Strom"
         )
 
         electricity_bus["sequences"].plot(
-            ax=ax14, kind="line", drawstyle="steps-post", title="Strombus"
+            fig=fig, ax=ax14, kind="line", drawstyle="steps-post", title="Strombus"
         )
 
         for ax in axs:
@@ -71,7 +64,7 @@ def PrintResultsFromDump(output, dumpfile=None, energysystem=None):
 
         plt.tight_layout()
         plt.show()
-
+        
     # print the solver results
     #print("********* Meta results *********", file=xfile)
     # Meta results are others for every system e.g. wallclocktime

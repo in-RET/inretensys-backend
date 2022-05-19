@@ -1,3 +1,5 @@
+from oemof import solph
+
 from ensys import EnsysFlow, EnsysConfigContainer
 
 
@@ -19,3 +21,8 @@ class EnsysTransformer(EnsysConfigContainer):
         self.inputs = inputs
         self.outputs = outputs
         self.conversion_factors = conversion_factors
+
+    def to_oemof(self, energysystem: solph.EnergySystem) -> solph.Transformer:
+        kwargs = self.build_kwargs(energysystem)
+
+        return solph.Transformer(**kwargs)

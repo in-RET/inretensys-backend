@@ -5,7 +5,7 @@ from pickle import load
 from oemof import solph
 from oemof_visio import ESGraphRenderer
 
-from ensys import EnsysFlow, EnsysBus, EnsysSource, EnsysSink, EnsysTransformer, EnsysStorage
+from ensys.types import CONSTRAINT_TYPES
 from hsncommon.log import HsnLogger
 
 logger = HsnLogger()
@@ -24,60 +24,6 @@ class ModelBuilder:
         BuildEnergySystem(es, DumpFile)
 
 
-def SearchNode(nodeslist, nodename):
-    """Search a specific node in  list and return this Node."""
-    for node in nodeslist:
-        if node.label == nodename:
-            return nodeslist[nodeslist.index(node)]
-
-    return None
-
-
-def BuildIO(ensys_io, es):
-    """Build Input/Output-Dicts for oemof-Objects."""
-    oemof_io = {}
-    keys = list(ensys_io.keys())
-
-    for key in keys:
-        for node in es.nodes:
-            if node.label == key:
-                bus = es.nodes[es.nodes.index(node)]
-                if isinstance(ensys_io[key], EnsysFlow):
-                    oemof_io[bus] = ensys_io[key].to_oemof()
-                else:
-                    oemof_io[bus] = ensys_io[key]
-
-    return oemof_io
-
-
-def BuildOemofKwargs(ensys_obj, oemof_es: solph.EnergySystem):
-    """Build a dict of arguments for the init of the oemof objects."""
-    kwargs = {}
-    io_keys = ["inputs", "outputs", "conversion_factors"]
-
-    args = vars(ensys_obj)
-
-    for key in args:
-        value = args[key]
-        if value is not None:
-            if key in io_keys:
-                kwargs[key] = BuildIO(value, oemof_es)
-            elif key == "nonconvex":
-                if value is False or value is True:
-                    kwargs[key] = value
-                else:
-                    kwargs[key] = value.to_oemof()
-            elif key == "investment":
-                if isinstance(value, solph.Investment):
-                    kwargs[key] = value
-                else:
-                    kwargs[key] = value.to_oemof()
-            else:
-                kwargs[key] = value
-
-    return kwargs
-
-
 def BuildEnergySystem(es, file, solver="gurobi", solver_verbose=False):
     ##########################################################################
     # Build an Energysystem from the config
@@ -92,8 +38,7 @@ def BuildEnergySystem(es, file, solver="gurobi", solver_verbose=False):
         timeincrement=es.timeincrement
     )
 
-    except_vars = ["label", "timeindex", "timeincrement"]
-    oemof_types = [solph.Bus, solph.GenericStorage, solph.Sink, solph.Source, solph.Transformer]
+    except_vars = ["label", "timeindex", "timeincrement", "constraints"]
 
     for attr in vars(es):
         if attr not in except_vars:
@@ -102,26 +47,10 @@ def BuildEnergySystem(es, file, solver="gurobi", solver_verbose=False):
             arg_value = getattr(es, attr)
 
             for value in arg_value:
-                if type(value) in oemof_types:
-                    oemof_es.add(arg_value)
-                else:
-                    kwargs = BuildOemofKwargs(value, oemof_es)
+                oemof_obj = value.to_oemof(oemof_es)
 
-                    if isinstance(value, EnsysBus):
-                        oemof_obj = solph.Bus(**kwargs)
-                    elif isinstance(value, EnsysSource):
-                        oemof_obj = solph.Source(**kwargs)
-                    elif isinstance(value, EnsysSink):
-                        oemof_obj = solph.Sink(**kwargs)
-                    elif isinstance(value, EnsysTransformer):
-                        oemof_obj = solph.Transformer(**kwargs)
-                    elif isinstance(value, EnsysStorage):
-                        oemof_obj = solph.GenericStorage(**kwargs)
-                    else:
-                        oemof_obj = None
-
-                    if oemof_obj is not None:
-                        oemof_es.add(oemof_obj)
+                if oemof_obj is not None:
+                    oemof_es.add(oemof_obj)
 
     logger.info("Building completed.")
 
@@ -139,6 +68,47 @@ def BuildEnergySystem(es, file, solver="gurobi", solver_verbose=False):
     logger.info("Initiate the energy system model.")
     model = solph.Model(oemof_es)
 
+    ##########################################################################
+    # Add Constraints to the model
+    ##########################################################################
+    constraints = es.constraints
+
+    if constraints is not None:
+        for constraint in constraints:
+            kwargs = constraint.to_oemof()
+            print(kwargs)
+
+            if constraint.typ == CONSTRAINT_TYPES.shared_limit:
+                solph.constraints.shared_limit(model=model, **kwargs)
+
+            elif constraint.typ == CONSTRAINT_TYPES.investment_limit:
+                model = solph.constraints.investment_limit(model=model, **kwargs)
+
+            elif constraint.typ == CONSTRAINT_TYPES.additional_investment_flow_limit:
+                model = solph.constraints.additional_investment_flow_limit(model=model, **kwargs)
+
+            elif constraint.typ == CONSTRAINT_TYPES.generic_integral_limit:
+                model = solph.constraints.generic_integral_limit(om=model, **kwargs)
+
+            elif constraint.typ == CONSTRAINT_TYPES.emission_limit:
+                solph.constraints.emission_limit(om=model, **kwargs)
+
+            elif constraint.typ == CONSTRAINT_TYPES.limit_active_flow_count:
+                model = solph.constraints.limit_active_flow_count(model=model, **kwargs)
+
+            elif constraint.typ == CONSTRAINT_TYPES.limit_active_flow_count_by_keyword:
+                model = solph.constraints.limit_active_flow_count_by_keyword(model=model, **kwargs)
+
+            elif constraint.typ == CONSTRAINT_TYPES.equate_variables:
+                solph.constraints.equate_variables(model=model, **kwargs)
+
+            else:
+                # do nothing
+                pass
+
+    ##########################################################################
+    # solving...
+    ##########################################################################
     logger.info("Solve the optimization problem.")
     t_start = time.time()
     model.solve(solver=solver, solve_kwargs={"tee": solver_verbose})

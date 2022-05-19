@@ -5,11 +5,6 @@ from ensys import Verification, PrintResultsFromDump, ModelBuilder
 from hsncommon.log import HsnLogger
 
 
-def CheckAndRemove(file):
-    if os.path.exists(file):
-        os.remove(file)
-
-
 def oemof(goOemof, goEnsys):
     logger = HsnLogger()
 
@@ -21,9 +16,10 @@ def oemof(goOemof, goEnsys):
     orig_dumpfile = os.path.join(wkdir, filename + "_orig.dump")
 
     for file in [configfile, dumpfile, orig_dumpfile]:
-        CheckAndRemove(file)
+        if os.path.exists(file):
+            os.remove(file)
 
-    verify = Verification
+    verify = Verification()
 
     ##########################################################################
     # oemof-Beispiel

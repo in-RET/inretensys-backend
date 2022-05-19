@@ -21,4 +21,4 @@ This decision was made because pydantic has a lot of built-in features to genera
 ## Functions
 
 ### to_oemof(self)
-A object function for later use in child-classes, i.e. EnsysFlow, to implement a call to directly return an oemof.solph-Object.
+A object function for later use in child-classes, i.e. [EnsysFlow](../components/flow.md), to implement a call to directly return an oemof.solph-Object.

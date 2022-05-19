@@ -13,6 +13,7 @@ class EnsysEnergysystem(EnsysConfigContainer):
     sources: list = None
     transformers: list = None
     storages: list = None
+    constraints: list = None
     timeindex: Sequence = None
     timeincrement: str = None
 
@@ -23,6 +24,7 @@ class EnsysEnergysystem(EnsysConfigContainer):
                  sources: list[source.EnsysSource] = None,
                  transformers: list[transformer.EnsysTransformer] = None,
                  storages: list[genericstorage.EnsysStorage] = None,
+                 constraints: list = None,
                  timeindex: pd.DatetimeIndex = None,
                  timeincrement=None
                  ):
@@ -34,5 +36,6 @@ class EnsysEnergysystem(EnsysConfigContainer):
         self.sources = sources
         self.transformers = transformers
         self.storages = storages
+        self.constraints = constraints
         self.timeindex = timeindex
         self.timeincrement = timeincrement

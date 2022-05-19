@@ -93,8 +93,10 @@ def oemofAllroundSample(dumpfile):
         solph.Source(
             label="import",
             outputs={bel: solph.Flow(
-                fix=data["import_el"],
-                nominal_value=1
+                nonconvex=solph.NonConvex(),
+                #fix=data["import_el"],
+                nominal_value=53000,
+                my_keyword=True
             )},
         )
     )
@@ -160,6 +162,13 @@ def oemofAllroundSample(dumpfile):
     logger.info("Initialise operational model.")
     # initialise the operational model
     model = solph.Model(es)
+
+    # Constraints
+    model = solph.constraints.investment_limit(model=model, limit=3100000) #2700900
+    model = solph.constraints.limit_active_flow_count_by_keyword(model=model,
+                                                                 keyword="my_keyword",
+                                                                 lower_limit=0,
+                                                                 upper_limit=1)
 
     logger.info("Start solving.")
     t_start = time.time()

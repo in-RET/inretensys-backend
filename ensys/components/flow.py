@@ -20,6 +20,8 @@ class EnsysFlow(EnsysConfigContainer):
     variable_costs: float = None
     investment: EnsysInvestment = None
     nonconvex: EnsysNonConvex = None
+    emission_factor: float = None
+    kwargs: dict = None
 
     def __init__(self,
                  nominal_value: float = None,
@@ -35,10 +37,11 @@ class EnsysFlow(EnsysConfigContainer):
                  summed_min: float = None,
                  variable_costs: float = None,
                  investment: EnsysInvestment = None,
-                 nonconvex: EnsysNonConvex = None
+                 nonconvex: EnsysNonConvex = None,
+                 emission_factor: float = None,
+                 **kwargs
                  ):
         """Init EnsysFlow-Object."""
-
         super().__init__()
         self.nominal_value = nominal_value
         if fix is not None:
@@ -55,29 +58,11 @@ class EnsysFlow(EnsysConfigContainer):
         self.variable_costs = variable_costs
         self.investment = investment
         self.nonconvex = nonconvex
+        self.emission_factor = emission_factor
+        self.kwargs = kwargs
 
-    def to_oemof(self) -> solph.Flow:
-        kwargs = {}
-
-        args = vars(self)
-
-        for key in args:
-            value = args[key]
-
-            if key.__contains__("nominal_storage"):
-                kwargs[key] = value
-            elif value is not None:
-                if key == "nonconvex":
-                    if value is False or value is True:
-                        kwargs[key] = value
-                    else:
-                        kwargs[key] = value.to_oemof()
-                elif key == "investment":
-                        kwargs[key] = value.to_oemof()
-                else:
-                    kwargs[key] = value
+    def to_oemof(self, energysystem: solph.EnergySystem) -> solph.Flow:
+        """Converts the given object to an oemof object."""
+        kwargs = self.build_kwargs(energysystem)
 
         return solph.Flow(**kwargs)
-
-
-

@@ -1,3 +1,4 @@
+from oemof import solph
 from ensys import EnsysFlow, EnsysInvestment, EnsysConfigContainer
 
 
@@ -59,3 +60,8 @@ class EnsysStorage(EnsysConfigContainer):
         self.min_storage_level = min_storage_level
         self.max_storage_level = max_storage_level
         self.investment = investment
+
+    def to_oemof(self, energysystem: solph.EnergySystem) -> solph.GenericStorage:
+        kwargs = self.build_kwargs(energysystem)
+
+        return solph.GenericStorage(**kwargs)

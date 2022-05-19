@@ -1,7 +1,6 @@
 from oemof import solph
 
 from ensys import EnsysConfigContainer
-from ensys.common.config import BuildKwargs
 
 
 class EnsysNonConvex(EnsysConfigContainer):
@@ -51,8 +50,8 @@ class EnsysNonConvex(EnsysConfigContainer):
         else:
             self.negative_gradient = negative_gradient
 
-    def to_oemof(self) -> solph.NonConvex:
+    def to_oemof(self, energysystem: solph.EnergySystem) -> solph.NonConvex:
         """Converts the given object to an oemof object."""
-        kwargs = BuildKwargs(self)
+        kwargs = self.build_kwargs(energysystem)
 
         return solph.NonConvex(**kwargs)

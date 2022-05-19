@@ -10,12 +10,16 @@ markdown_extensions:
           use_pygments: true
     - pymdownx.inlinehilite
     - pymdownx.snippets
-    - pymdownx.superfences
+    - pymdownx.superfences:
+        custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
 nav:
     - Home: index.md
     - 'Common':
         - 'Konfigurationscontainer': common/config.md
-        - 'Systembuilder': common/systembuilder.md
+        - 'Modelbuilder': common/modelbuilder.md
     - 'Components':
         - 'Energysystem': components/energysystem.md
         - 'Bus': components/bus.md
