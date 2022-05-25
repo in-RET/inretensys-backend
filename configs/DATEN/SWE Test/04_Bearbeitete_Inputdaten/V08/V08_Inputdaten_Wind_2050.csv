@@ -1,8 +1,0 @@
-index;Einheit;Wind
-Eigenerzeugungsfaktor;-;0
-Energiemenge_je_Windrad;MWh/a;16668
-Leistung_je_Windrad;MW;6
-Anzahl_Windraeder;-;6
-Bestand;MWh/a;19599
-variable_Kosten;\euro{}/MWh;65
-Leistung_Windpark_gesamt;MW;41,44

@@ -1,7 +1,0 @@
-index;Einheit;AHK_1;AHK_2;Bemerkungen
-Wirkungsgrad_Frischdampf;%;93,778085;91,86902;210114_VEI_Antwort Rü Christoph Schmidt --> Tabelle 1 gerechnet mit Max-Werten
-min_Leistung_Frischdampf;MW_th,FD;10,3;10,3;Quelle: 210208_SWE_FH NH_Installierte Leistungen und Grenzen
-max_Leistung_Frischdampf;MW_th,FD;68,7;68,7;Quelle: 210208_SWE_FH NH_Installierte Leistungen und Grenzen
-Mindestbetriebszeit;h;120;120;Quelle: Besprechung Veitenhansel (21.12.2020)
-Mindeststillstandszeit;h;48;48;Quelle: Besprechung Veitenhansel (21.12.2020)
-P_RG;MW_th_RG;0,9;0,9;Quelle_Mail Veiti 28.06.21

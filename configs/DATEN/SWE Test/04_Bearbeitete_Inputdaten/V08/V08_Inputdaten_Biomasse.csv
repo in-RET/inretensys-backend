@@ -1,8 +1,0 @@
-index;Einheit;Biogas_BHKW;Biogaseinspeisung
-CAPEX;\euro{}/MW;2390000;2150000
-OPEX;\% von Invest;5;5
-Amortisierungszeitraum;a;30;25
-Wirkungsgrad_el;-;0,38;0,9
-Wirkungsgrad_th;-;0,49;0
-Zinssatz;\%;5;5
-Potential_Summe;MWh;120000;

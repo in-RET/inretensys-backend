@@ -1,7 +1,0 @@
-﻿index;Einheit;HWS_1;HWS_2;HWS_3
-min_Leistung_Heisswasser;MW_th,HW;0,4;0,4;0
-max_Leistung_Heisswasser;MW_th,HW;6,3;6,3;12,9
-CAPEX;€/MW;;;
-OPEX;% von Invest;;;
-Amortisierungszeitraum_in_Jahren;a;;;
-Zinssatz;%;;;

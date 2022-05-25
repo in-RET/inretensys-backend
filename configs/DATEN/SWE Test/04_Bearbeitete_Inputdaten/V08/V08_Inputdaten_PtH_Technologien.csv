@@ -1,8 +1,0 @@
-index;Einheit;Heizstab
-Wirkungsgrad_el;-;0,98
-min_Leistung;MW;0,1
-max_Leistung;MW;100
-CAPEX;\euro{}/MW;108000
-OPEX;\% von Invest;1
-Amortisierungszeitraum;a;15
-Zinssatz;\%;5
