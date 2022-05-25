@@ -136,4 +136,4 @@ dmypy.json
 /backup/
 /configs/ENSYS/SWE2021_V08_O4_2045_BEW0_S1_Geoth_Wind.py
 /configs/OEMOF/oemof_SWE2021_V08_O4_2045_BEW0_S1_Geoth_Wind.py
-/configs/DATEN/
+/configs/DATEN/SWE Test/
