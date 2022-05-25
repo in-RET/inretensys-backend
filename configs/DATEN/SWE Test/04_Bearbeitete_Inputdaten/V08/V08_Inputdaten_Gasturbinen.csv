@@ -1,0 +1,10 @@
+index;Einheit;Gasturbine_1;Gasturbine_2;Gasturbine_3
+Wirkungsgrad_el_brutto;\%;33,67;34,8;36,7
+max_Leistung_el_brutto;MW\textsubscript{el};22,05;24,24;32,7
+Eigenverbrauchsfaktor;MW\textsubscript{el}/MW\textsubscript{th};0,003;0,003;0,00544
+Mindestbetriebszeit;h;120;120;120
+Mindeststillstandszeit;h;48;48;24
+CAPEX;\euro{}/MW;246470;246470;330000
+OPEX;\% von Invest;5;5;5
+Amortisierungszeitraum;a;20;20;20
+Zinssatz;\%;5;5;5

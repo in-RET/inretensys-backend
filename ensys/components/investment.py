@@ -10,6 +10,7 @@ class EnsysInvestment(EnsysConfigContainer):
     existing: float = 0.0
     nonconvex: bool = False
     offset: float = 0.0
+    kwargs: dict = None
 
     def __init__(self,
                  maximum: float = float("+inf"),
@@ -17,7 +18,8 @@ class EnsysInvestment(EnsysConfigContainer):
                  ep_costs: float = 0.0,
                  existing: float = 0.0,
                  nonconvex: bool = False,
-                 offset: float = 0.0
+                 offset: float = 0.0,
+                 **kwargs
                  ):
         """Init the EnsysInvestment object."""
         super().__init__()
@@ -27,6 +29,7 @@ class EnsysInvestment(EnsysConfigContainer):
         self.existing = existing
         self.nonconvex = nonconvex
         self.offset = offset
+        self.kwargs = kwargs
 
     def to_oemof(self, energysystem: solph.EnergySystem) -> solph.Investment:
         """Converts the given object to an oemof object."""

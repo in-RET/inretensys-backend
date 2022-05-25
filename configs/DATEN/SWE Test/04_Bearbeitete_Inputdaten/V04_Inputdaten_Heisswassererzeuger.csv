@@ -1,0 +1,11 @@
+index;Einheit;HWE_2;HWE_5_1;HWE_5_2;
+Wirkungsgrad_th;-;0,91;0,971;0,972;
+min_Leistung;MW_th;2;0,8;5;
+max_Leistung;MW_th;62;19,44;40,56;
+Eigenverbrauchsfaktor;MW_el/MW_th;0,00563;0,00563;0,00563;Quelle: 210416_Eigenbedarf.pdf
+CAPEX;€/MW_th;130000;130000;130000;
+OPEX;% von Invest;1;1;1;
+Amortisierungszeitraum_in_Jahren;a;20;20;20;
+Zinssatz;%;5;5;5;
+Volllaststunden;h;5000;5000;5000;
+variable_Kosten;€/MWh_th;1,99;1,99;1,99;

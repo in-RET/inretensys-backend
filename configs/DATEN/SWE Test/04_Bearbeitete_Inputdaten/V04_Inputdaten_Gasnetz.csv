@@ -1,0 +1,8 @@
+index;Einheit;Gasnetz
+Brennstoffenergiesteuer;€/MWh_Ho;5,5
+Umrechnungsfaktor_Hu_zu_Ho_Preis;MWh_Hu/MWh_Ho;0,902
+Umrechnungsfaktor_Hu_zu_Ho_Emission;MWh_Hu/MWh_Ho;0,903
+NNE_Kraftwerksgas_2020;€/MW;10857,14286
+NNE_Kraftwerksgas_2025;€/MW;11757,14286
+NNE_Kraftwerksgas_2030;;11757,14286
+NNE_Kraftwerksgas_2035;;11757,14286

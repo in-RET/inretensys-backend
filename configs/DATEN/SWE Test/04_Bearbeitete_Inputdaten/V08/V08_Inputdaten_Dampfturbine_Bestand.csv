@@ -1,0 +1,13 @@
+index;Einheit;DT_Bestand
+min_Leistung_el_brutto;MW\textsubscript{el};2,02
+max_Leistung_el_brutto;MW\textsubscript{el};32,1
+max_Leistung_Frischdampf;MW\textsubscript{th};138,8
+max_Leistung_Dampf;MW\textsubscript{th};25
+max_Leistung_Heisswasser;MW\textsubscript{th};91,6
+Eigenverbrauchsfaktor;MW\textsubscript{eigen}/MW\textsubscript{el,brutto};0,01232
+Mindestbetriebszeit;h;336
+Mindeststillstandszeit;h;168
+CAPEX;\euro{}/MW;250000
+OPEX;\% von Invest;2
+Amortisierungszeitraum;a;15
+Zinssatz;\%;5

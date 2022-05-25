@@ -74,6 +74,8 @@ def PrintResultsFromDump(output, dumpfile=None, energysystem=None):
     print("********* Main results *********", file=xfile)
     print(electricity_bus["sequences"].sum(axis=0), file=xfile)
 
+    print("Investment Gas (Limit: 29000):", solph.views.node(results, 'rgas')["scalars"][0], file=xfile)
+
     if True is True:
         my_results = electricity_bus["scalars"]
 

@@ -1,0 +1,12 @@
+index;Einheit;AHK_1;AHK_2;Bemerkungen
+Wirkungsgrad_Frischdampf;%;84,4144;88,1328;210114_VEI_Antwort Rü Christoph Schmidt Tabelle 1 mit max-Werten gerechnet
+min_Leistung_Frischdampf;MW_th,FD;21,9;21,9;Quelle: 210208_SWE_FH NH_Installierte Leistungen und Grenzen
+max_Leistung_Frischdampf;MW_th,FD;72;72;Quelle: 210208_SWE_FH NH_Installierte Leistungen und Grenzen
+Mindestbetriebszeit;h;120;120;Quelle: Besprechung Veitenhansel (21.12.2020)
+Mindeststillstandszeit;h;48;48;Quelle: Besprechung Veitenhansel (21.12.2020)
+CAPEX;€/MW;100000;100000;Quelle: 210122_Kostenübersicht Kellner
+OPEX;% von Invest;3;3;Quelle: 210122_Kostenübersicht Kellner
+Amortisierungszeitraum_in_Jahren;a;15;15;Quelle: 210122_Kostenübersicht Kellner
+Zinssatz;%;5;5;Quelle: 210122_Kostenübersicht Kellner
+Volllaststunden;h;5000;5000;Quelle: 210122_Kostenübersicht Kellner
+P_RG;MW_th_RG;3,6;3,6;Quelle: Mail Veiti 28.06.21

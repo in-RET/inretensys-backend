@@ -1,0 +1,14 @@
+index;Einheit;Tandem_ND;Tandem_HD;Bemerkungen
+min_Leistung_el_brutto;MW_el;0,64;1,54;210119_Übersicht Parameterdaten T_DT
+max_Leistung_el_brutto;MW_el;3,46;8,31;210119_Übersicht Parameterdaten T_DT
+eta_el_brutto;%;7,38;16,5;210119_Übersicht Parameterdaten T_DT
+Eigenverbrauchsfaktor;MW_eigen/MW_el_brutto;0,01232;0,01232;Quelle: 210416_Eigenbedarf.pdf
+Mindestbetriebszeit;h;48;48;Quelle: Besprechung Veitenhansel (21.12.2020)
+Mindeststillstandszeit;h;6;6;Quelle: Besprechung Veitenhansel (21.12.2020)
+CAPEX;€/MW_el;420000;420000;Quelle: Kostenübersicht 02022021
+OPEX;% von Invest;2;2;Quelle: Kostenübersicht 02022022
+Amortisierungszeitraum_in_Jahren;a;20;20;Quelle: Kostenübersicht 02022023
+Zinssatz;%;5;5;Quelle: Kostenübersicht 02022024
+Eigenverbrauchsfaktor_alt;-;0,9804;0,9804;Quelle: Besprechung Veitenhansel (21.12.2020)
+Volllaststunden;h;5000;5000;Quelle: Kostenübersicht 02022021
+Max_Dampfauskopplung;MW_th;0;21;Quelle: 210208_SWE_FH NH_Installierte Leistungen und Grenzen

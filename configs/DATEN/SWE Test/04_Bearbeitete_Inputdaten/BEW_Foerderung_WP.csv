@@ -1,0 +1,6 @@
+index;Einheit;WP_Abwasser_Industrie;WP_Flusswasser_Seen;WP_RABA_Rauchgas;WP_RABA_alternativ;WP_Waescherei;WP_Luftwaerme_direkt;WP_WWK
+COP;-;2,1;1,4;3,6;3,6;2,1;1,6;1,5
+X;ct/kWh_th;6,93;;;;;;
+Y;ct/kWh_th;16,81;;;;;;
+Strompreis_gefoerdert;ct/kWh_th;7,89;10,89;5,39;5,39;7,89;4,35;4,60
+Betriebskostenfoerderung_max;€/MWh_th;70;70;53,9;53,9;70;30,00;30,00

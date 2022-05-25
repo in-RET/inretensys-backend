@@ -24,6 +24,7 @@ class ModelBuilder:
         BuildEnergySystem(es, DumpFile)
 
 
+# gurobi direct wegen exce not found
 def BuildEnergySystem(es, file, solver="gurobi", solver_verbose=False):
     ##########################################################################
     # Build an Energysystem from the config
@@ -60,7 +61,8 @@ def BuildEnergySystem(es, file, solver="gurobi", solver_verbose=False):
     filepath = "images/energy_system"
     logger.info("Print energysystem as graph")
 
-    ESGraphRenderer(energy_system=oemof_es, filepath=filepath)
+    gr = ESGraphRenderer(energy_system=oemof_es, filepath=filepath)
+    gr.view()
 
     ##########################################################################
     # Initiate the energy system model
@@ -76,7 +78,6 @@ def BuildEnergySystem(es, file, solver="gurobi", solver_verbose=False):
     if constraints is not None:
         for constraint in constraints:
             kwargs = constraint.to_oemof()
-            print(kwargs)
 
             if constraint.typ == CONSTRAINT_TYPES.shared_limit:
                 solph.constraints.shared_limit(model=model, **kwargs)
@@ -125,6 +126,8 @@ def BuildEnergySystem(es, file, solver="gurobi", solver_verbose=False):
     oemof_es.results["main"] = solph.processing.results(model)
     oemof_es.results["meta"] = solph.processing.meta_results(model)
     oemof_es.results["verification"] = solph.processing.create_dataframe(model)
+
+    print(model.integral_limit_emission_factor())
 
     logger.info("Dump file with results to: " + os.path.join(wdir, filename))
 

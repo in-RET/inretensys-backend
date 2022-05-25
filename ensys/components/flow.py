@@ -8,7 +8,7 @@ from ensys.components.nonconvex import EnsysNonConvex
 class EnsysFlow(EnsysConfigContainer):
     nominal_value: float = None
     # numeric or sequence or None
-    fix: float = None
+    fix: float or list = None
     # numeric or sequence
     min: float = 0.0
     # numeric or sequence
@@ -17,16 +17,15 @@ class EnsysFlow(EnsysConfigContainer):
     negative_gradient: dict = None
     summed_max: float = None
     summed_min: float = None
-    variable_costs: float = None
+    variable_costs: float or list = None
     investment: EnsysInvestment = None
     nonconvex: EnsysNonConvex = None
-    emission_factor: float = None
     kwargs: dict = None
 
     def __init__(self,
                  nominal_value: float = None,
                  # numeric or sequence or None
-                 fix: float = None,
+                 fix: float or list = None,
                  # numeric or sequence
                  min: float = 0.0,
                  # numeric or sequence
@@ -35,10 +34,9 @@ class EnsysFlow(EnsysConfigContainer):
                  negative_gradient: dict = None,
                  summed_max: float = None,
                  summed_min: float = None,
-                 variable_costs: float = None,
+                 variable_costs: float or list = None,
                  investment: EnsysInvestment = None,
                  nonconvex: EnsysNonConvex = None,
-                 emission_factor: float = None,
                  **kwargs
                  ):
         """Init EnsysFlow-Object."""
@@ -58,7 +56,6 @@ class EnsysFlow(EnsysConfigContainer):
         self.variable_costs = variable_costs
         self.investment = investment
         self.nonconvex = nonconvex
-        self.emission_factor = emission_factor
         self.kwargs = kwargs
 
     def to_oemof(self, energysystem: solph.EnergySystem) -> solph.Flow:

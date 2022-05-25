@@ -1,0 +1,12 @@
+index;Einheit;Tandem_ND;Tandem_HD
+min_Leistung_el_brutto;MW\textsubscript{el};0,64;1,54
+max_Leistung_el_brutto;MW\textsubscript{el};3,46;8,31
+eta_el_brutto;\%;7,38;16,5
+Eigenverbrauchsfaktor;MW\textsubscript{eigen}/MW\textsubscript{el,brutto};0,01232;0,01232
+Mindestbetriebszeit;h;48;48
+Mindeststillstandszeit;h;6;6
+CAPEX;\euro{}/MW;500000;500000
+OPEX;\% von Invest;2;2
+Amortisierungszeitraum;a;15;15
+Zinssatz;\%;5;5
+Max_Dampfauskopplung;MW\textsubscript{th};0;21

@@ -9,7 +9,7 @@ class EnsysSource(EnsysConfigContainer):
 
     def __init__(self,
                  label: str = "Default Source",
-                 outputs: dict[EnsysFlow] = None
+                 outputs: dict[str, EnsysFlow] = None
                  ):
         """Init the EnsysSource object."""
         super().__init__()

@@ -1,0 +1,8 @@
+index;Einheit;PV_eigenerzeugung
+min_Leistung;MW;0
+max_Leistung;MW;8,57
+CAPEX;\euro{}/MW;483000
+OPEX;\% von Invest;1
+Amortisierungszeitraum;a;20
+Zinssatz;\%;5
+Eigenerzeugungsfaktor;-;0

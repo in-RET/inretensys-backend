@@ -1,0 +1,7 @@
+index;Einheit;AHK_1;AHK_2
+Wirkungsgrad_Frischdampf;\%;93,778085;91,86902
+min_Leistung_Frischdampf;MW\textsubscript{th,FD};10,3;10,3
+max_Leistung_Frischdampf;MW\textsubscript{th,FD};68,7;68,7
+Mindestbetriebszeit;h;120;120
+Mindeststillstandszeit;h;48;48
+P_Rauchgas;MW\textsubscript{th,RG};0,9;0,9

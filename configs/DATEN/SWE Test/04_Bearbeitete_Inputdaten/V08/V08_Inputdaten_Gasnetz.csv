@@ -1,0 +1,5 @@
+﻿index;Einheit;Gasnetz
+Brennstoffenergiesteuer;€/MWh_Ho;5,5
+Umrechnungsfaktor_Hu_zu_Ho_Preis;MWh_Hu/MWh_Ho;0,902
+Umrechnungsfaktor_Hu_zu_Ho_Emission;MWh_Hu/MWh_Ho;0,903
+Emissionsfaktor_Erdgas;t_CO2/GJ_Ho;0,056

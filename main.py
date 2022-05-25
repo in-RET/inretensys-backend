@@ -1,15 +1,54 @@
 import os
 
-from configs import oemof_allround_sample, allround_sample
 from ensys import Verification, PrintResultsFromDump, ModelBuilder
 from hsncommon.log import HsnLogger
 
+from configs.OEMOF.oemof_SWE2021_V08_O4_2045_BEW0_S1_Geoth_Wind import oemof_swe_test
+from configs.OEMOF.oemof_allround_sample import oemofAllroundSample
+from configs.ENSYS.SWE2021_V08_O4_2045_BEW0_S1_Geoth_Wind import createConfigBinary
+from configs.ENSYS.allround_sample import CreateSampleConfiguration
 
-def oemof(goOemof, goEnsys):
+
+def swe_samples(goOemof, goEnsys):
+    logger = HsnLogger()
+    filename = "swe_energy_system"
+    dumpfile = os.path.join(os.getcwd(), "dumps", filename + ".dump")
+    orig_dumpfile = os.path.join(os.getcwd(), "dumps", filename + "orig.dump")
+    verify = Verification()
+
+    datadir = os.path.join(os.getcwd(), "configs", "DATEN", "SWE Test")
+    logger.info(datadir)
+
+    if goOemof:
+        logger.info("Start oemof-Sample.")
+        oemof_swe_test(orig_dumpfile, datadir)
+        logger.info("oemof-sample fin.")
+
+    if goEnsys:
+        logger.info("Start ensys-Sample.")
+        configfile = os.path.join(os.getcwd(), "dumps", "ensys_swe_config.bin")
+        dumpfile = os.path.join(os.getcwd(), "dumps", "ensys_swe_energy_system.dump")
+
+        logger.info(configfile)
+        createConfigBinary(configfile, datadir)
+
+        ModelBuilder(ConfigFile=configfile,
+                     DumpFile=dumpfile)
+
+    logger.info("Start verifying.")
+
+    verify.dataframes([orig_dumpfile, dumpfile])
+    logger.info("Fin.")
+
+    logger.info("Größe Ensys-Dumpfile: " + str(os.path.getsize("dumps/ensys_swe_energy_system.dump")))
+    logger.info("Größe Oemof-Dumpfile: " + str(os.path.getsize("dumps/ensys_swe_energy_system_orig.dump")))
+
+
+def allround_samples(goOemof, goEnsys):
     logger = HsnLogger()
 
     wkdir = os.path.join(os.getcwd(), "dumps")
-    filename = "energy_system"
+    filename = "allround_energy_system"
 
     configfile = os.path.join(wkdir, filename + ".bin")
     dumpfile = os.path.join(wkdir, filename + ".dump")
@@ -21,34 +60,25 @@ def oemof(goOemof, goEnsys):
 
     verify = Verification()
 
-    ##########################################################################
-    # oemof-Beispiel
-    ##########################################################################
     if goOemof:
         logger.info("Start oemof-Sample")
 
         # oemof_sample.oemofSample(orig_dumpfile)
-        oemof_allround_sample.oemofAllroundSample(orig_dumpfile)
+        oemofAllroundSample(orig_dumpfile)
 
         logger.info("Print results from sample.")
         PrintResultsFromDump(dumpfile=orig_dumpfile, output=os.path.join(os.getcwd(), "output", "oemof_out"))
 
         logger.info("Fin with oemof-Sample")
 
-    ##########################################################################
-    # ensys-Klassen
-    ##########################################################################
     if goEnsys:
         # basic_sample.CreateSampleConfiguration(configfile)
         # modifiedexample.CreateSampleConfiguration(path_to_dump_config)
-        allround_sample.CreateSampleConfiguration(configfile)
+        CreateSampleConfiguration(configfile)
 
         ModelBuilder(configfile, dumpfile)
         PrintResultsFromDump(dumpfile=dumpfile, output=os.path.join(os.getcwd(), "output", "ensys_out"))
 
-    ##########################################################################
-    # Verifiy results
-    ##########################################################################
     logger.info("Start verifying.")
 
     verify.dataframes([orig_dumpfile, dumpfile])
@@ -56,9 +86,10 @@ def oemof(goOemof, goEnsys):
 
     logger.info("Fin.")
 
-    logger.info("Größe Ensys-Dumpfile: " + str(os.path.getsize("dumps/energy_system.dump")))
-    logger.info("Größe Oemof-Dumpfile: " + str(os.path.getsize("dumps/energy_system_orig.dump")))
+    logger.info("Größe Ensys-Dumpfile: " + str(os.path.getsize("dumps/allround_energy_system.dump")))
+    logger.info("Größe Oemof-Dumpfile: " + str(os.path.getsize("dumps/allround_energy_system_orig.dump")))
 
 
 if __name__ == "__main__":
-    oemof(goOemof=True, goEnsys=True)
+    allround_samples(goOemof=True, goEnsys=True)
+    #swe_samples(goOemof=True, goEnsys=True)

@@ -1,0 +1,15 @@
+index;Einheit;Heizstab;Waescherei;WWK;RABA_Rauchgas;RABA_alternativ;Luftwaerme;AHK_RG;Abwasser_Industrie;Flusswasser_Seen
+Wirkungsgrad_el;-;0,98;NaN;NaN;NaN;NaN;NaN;NaN;NaN;NaN
+min_Leistung;MW;0,1;0;0;0;0;0;0;0;0
+max_Leistung;MW;100;0,2;2,5;10;2;1,5;30;2;10
+CAPEX;€/MW;108000;1528000;780000;352000;720000;680000;352000;1528000;780000
+OPEX;% von Invest;1;3;3;3;3;3;3;3;3
+Amortisierungszeitraum_in_Jahren;a;15;15;15;15;15;15;15;15;15
+Zinssatz;%;5;5;5;5;5;5;5;5;5
+Kosten_Fernwaermenetzausbau;€/MW;NaN;700;700;700;700;700;700;700;700
+Laenge_Fernwaermeleitung;m;;300;300;300;300;300;300;300;300
+Amortisationszeit_Netzausbau;a;NaN;40;40;40;40;40;40;40;40
+Temperaturniveau;°C;NaN;35;10;65;65;NaN;75;35;10
+Energiemenge;MWh/a;NaN;NaN;NaN;NaN;NaN;NaN;NaN;NaN;NaN
+Guetegrad;-;NaN;0,4;0,4;0,4;0,4;0,4;0,4;0,4;0,4
+Volllaststunden;h/a;;5000;7000;6000;6000;4500;;5000;7000

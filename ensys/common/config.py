@@ -6,7 +6,7 @@ class EnsysConfigContainer(BaseModel):
         """Default config container."""
         super().__init__()
 
-    def to_oemof(self):
+    def to_oemof(self, **kwargs):
         pass
 
     def build_kwargs(self, energysystem=None):
@@ -25,7 +25,7 @@ class EnsysConfigContainer(BaseModel):
 
                     for io_key in io_keys:
                         bus = energysystem.groups[io_key]
-                        if isinstance(value[io_key], float):
+                        if isinstance(value[io_key], float) or isinstance(value[io_key], list):
                             oemof_io[bus] = value[io_key]
                         else:
                             oemof_io[bus] = value[io_key].to_oemof(energysystem)
