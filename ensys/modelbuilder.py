@@ -2,10 +2,12 @@ import os.path
 import time
 from pickle import load
 
+import pandas as pd
 from oemof import solph, tools
 from oemof_visio import ESGraphRenderer
 
-from ensys.types import CONSTRAINT_TYPES
+from ensys import EnsysEnergysystem
+from ensys.types import CONSTRAINT_TYPES, FREQUENZ_TYPES
 from hsncommon.log import HsnLogger
 
 logger = HsnLogger()
@@ -15,17 +17,19 @@ class ModelBuilder:
     def __init__(self,
                  ConfigFile,
                  DumpFile,
+                 solver="gurobi",
+                 solver_verbose=False
                  ):
         """Init Modelbuilder and if given load and optimise the configuration."""
         xf = open(ConfigFile, 'rb')
         es = load(xf)
         xf.close()
 
-        BuildEnergySystem(es, DumpFile)
+        BuildEnergySystem(es, DumpFile, solver, solver_verbose)
 
 
 # gurobi direct wegen exce not found
-def BuildEnergySystem(es, file, solver="gurobi", solver_verbose=False):
+def BuildEnergySystem(es: EnsysEnergysystem, file, solver, solver_verbose):
     ##########################################################################
     # Build an Energysystem from the config
     ##########################################################################
@@ -33,13 +37,31 @@ def BuildEnergySystem(es, file, solver="gurobi", solver_verbose=False):
     filename = os.path.basename(file)
     wdir = os.path.dirname(file)
 
+    if es.frequenz is FREQUENZ_TYPES.quarter_hourly:
+        freq = "15min"
+    elif es.frequenz is FREQUENZ_TYPES.half_hourly:
+        freq = "15min"
+    elif es.frequenz is FREQUENZ_TYPES.hourly:
+        freq = "H"
+    elif es.frequenz is FREQUENZ_TYPES.daily:
+        freq = "D"
+    elif es.frequenz is FREQUENZ_TYPES.weekly:
+        freq = "7D"
+    elif es.frequenz is FREQUENZ_TYPES.monthly:
+        freq = "M"
+    else:
+        freq = "H"
+
+    timeindex = pd.date_range(start=es.start_date,
+                              periods=es.time_steps,
+                              freq=freq)
+
     oemof_es = solph.EnergySystem(
         label=es.label,
-        timeindex=es.timeindex,
-        timeincrement=es.timeincrement
+        timeindex=timeindex
     )
 
-    except_vars = ["label", "timeindex", "timeincrement", "constraints"]
+    except_vars = ["label", "start_date", "time_steps", "frequenz", "constraints"]
 
     for attr in vars(es):
         if attr not in except_vars:
@@ -127,7 +149,7 @@ def BuildEnergySystem(es, file, solver="gurobi", solver_verbose=False):
     oemof_es.results["meta"] = solph.processing.meta_results(model)
     oemof_es.results["verification"] = solph.processing.create_dataframe(model)
 
-    print(model.integral_limit_emission_factor())
+    #print(model.integral_limit_emission_factor())
 
     logger.info("Dump file with results to: " + os.path.join(wdir, filename))
 

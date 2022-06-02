@@ -1,7 +1,11 @@
-site_name: ENSYS
-site_url: https://lubojanski.com/documentation
+site_name: hsn.oemof.web.configurator
+site_url: https://pyrokar1993.github.io/hsn.oemof.web.configurator
+site_author: Andreas Lubojanski
+
+# Repository
 repo_name: pyrokar1993/ensys
-repo_url: https://github.com/pyrokar1993/ensys
+repo_url: https://github.com/pyrokar1993/hsn.oemof.web.configurator
+
 markdown_extensions:
     - toc:
         permalink: true

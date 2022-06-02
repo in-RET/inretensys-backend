@@ -7,22 +7,20 @@ from oemof.tools import economics
 
 from ensys import EnsysBus, EnsysFlow, EnsysSink, EnsysSource, EnsysTransformer, EnsysStorage, EnsysInvestment, \
     EnsysEnergysystem, EnsysNonConvex, EnsysConstraints
-from ensys.types import CONSTRAINT_TYPES
+from ensys.types import CONSTRAINT_TYPES, FREQUENZ_TYPES
 from hsncommon.log import HsnLogger
 
 
 def CreateSampleConfiguration(filename):
     logger = HsnLogger()
+
     number_of_time_steps = 24 * 7 * 12
-    date_time_index = pd.date_range(
-        "1/1/2022", periods=number_of_time_steps, freq="H"
-    )
 
     import_el = []
 
     N = number_of_time_steps  # sample count
-    P = 200 # period
-    D = 75 # width of pulse
+    P = 200  # period
+    D = 75  # width of pulse
     sig = (np.arange(N) % P < D) * 5000 + 53000
 
     demand_el = sig.tolist()
@@ -30,7 +28,7 @@ def CreateSampleConfiguration(filename):
     for x in range(0, number_of_time_steps):
         if number_of_time_steps / 3 < x < 2 * number_of_time_steps / 3:
             demand_el[x] = 62000
-        import_el.append(3000 * math.cos(1/10*x) * math.sin(1/10 * x) * math.cos(1/20*x)**3 + 54000)
+        import_el.append(3000 * math.cos(1 / 10 * x) * math.sin(1 / 10 * x) * math.cos(1 / 20 * x) ** 3 + 54000)
 
     tmp = {'demand_el': demand_el, 'import_el': import_el}
     data = pd.DataFrame(tmp)
@@ -77,8 +75,8 @@ def CreateSampleConfiguration(filename):
         label="biomass",
         outputs={bel.label: EnsysFlow(
             nonconvex=EnsysNonConvex(),
-            #fix=data["import_el"],
-            nominal_value=53000, #53000
+            # fix=data["import_el"],
+            nominal_value=53000,  # 53000
             emission_factor=0.01
         )}
     )
@@ -90,7 +88,7 @@ def CreateSampleConfiguration(filename):
         label="pp_gas",
         inputs={bgas.label: EnsysFlow()},
         outputs={bel.label: EnsysFlow(
-            #investment=EnsysInvestment(ep_costs=epc_pp_gas),
+            # investment=EnsysInvestment(ep_costs=epc_pp_gas),
             nominal_value=16000,
             min=0.1,
             max=0.8,
@@ -110,7 +108,7 @@ def CreateSampleConfiguration(filename):
 
     storage = EnsysStorage(
         label="storage",
-        #nominal_storage_capacity=10000,
+        # nominal_storage_capacity=10000,
         inputs={
             bel.label: EnsysFlow(
                 variable_costs=0.0001
@@ -128,7 +126,7 @@ def CreateSampleConfiguration(filename):
         investment=EnsysInvestment(ep_costs=epc_storage),
     )
 
-    constraint1 = EnsysConstraints(typ=CONSTRAINT_TYPES.investment_limit, limit=3100000) #2700900
+    constraint1 = EnsysConstraints(typ=CONSTRAINT_TYPES.investment_limit, limit=3100000)  # 2700900
     constraint2 = EnsysConstraints(typ=CONSTRAINT_TYPES.limit_active_flow_count_by_keyword,
                                    keyword="my_keyword",
                                    lower_limit=0,
@@ -147,7 +145,9 @@ def CreateSampleConfiguration(filename):
         storages=[storage],
         transformers=[pp_gas],
         constraints=[constraint1, constraint2, constraint3, constraint4],
-        timeindex=date_time_index
+        start_date="01/01/2022",
+        time_steps=number_of_time_steps,
+        frequenz=FREQUENZ_TYPES.hourly
     )
 
     xf = open(filename, 'wb')

@@ -33,7 +33,8 @@ def swe_samples(goOemof, goEnsys):
         createConfigBinary(configfile, datadir)
 
         ModelBuilder(ConfigFile=configfile,
-                     DumpFile=dumpfile)
+                     DumpFile=dumpfile,
+                     solver_verbose=True)
 
     logger.info("Start verifying.")
 
@@ -92,4 +93,4 @@ def allround_samples(goOemof, goEnsys):
 
 if __name__ == "__main__":
     allround_samples(goOemof=True, goEnsys=True)
-    #swe_samples(goOemof=True, goEnsys=True)
+    #swe_samples(goOemof=False, goEnsys=True)

@@ -11,11 +11,11 @@ from oemof_visio import ESGraphRenderer
 from hsncommon.log import HsnLogger
 
 
-def oemofAllroundSample(dumpfile):
+def oemofAllroundSample(dumpfile, solver_verbose=False):
     logger = HsnLogger()
     solver = "gurobi"
     number_of_time_steps = 24 * 7 * 12
-    solver_verbose = False
+    solver_verbose = solver_verbose
 
     date_time_index = pd.date_range(
         "1/1/2022", periods=number_of_time_steps, freq="H"
@@ -189,7 +189,7 @@ def oemofAllroundSample(dumpfile):
     es.results["meta"] = solph.processing.meta_results(model)
     es.results["verification"] = solph.processing.create_dataframe(model)
 
-    print(model.integral_limit_emission_factor())
+    #print(model.integral_limit_emission_factor())
 
     logger.info("Dump files to filesystem.")
     # store energy system with results
