@@ -1,3 +1,6 @@
+import os
+import pickle
+
 import pandas as pd
 
 from ensys import EnsysBus, EnsysSource, EnsysFlow, EnsysSink, EnsysTransformer, EnsysEnergysystem, EnsysStorage
@@ -95,4 +98,10 @@ def CreateSampleConfiguration(filename):
         timeindex=date_time_index
     )
 
-    es.to_file(filename)
+    wkdir = os.path.join(os.getcwd())
+    filename = "ensys_basic_config.bin"
+    file = os.path.join(wkdir, filename)
+
+    xf = open(file, 'wb')
+    pickle.dump(es, xf)
+    xf.close()

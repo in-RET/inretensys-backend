@@ -7,7 +7,7 @@ from oemof import solph, tools
 from oemof_visio import ESGraphRenderer
 
 from ensys import EnsysEnergysystem
-from ensys.types import CONSTRAINT_TYPES, FREQUENZ_TYPES
+from ensys.types import Constraints, Frequencies
 from hsncommon.log import HsnLogger
 
 logger = HsnLogger()
@@ -37,17 +37,17 @@ def BuildEnergySystem(es: EnsysEnergysystem, file, solver, solver_verbose):
     filename = os.path.basename(file)
     wdir = os.path.dirname(file)
 
-    if es.frequenz is FREQUENZ_TYPES.quarter_hourly:
+    if es.frequenz is Frequencies.quarter_hourly:
         freq = "15min"
-    elif es.frequenz is FREQUENZ_TYPES.half_hourly:
+    elif es.frequenz is Frequencies.half_hourly:
         freq = "15min"
-    elif es.frequenz is FREQUENZ_TYPES.hourly:
+    elif es.frequenz is Frequencies.hourly:
         freq = "H"
-    elif es.frequenz is FREQUENZ_TYPES.daily:
+    elif es.frequenz is Frequencies.daily:
         freq = "D"
-    elif es.frequenz is FREQUENZ_TYPES.weekly:
+    elif es.frequenz is Frequencies.weekly:
         freq = "7D"
-    elif es.frequenz is FREQUENZ_TYPES.monthly:
+    elif es.frequenz is Frequencies.monthly:
         freq = "M"
     else:
         freq = "H"
@@ -84,7 +84,7 @@ def BuildEnergySystem(es: EnsysEnergysystem, file, solver, solver_verbose):
     logger.info("Print energysystem as graph")
 
     gr = ESGraphRenderer(energy_system=oemof_es, filepath=filepath)
-    gr.view()
+    #gr.view()
 
     ##########################################################################
     # Initiate the energy system model
@@ -101,28 +101,28 @@ def BuildEnergySystem(es: EnsysEnergysystem, file, solver, solver_verbose):
         for constraint in constraints:
             kwargs = constraint.to_oemof()
 
-            if constraint.typ == CONSTRAINT_TYPES.shared_limit:
+            if constraint.typ == Constraints.shared_limit:
                 solph.constraints.shared_limit(model=model, **kwargs)
 
-            elif constraint.typ == CONSTRAINT_TYPES.investment_limit:
+            elif constraint.typ == Constraints.investment_limit:
                 model = solph.constraints.investment_limit(model=model, **kwargs)
 
-            elif constraint.typ == CONSTRAINT_TYPES.additional_investment_flow_limit:
+            elif constraint.typ == Constraints.additional_investment_flow_limit:
                 model = solph.constraints.additional_investment_flow_limit(model=model, **kwargs)
 
-            elif constraint.typ == CONSTRAINT_TYPES.generic_integral_limit:
+            elif constraint.typ == Constraints.generic_integral_limit:
                 model = solph.constraints.generic_integral_limit(om=model, **kwargs)
 
-            elif constraint.typ == CONSTRAINT_TYPES.emission_limit:
+            elif constraint.typ == Constraints.emission_limit:
                 solph.constraints.emission_limit(om=model, **kwargs)
 
-            elif constraint.typ == CONSTRAINT_TYPES.limit_active_flow_count:
+            elif constraint.typ == Constraints.limit_active_flow_count:
                 model = solph.constraints.limit_active_flow_count(model=model, **kwargs)
 
-            elif constraint.typ == CONSTRAINT_TYPES.limit_active_flow_count_by_keyword:
+            elif constraint.typ == Constraints.limit_active_flow_count_by_keyword:
                 model = solph.constraints.limit_active_flow_count_by_keyword(model=model, **kwargs)
 
-            elif constraint.typ == CONSTRAINT_TYPES.equate_variables:
+            elif constraint.typ == Constraints.equate_variables:
                 solph.constraints.equate_variables(model=model, **kwargs)
 
             else:

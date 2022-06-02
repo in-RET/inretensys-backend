@@ -5,7 +5,7 @@ from ensys import EnsysFlow, EnsysConfigContainer
 
 class EnsysSource(EnsysConfigContainer):
     label: str = "Default Source",
-    outputs: dict = None
+    outputs: dict[str, EnsysFlow] = None
 
     def __init__(self,
                  label: str = "Default Source",

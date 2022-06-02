@@ -5,14 +5,14 @@ from ensys import EnsysFlow, EnsysConfigContainer
 
 class EnsysTransformer(EnsysConfigContainer):
     label: str = "Default Transformer",
-    inputs: dict = None,
-    outputs: dict = None,
+    inputs: dict[str, EnsysFlow]  = None,
+    outputs: dict[str, EnsysFlow]  = None,
     conversion_factors: dict = None
 
     def __init__(self,
                  label: str = "Default Transformer",
-                 inputs: dict[EnsysFlow] = None,
-                 outputs: dict[EnsysFlow] = None,
+                 inputs: dict[str, EnsysFlow] = None,
+                 outputs: dict[str, EnsysFlow] = None,
                  conversion_factors=None
                  ):
         """Init the EnsysTransformer object."""

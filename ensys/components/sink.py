@@ -5,11 +5,11 @@ from ensys import EnsysFlow, EnsysConfigContainer
 
 class EnsysSink(EnsysConfigContainer):
     label: str = "Default Sink",
-    inputs: dict = None
+    inputs: dict[str, EnsysFlow] = None
 
     def __init__(self,
                  label: str = "Default Sink",
-                 inputs: dict[EnsysFlow] = None
+                 inputs: dict[str, EnsysFlow] = None
                  ):
         """Init the EnsysSink object."""
         super().__init__()

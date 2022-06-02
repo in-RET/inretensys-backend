@@ -4,7 +4,7 @@ from oemof.thermal.facades import StratifiedThermalStorage
 from ensys import EnsysConfigContainer, EnsysBus
 
 
-class EnsysStorage(EnsysConfigContainer):
+class EnsysThermalStorage(EnsysConfigContainer):
     label: str = "Default Storage"
     bus: EnsysBus = None,
     diameter: float = 2,

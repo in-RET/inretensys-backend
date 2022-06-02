@@ -1,9 +1,9 @@
 from ensys import EnsysConfigContainer
-from ensys.types import CONSTRAINT_TYPES
+from ensys.types import Constraints
 
 
 class EnsysConstraints(EnsysConfigContainer):
-    typ: CONSTRAINT_TYPES = None
+    typ: Constraints = None
     var1: object = None
     var2: object = None
     factor1: float = None
@@ -20,7 +20,7 @@ class EnsysConstraints(EnsysConfigContainer):
     lower_limit: int = None
 
     def __init__(self,
-                 typ: CONSTRAINT_TYPES,
+                 typ: Constraints,
                  var1=None,
                  var2=None,
                  name=None,
@@ -40,7 +40,7 @@ class EnsysConstraints(EnsysConfigContainer):
         super().__init__()
         self.typ = typ
 
-        if self.typ == CONSTRAINT_TYPES.shared_limit:
+        if self.typ == Constraints.shared_limit:
             # Shared_Limit
             self.quantity = quantity
             self.limit_name = limit_name
@@ -49,40 +49,40 @@ class EnsysConstraints(EnsysConfigContainer):
             self.lower_limit = lower_limit
             self.upper_limit = upper_limit
 
-        elif self.typ == CONSTRAINT_TYPES.investment_limit:
+        elif self.typ == Constraints.investment_limit:
             # Investment_limit
             self.limit = limit
 
-        elif self.typ == CONSTRAINT_TYPES.additional_investment_flow_limit:
+        elif self.typ == Constraints.additional_investment_flow_limit:
             # Additional_investment_flow_limit
             self.keyword = keyword
             self.limit = limit
 
-        elif self.typ == CONSTRAINT_TYPES.generic_integral_limit:
+        elif self.typ == Constraints.generic_integral_limit:
             # generic_integral_limit
             self.keyword = keyword
             self.flows = flows
             self.limit = limit
 
-        elif self.typ == CONSTRAINT_TYPES.emission_limit:
+        elif self.typ == Constraints.emission_limit:
             # emission_limit
             self.flows = flows
             self.limit = limit
 
-        elif self.typ == CONSTRAINT_TYPES.limit_active_flow_count:
+        elif self.typ == Constraints.limit_active_flow_count:
             # limit_active_flow_count
             self.constraint_name = constraint_name
             self.flows = flows
             self.lower_limit = lower_limit
             self.upper_limit = upper_limit
 
-        elif self.typ == CONSTRAINT_TYPES.limit_active_flow_count_by_keyword:
+        elif self.typ == Constraints.limit_active_flow_count_by_keyword:
             # limit_active_flow_count_by_keyword
             self.keyword = keyword
             self.lower_limit = lower_limit
             self.upper_limit = upper_limit
 
-        elif self.typ == CONSTRAINT_TYPES.equate_variables:
+        elif self.typ == Constraints.equate_variables:
             # equate_variables
             self.var1 = var1
             self.var2 = var2

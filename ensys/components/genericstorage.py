@@ -4,8 +4,8 @@ from ensys import EnsysFlow, EnsysInvestment, EnsysConfigContainer
 
 class EnsysStorage(EnsysConfigContainer):
     label: str = "Default Storage"
-    inputs: dict = None
-    outputs: dict = None
+    inputs: dict[str, EnsysFlow] = None
+    outputs: dict[str, EnsysFlow] = None
     nominal_storage_capacity: float = None
     invest_relation_input_capacity: float = None
     invest_relation_output_capacity: float = None
@@ -23,8 +23,8 @@ class EnsysStorage(EnsysConfigContainer):
 
     def __init__(self,
                  label: str = "Default Storage",
-                 inputs: dict[EnsysFlow] = None,
-                 outputs: dict[EnsysFlow] = None,
+                 inputs: dict[str, EnsysFlow] = None,
+                 outputs: dict[str, EnsysFlow] = None,
                  nominal_storage_capacity: float = None,
                  invest_relation_input_capacity: float = None,
                  invest_relation_output_capacity: float = None,

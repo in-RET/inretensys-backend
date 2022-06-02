@@ -1,17 +1,17 @@
 import math
+import os
 import pickle
 
 import numpy as np
 import pandas as pd
 from oemof.tools import economics
 
-from ensys import EnsysBus, EnsysFlow, EnsysSink, EnsysSource, EnsysTransformer, EnsysStorage, EnsysInvestment, \
-    EnsysEnergysystem, EnsysNonConvex, EnsysConstraints
-from ensys.types import CONSTRAINT_TYPES, FREQUENZ_TYPES
+from ensys import *
+from ensys.types import Constraints, Frequencies
 from hsncommon.log import HsnLogger
 
 
-def CreateSampleConfiguration(filename):
+def CreateSampleConfiguration():
     logger = HsnLogger()
 
     number_of_time_steps = 24 * 7 * 12
@@ -126,15 +126,15 @@ def CreateSampleConfiguration(filename):
         investment=EnsysInvestment(ep_costs=epc_storage),
     )
 
-    constraint1 = EnsysConstraints(typ=CONSTRAINT_TYPES.investment_limit, limit=3100000)  # 2700900
-    constraint2 = EnsysConstraints(typ=CONSTRAINT_TYPES.limit_active_flow_count_by_keyword,
+    constraint1 = EnsysConstraints(typ=Constraints.investment_limit, limit=3100000)  # 2700900
+    constraint2 = EnsysConstraints(typ=Constraints.limit_active_flow_count_by_keyword,
                                    keyword="my_keyword",
                                    lower_limit=0,
                                    upper_limit=1)
-    constraint3 = EnsysConstraints(typ=CONSTRAINT_TYPES.additional_investment_flow_limit,
+    constraint3 = EnsysConstraints(typ=Constraints.additional_investment_flow_limit,
                                    keyword="my_invest_limit",
                                    limit=29000)
-    constraint4 = EnsysConstraints(typ=CONSTRAINT_TYPES.emission_limit,
+    constraint4 = EnsysConstraints(typ=Constraints.emission_limit,
                                    limit=9900000)
 
     es = EnsysEnergysystem(
@@ -147,9 +147,15 @@ def CreateSampleConfiguration(filename):
         constraints=[constraint1, constraint2, constraint3, constraint4],
         start_date="01/01/2022",
         time_steps=number_of_time_steps,
-        frequenz=FREQUENZ_TYPES.hourly
+        frequenz=Frequencies.hourly
     )
 
-    xf = open(filename, 'wb')
+    wkdir = os.path.join(os.path.dirname(__file__))
+    filename = "ensys_allround_config.bin"
+    file = os.path.join(wkdir, filename)
+
+    xf = open(file, 'wb')
     pickle.dump(es, xf)
     xf.close()
+
+    return file
