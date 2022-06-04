@@ -3,78 +3,79 @@ import pickle
 
 import pandas as pd
 
-from ensys import EnsysBus, EnsysSource, EnsysFlow, EnsysSink, EnsysTransformer, EnsysEnergysystem, EnsysStorage, \
-    InRetSysModel
-from ensys.types import Frequencies, Solver
+from InRetEnsys import InRetInRetEnsysBus, InRetEnsysSource, InRetEnsysFlow, InRetEnsysSink, InRetEnsysTransformer, \
+    InRetEnsysEnergysystem, InRetEnsysStorage
+from InRetEnsys.components.model import InRetEnsysModel
+from InRetEnsys.types import Frequencies, Solver
 
 
 def CreateBasisSampleConfiguration():
     data_file = "/Users/pyrokar/Documents/GitHub/python/oemof/examples/basic_example/basic_example.csv"
     data = pd.read_csv(data_file)
 
-    bel = EnsysBus(
+    bel = InRetInRetEnsysBus(
         label="electricity"
     )
 
-    bgas = EnsysBus(
+    bgas = InRetInRetEnsysBus(
         label="natural_gas"
     )
 
-    rgas = EnsysSource(
+    rgas = InRetEnsysSource(
         label="rgas",
-        outputs={bgas.label: EnsysFlow(
+        outputs={bgas.label: InRetEnsysFlow(
             nominal_value=29825293,
             summed_max=1
         )},
     )
 
-    pv = EnsysSource(
+    pv = InRetEnsysSource(
         label="pv",
-        outputs={bel.label: EnsysFlow(
+        outputs={bel.label: InRetEnsysFlow(
             fix=data["pv"],
             nominal_value=582000
         )},
     )
 
-    wind = EnsysSource(
+    wind = InRetEnsysSource(
         label="wind",
-        outputs={bel.label: EnsysFlow(
+        outputs={bel.label: InRetEnsysFlow(
             fix=data["wind"],
             nominal_value=1000000
         )},
     )
 
-    excess_bel = EnsysSink(
+    excess_bel = InRetEnsysSink(
         label="excess_bel",
-        inputs={bel.label: EnsysFlow(
+        inputs={bel.label: InRetEnsysFlow(
         )}
     )
 
-    demand_bel = EnsysSink(
+    demand_bel = InRetEnsysSink(
         label="demand",
-        inputs={bel.label: EnsysFlow(
+        inputs={bel.label: InRetEnsysFlow(
             fix=data["demand_el"],
             nominal_value=1
         )},
     )
 
-    pp_gas = EnsysTransformer(
+    pp_gas = InRetEnsysTransformer(
         label="pp_gas",
-        inputs={bgas.label: EnsysFlow()},
-        outputs={bel.label: EnsysFlow(
+        inputs={bgas.label: InRetEnsysFlow()},
+        outputs={bel.label: InRetEnsysFlow(
             nominal_value=10e10,
             variable_costs=50
         )},
         conversion_factors={bel.label: 0.58},
     )
 
-    storage = EnsysStorage(
+    storage = InRetEnsysStorage(
         nominal_storage_capacity=10077997,
         label="storage",
-        inputs={bel.label: EnsysFlow(
+        inputs={bel.label: InRetEnsysFlow(
             nominal_value=10077997 / 6
         )},
-        outputs={bel.label: EnsysFlow(
+        outputs={bel.label: InRetEnsysFlow(
             nominal_value=10077997 / 6,
             variable_costs=0.001
         )
@@ -87,7 +88,7 @@ def CreateBasisSampleConfiguration():
 
     number_of_time_steps = 24 * 7 * 8
 
-    es = EnsysEnergysystem(
+    es = InRetEnsysEnergysystem(
         busses=[bel, bgas],
         sinks=[demand_bel, excess_bel],
         sources=[wind, pv, rgas],
@@ -98,7 +99,7 @@ def CreateBasisSampleConfiguration():
         frequenz=Frequencies.hourly
     )
 
-    model = InRetSysModel(
+    model = InRetEnsysModel(
         energysystem=es,
         solver=Solver.gurobi
     )

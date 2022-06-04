@@ -1,12 +1,12 @@
 from typing import Dict
 from oemof import solph
 
-from ensys import EnsysFlow, EnsysConfigContainer
+from InRetEnsys import InRetEnsysFlow, InRetEnsysConfigContainer
 
 
-class EnsysSink(EnsysConfigContainer):
+class InRetEnsysSink(InRetEnsysConfigContainer):
     label: str = "Default Sink"
-    inputs: Dict[str, EnsysFlow]
+    inputs: Dict[str, InRetEnsysFlow]
 
     def to_oemof(self, energysystem: solph.EnergySystem) -> solph.Sink:
         """

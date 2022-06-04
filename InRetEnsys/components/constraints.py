@@ -1,10 +1,10 @@
 from typing import Union, List, Dict
 
-from ensys import EnsysConfigContainer
-from ensys.types import Constraints
+from InRetEnsys import InRetEnsysConfigContainer
+from InRetEnsys.types import Constraints
 
 
-class EnsysConstraints(EnsysConfigContainer):
+class InRetEnsysConstraints(InRetEnsysConfigContainer):
     typ: Union[None, Constraints] = None
     var1: Union[None, object] = None
     var2: Union[None, object] = None

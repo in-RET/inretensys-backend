@@ -1,10 +1,10 @@
 from typing import Union, Dict
 from oemof import solph
 
-from ensys import EnsysConfigContainer
+from InRetEnsys import InRetEnsysConfigContainer
 
 
-class EnsysInvestment(EnsysConfigContainer):
+class InRetEnsysInvestment(InRetEnsysConfigContainer):
     maximum: float = float("+inf")
     minimum: float = 0.0
     ep_costs: float = 0.0

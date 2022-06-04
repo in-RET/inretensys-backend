@@ -1,11 +1,11 @@
 from pydantic import validator
 
-from ensys import EnsysConfigContainer, EnsysEnergysystem
-from ensys.types import Solver
+from InRetEnsys import InRetEnsysConfigContainer, InRetEnsysEnergysystem
+from InRetEnsys.types import Solver
 
 
-class InRetSysModel(EnsysConfigContainer):
-    energysystem: EnsysEnergysystem
+class InRetEnsysModel(InRetEnsysConfigContainer):
+    energysystem: InRetEnsysEnergysystem
     solver: Solver = Solver.gurobi
     solver_verbose: bool = True
 

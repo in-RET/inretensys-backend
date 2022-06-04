@@ -1,12 +1,12 @@
 from oemof import solph
 from oemof.thermal.facades import StratifiedThermalStorage
 
-from ensys import EnsysConfigContainer, EnsysBus
+from InRetEnsys import InRetEnsysConfigContainer, InRetInRetEnsysBus
 
 
-class EnsysThermalStorage(EnsysConfigContainer):
+class InRetEnsysThermalStorage(InRetEnsysConfigContainer):
     label: str = "Default Storage"
-    bus: EnsysBus = None,
+    bus: InRetInRetEnsysBus = None,
     diameter: float = 2,
     height: float = 5,
     temp_h: int = 95,

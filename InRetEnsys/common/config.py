@@ -5,7 +5,7 @@ from oemof import solph
 from pydantic import BaseModel, Extra
 
 
-class EnsysConfigContainer(BaseModel):
+class InRetEnsysConfigContainer(BaseModel):
     @pydantic.root_validator(pre=False)
     def check(cls, values):
         retVal = {}

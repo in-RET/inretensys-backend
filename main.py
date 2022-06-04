@@ -6,7 +6,7 @@ from configs.ENSYS.basic_sample import CreateBasisSampleConfiguration
 from configs.OEMOF.oemof_SWE2021_V08_O4_2045_BEW0_S1_Geoth_Wind import oemof_swe_test
 from configs.OEMOF.oemof_allround_sample import oemofAllroundSample
 from configs.OEMOF.oemof_basic_sample import oemofBasicSample
-from ensys import Verification, PrintResultsFromDump, ModelBuilder
+from InRetEnsys import Verification, PrintResultsFromDump, ModelBuilder
 from hsncommon.log import HsnLogger
 
 logger = HsnLogger()
@@ -28,7 +28,7 @@ def swe_samples(goOemof, goEnsys):
         logger.info("oemof-sample fin.")
 
     if goEnsys:
-        logger.info("Start ensys-Sample.")
+        logger.info("Start InRetEnsys-Sample.")
         configfile = createConfigBinary(datadir)
 
         ModelBuilder(ConfigFile=configfile,
@@ -141,7 +141,7 @@ def BuildConfigFiles(Allround=False, SWE=True):
 
 def main(*args, **kwargs):
     # pro job ein config file > was mit args gestartet wird
-    # ensys package als wheel
+    # InRetEnsys package als wheel
     # Only Ensys Energysystems
     wkdir = os.getcwd()
     dumpdir = os.path.join(wkdir, "dumps")

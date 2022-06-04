@@ -1,13 +1,13 @@
 from oemof import solph
 from typing import Dict
 
-from ensys import EnsysFlow, EnsysConfigContainer
+from InRetEnsys import InRetEnsysFlow, InRetEnsysConfigContainer
 
 
-class EnsysTransformer(EnsysConfigContainer):
+class InRetEnsysTransformer(InRetEnsysConfigContainer):
     label: str = "Default Transformer"
-    inputs: Dict[str, EnsysFlow] = None
-    outputs: Dict[str, EnsysFlow] = None
+    inputs: Dict[str, InRetEnsysFlow] = None
+    outputs: Dict[str, InRetEnsysFlow] = None
     conversion_factors: Dict = None
 
     def to_oemof(self, energysystem: solph.EnergySystem) -> solph.Transformer:

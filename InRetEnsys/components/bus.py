@@ -1,9 +1,9 @@
 from oemof import solph
 
-from ensys import EnsysConfigContainer
+from InRetEnsys import InRetEnsysConfigContainer
 
 
-class EnsysBus(EnsysConfigContainer):
+class InRetInRetEnsysBus(InRetEnsysConfigContainer):
     label: str
     balanced: bool = True
 

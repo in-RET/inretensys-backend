@@ -3,12 +3,12 @@ from typing import Sequence, Union, Dict
 import pandas as pd
 from oemof import solph
 
-from ensys import EnsysConfigContainer
-from ensys.components.investment import EnsysInvestment
-from ensys.components.nonconvex import EnsysNonConvex
+from InRetEnsys import InRetEnsysConfigContainer
+from InRetEnsys.components.investment import InRetEnsysInvestment
+from InRetEnsys.components.nonconvex import InRetEnsysNonConvex
 
 
-class EnsysFlow(EnsysConfigContainer):
+class InRetEnsysFlow(InRetEnsysConfigContainer):
     nominal_value: Union[None, float] = None
     # numeric or sequence or None
     fix: Union[None, float, Sequence, pd.Series] = None
@@ -21,8 +21,8 @@ class EnsysFlow(EnsysConfigContainer):
     summed_max: Union[None, float] = None
     summed_min: Union[None, float] = None
     variable_costs: Union[None, float, Sequence, pd.Series] = None
-    investment: Union[None, EnsysInvestment] = None
-    nonconvex: Union[None, EnsysNonConvex] = None
+    investment: Union[None, InRetEnsysInvestment] = None
+    nonconvex: Union[None, InRetEnsysNonConvex] = None
     kwargs: Union[None, Dict] = None
 
     def to_oemof(self, energysystem: solph.EnergySystem) -> solph.Flow:

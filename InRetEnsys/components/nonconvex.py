@@ -1,10 +1,10 @@
 from typing import Union, Dict
 from oemof import solph
 
-from ensys import EnsysConfigContainer
+from InRetEnsys import InRetEnsysConfigContainer
 
 
-class EnsysNonConvex(EnsysConfigContainer):
+class InRetEnsysNonConvex(InRetEnsysConfigContainer):
     startup_costs: Union[None, float] = None
     shutdown_costs: Union[None, float] = None
     activity_costs: Union[None, float] = None

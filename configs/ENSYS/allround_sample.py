@@ -7,8 +7,8 @@ import numpy as np
 import pandas as pd
 from oemof.tools import economics
 
-from ensys import *
-from ensys.types import Constraints, Frequencies, Solver
+from InRetEnsys import *
+from InRetEnsys.types import Constraints, Frequencies, Solver
 from hsncommon.log import HsnLogger
 
 
@@ -34,18 +34,18 @@ def CreateAllroundSampleConfiguration():
     tmp = {'demand_el': demand_el, 'import_el': import_el}
     data = pd.DataFrame(tmp)
 
-    bel = EnsysBus(label="electricity")
+    bel = InRetInRetEnsysBus(label="electricity")
 
-    bgas = EnsysBus(label="natural_gas")
+    bgas = InRetInRetEnsysBus(label="natural_gas")
 
-    excess_bel = EnsysSink(
+    excess_bel = InRetEnsysSink(
         label="excess_bel",
-        inputs={bel.label: EnsysFlow()}
+        inputs={bel.label: InRetEnsysFlow()}
     )
 
-    demand_el = EnsysSink(
+    demand_el = InRetEnsysSink(
         label="demand",
-        inputs={bel.label: EnsysFlow(
+        inputs={bel.label: InRetEnsysFlow(
             fix=data["demand_el"],
             nominal_value=1
         )}
@@ -55,22 +55,22 @@ def CreateAllroundSampleConfiguration():
     epc_rgas = economics.annuity(capex=1000, n=20, wacc=0.05)
     logger.info("epc_rgas: " + str(epc_rgas))
 
-    rgas = EnsysSource(
+    rgas = InRetEnsysSource(
         label="rgas",
         outputs={
-            bgas.label: EnsysFlow(
+            bgas.label: InRetEnsysFlow(
                 variable_costs=price_gas,
                 emission_factor=0.3,
-                investment=EnsysInvestment(ep_costs=epc_rgas,
-                                           my_invest_limit=1)
+                investment=InRetEnsysInvestment(ep_costs=epc_rgas,
+                                                my_invest_limit=1)
             )
         }
     )
 
-    import_el = EnsysSource(
+    import_el = InRetEnsysSource(
         label="biomass",
-        outputs={bel.label: EnsysFlow(
-            nonconvex=EnsysNonConvex(),
+        outputs={bel.label: InRetEnsysFlow(
+            nonconvex=InRetEnsysNonConvex(),
             # fix=data["import_el"].tolist(),
             nominal_value=53000,  # 53000
             emission_factor=0.01
@@ -80,16 +80,16 @@ def CreateAllroundSampleConfiguration():
     epc_pp_gas = economics.annuity(capex=2000, n=20, wacc=0.05)
     logger.info("epc_pp_gas: " + str(epc_pp_gas))
 
-    pp_gas = EnsysTransformer(
+    pp_gas = InRetEnsysTransformer(
         label="pp_gas",
-        inputs={bgas.label: EnsysFlow()},
-        outputs={bel.label: EnsysFlow(
+        inputs={bgas.label: InRetEnsysFlow()},
+        outputs={bel.label: InRetEnsysFlow(
             # investment=EnsysInvestment(ep_costs=epc_pp_gas),
             nominal_value=16000,
             min=0.1,
             max=0.8,
             variable_costs=0.1,
-            nonconvex=EnsysNonConvex(
+            nonconvex=InRetEnsysNonConvex(
                 minimum_uptime=20,
                 initial_status=0
             )
@@ -102,16 +102,16 @@ def CreateAllroundSampleConfiguration():
     epc_storage = economics.annuity(capex=30, n=20, wacc=0.05)
     logger.info("epc_storage: " + str(epc_storage))
 
-    storage = EnsysStorage(
+    storage = InRetEnsysStorage(
         label="storage",
         # nominal_storage_capacity=10000,
         inputs={
-            bel.label: EnsysFlow(
+            bel.label: InRetEnsysFlow(
                 variable_costs=0.0001
             )
         },
         outputs={
-            bel.label: EnsysFlow()
+            bel.label: InRetEnsysFlow()
         },
         loss_rate=0.0,
         initial_storage_level=None,
@@ -119,21 +119,21 @@ def CreateAllroundSampleConfiguration():
         outflow_conversion_factor=0.8,
         invest_relation_input_capacity=1 / 6,
         invest_relation_output_capacity=1 / 6,
-        investment=EnsysInvestment(ep_costs=epc_storage),
+        investment=InRetEnsysInvestment(ep_costs=epc_storage),
     )
 
-    constraint1 = EnsysConstraints(typ=Constraints.investment_limit, limit=3100000)  # 2700900
-    constraint2 = EnsysConstraints(typ=Constraints.limit_active_flow_count_by_keyword,
-                                   keyword="my_keyword",
-                                   lower_limit=0,
-                                   upper_limit=1)
-    constraint3 = EnsysConstraints(typ=Constraints.additional_investment_flow_limit,
-                                   keyword="my_invest_limit",
-                                   limit=29000)
-    constraint4 = EnsysConstraints(typ=Constraints.emission_limit,
-                                   limit=9900000)
+    constraint1 = InRetEnsysConstraints(typ=Constraints.investment_limit, limit=3100000)  # 2700900
+    constraint2 = InRetEnsysConstraints(typ=Constraints.limit_active_flow_count_by_keyword,
+                                        keyword="my_keyword",
+                                        lower_limit=0,
+                                        upper_limit=1)
+    constraint3 = InRetEnsysConstraints(typ=Constraints.additional_investment_flow_limit,
+                                        keyword="my_invest_limit",
+                                        limit=29000)
+    constraint4 = InRetEnsysConstraints(typ=Constraints.emission_limit,
+                                        limit=9900000)
 
-    es = EnsysEnergysystem(
+    es = InRetEnsysEnergysystem(
         busses=[bel, bgas],
         sinks=[excess_bel, demand_el],
         sources=[import_el, rgas],
@@ -145,7 +145,7 @@ def CreateAllroundSampleConfiguration():
         frequenz=Frequencies.hourly
     )
 
-    allround_model = InRetSysModel(energysystem=es,
+    allround_model = InRetEnsysModel(energysystem=es,
                                    solver=Solver.gurobi,
                                    solver_verbose=False)
 

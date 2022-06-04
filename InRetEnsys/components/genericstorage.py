@@ -1,13 +1,13 @@
 from typing import Union, Dict
 
 from oemof import solph
-from ensys import EnsysFlow, EnsysInvestment, EnsysConfigContainer
+from InRetEnsys import InRetEnsysFlow, InRetEnsysInvestment, InRetEnsysConfigContainer
 
 
-class EnsysStorage(EnsysConfigContainer):
+class InRetEnsysStorage(InRetEnsysConfigContainer):
     label: str = "Default Storage"
-    inputs: Dict[str, EnsysFlow]
-    outputs: Dict[str, EnsysFlow]
+    inputs: Dict[str, InRetEnsysFlow]
+    outputs: Dict[str, InRetEnsysFlow]
     nominal_storage_capacity: Union[None, float] = None
     invest_relation_input_capacity: Union[None, float] = None
     invest_relation_output_capacity: Union[None, float] = None
@@ -21,7 +21,7 @@ class EnsysStorage(EnsysConfigContainer):
     outflow_conversion_factor: float = 1
     min_storage_level: float = 0
     max_storage_level: float = 1
-    investment: Union[None, EnsysInvestment] = None
+    investment: Union[None, InRetEnsysInvestment] = None
 
     def to_oemof(self, energysystem: solph.EnergySystem) -> solph.GenericStorage:
         """

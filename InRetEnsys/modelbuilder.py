@@ -6,8 +6,8 @@ import pandas as pd
 from oemof import solph
 from oemof_visio import ESGraphRenderer
 
-from ensys import EnsysEnergysystem
-from ensys.types import Constraints, Frequencies, Solver
+from InRetEnsys import InRetEnsysEnergysystem
+from InRetEnsys.types import Constraints, Frequencies, Solver
 from hsncommon.log import HsnLogger
 
 logger = HsnLogger()
@@ -48,13 +48,13 @@ class ModelBuilder:
         BuildEnergySystem(model.energysystem, DumpFile, solver, model.solver_verbose)
 
 
-def BuildEnergySystem(es: EnsysEnergysystem, file: str, solver: str, solver_verbose: bool) -> None:
+def BuildEnergySystem(es: InRetEnsysEnergysystem, file: str, solver: str, solver_verbose: bool) -> None:
     """
     Build an energysystem from the config.
 
     :rtype: None
     :param es: energysystem from the binary config file
-    :type es: EnsysEnergysystem
+    :type es: InRetEnsysEnergysystem
     :param file: filename of the final dumpfile
     :type file: str
     :param solver: Solver to use for optimisation in Pyomo
