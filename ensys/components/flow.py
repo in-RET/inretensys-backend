@@ -1,3 +1,6 @@
+from typing import Sequence, Union, Dict
+
+import pandas as pd
 from oemof import solph
 
 from ensys import EnsysConfigContainer
@@ -6,60 +9,30 @@ from ensys.components.nonconvex import EnsysNonConvex
 
 
 class EnsysFlow(EnsysConfigContainer):
-    nominal_value: float = None
+    nominal_value: Union[None, float] = None
     # numeric or sequence or None
-    fix: float or list = None
+    fix: Union[None, float, Sequence, pd.Series] = None
     # numeric or sequence
-    min: float = 0.0
+    min: Union[None, float, Sequence, pd.Series] = None
     # numeric or sequence
-    max: float = 1.0
-    positive_gradient: dict = None
-    negative_gradient: dict = None
-    summed_max: float = None
-    summed_min: float = None
-    variable_costs: float or list = None
-    investment: EnsysInvestment = None
-    nonconvex: EnsysNonConvex = None
-    kwargs: dict = None
-
-    def __init__(self,
-                 nominal_value: float = None,
-                 # numeric or sequence or None
-                 fix: float or list = None,
-                 # numeric or sequence
-                 min: float = 0.0,
-                 # numeric or sequence
-                 max: float = 1.0,
-                 positive_gradient: dict = None,
-                 negative_gradient: dict = None,
-                 summed_max: float = None,
-                 summed_min: float = None,
-                 variable_costs: float or list = None,
-                 investment: EnsysInvestment = None,
-                 nonconvex: EnsysNonConvex = None,
-                 **kwargs
-                 ):
-        """Init EnsysFlow-Object."""
-        super().__init__()
-        self.nominal_value = nominal_value
-        if fix is not None:
-            self.fix = fix
-            self.min = None
-            self.max = None
-        else:
-            self.min = min
-            self.max = max
-        self.positive_gradient = positive_gradient
-        self.negative_gradient = negative_gradient
-        self.summed_min = summed_min
-        self.summed_max = summed_max
-        self.variable_costs = variable_costs
-        self.investment = investment
-        self.nonconvex = nonconvex
-        self.kwargs = kwargs
+    max: Union[None, float, Sequence, pd.Series] = None
+    positive_gradient: Union[None, Dict] = None
+    negative_gradient: Union[None, Dict] = None
+    summed_max: Union[None, float] = None
+    summed_min: Union[None, float] = None
+    variable_costs: Union[None, float, Sequence, pd.Series] = None
+    investment: Union[None, EnsysInvestment] = None
+    nonconvex: Union[None, EnsysNonConvex] = None
+    kwargs: Union[None, Dict] = None
 
     def to_oemof(self, energysystem: solph.EnergySystem) -> solph.Flow:
-        """Converts the given object to an oemof object."""
+        """
+        Return an oemof-object build with the args of the object.
+        :return: oemof-Flow-object
+        :rtype: solph.Flow
+        :param energysystem: the oemof-energysystem to build the kwargs of the object
+        :type energysystem: solph.Energysystem
+        """
         kwargs = self.build_kwargs(energysystem)
 
         return solph.Flow(**kwargs)

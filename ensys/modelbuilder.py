@@ -3,11 +3,11 @@ import time
 from pickle import load
 
 import pandas as pd
-from oemof import solph, tools
+from oemof import solph
 from oemof_visio import ESGraphRenderer
 
 from ensys import EnsysEnergysystem
-from ensys.types import Constraints, Frequencies
+from ensys.types import Constraints, Frequencies, Solver
 from hsncommon.log import HsnLogger
 
 logger = HsnLogger()
@@ -15,24 +15,53 @@ logger = HsnLogger()
 
 class ModelBuilder:
     def __init__(self,
-                 ConfigFile,
-                 DumpFile,
-                 solver="gurobi",
-                 solver_verbose=False
-                 ):
-        """Init Modelbuilder and if given load and optimise the configuration."""
+                 ConfigFile: str,
+                 DumpFile: str
+                 ) -> None:
+        """
+        Init Modelbuilder and if given load and optimise the configuration.
+
+        :return: Nothing
+        :rtype: None
+        :param ConfigFile: Path to the Configfile which contains the EnsysConfiguration
+        :param DumpFile: Path to the Dumpfile where the oemof-energysystem and the results should be stored.
+        """
         xf = open(ConfigFile, 'rb')
-        es = load(xf)
+        model = load(xf)
         xf.close()
 
-        BuildEnergySystem(es, DumpFile, solver, solver_verbose)
+        if model.solver is Solver.gurobi:
+            solver = 'gurobi'
+        elif model.solver is Solver.gurobi_direct:
+            solver = 'gurobi_direct'
+        elif model.solver is Solver.cbc:
+            solver = 'cbc'
+        elif model.solver is Solver.glpk:
+            solver = 'glpk'
+        elif model.solver is Solver.cplex:
+            solver = 'cplex'
+        elif model.solver is Solver.kiwi:
+            solver = 'kiwisolver'
+        else:
+            solver = 'gurobi'
+
+        BuildEnergySystem(model.energysystem, DumpFile, solver, model.solver_verbose)
 
 
-# gurobi direct wegen exce not found
-def BuildEnergySystem(es: EnsysEnergysystem, file, solver, solver_verbose):
-    ##########################################################################
-    # Build an Energysystem from the config
-    ##########################################################################
+def BuildEnergySystem(es: EnsysEnergysystem, file: str, solver: str, solver_verbose: bool) -> None:
+    """
+    Build an energysystem from the config.
+
+    :rtype: None
+    :param es: energysystem from the binary config file
+    :type es: EnsysEnergysystem
+    :param file: filename of the final dumpfile
+    :type file: str
+    :param solver: Solver to use for optimisation in Pyomo
+    :type solver: str
+    :param solver_verbose: Should the Solver print the output
+    :type solver_verbose: bool
+    """
     logger.info("Build an Energysystem from config file.")
     filename = os.path.basename(file)
     wdir = os.path.dirname(file)
@@ -57,7 +86,6 @@ def BuildEnergySystem(es: EnsysEnergysystem, file, solver, solver_verbose):
                               freq=freq)
 
     oemof_es = solph.EnergySystem(
-        label=es.label,
         timeindex=timeindex
     )
 
@@ -75,7 +103,7 @@ def BuildEnergySystem(es: EnsysEnergysystem, file, solver, solver_verbose):
                 if oemof_obj is not None:
                     oemof_es.add(oemof_obj)
 
-    logger.info("Building completed.")
+    logger.info("Build completed.")
 
     ##########################################################################
     # Print the EnergySystem as Graph
@@ -84,7 +112,7 @@ def BuildEnergySystem(es: EnsysEnergysystem, file, solver, solver_verbose):
     logger.info("Print energysystem as graph")
 
     gr = ESGraphRenderer(energy_system=oemof_es, filepath=filepath)
-    #gr.view()
+    # gr.view()
 
     ##########################################################################
     # Initiate the energy system model
@@ -95,10 +123,8 @@ def BuildEnergySystem(es: EnsysEnergysystem, file, solver, solver_verbose):
     ##########################################################################
     # Add Constraints to the model
     ##########################################################################
-    constraints = es.constraints
-
-    if constraints is not None:
-        for constraint in constraints:
+    if hasattr(es, "constraints"):
+        for constraint in es.constraints:
             kwargs = constraint.to_oemof()
 
             if constraint.typ == Constraints.shared_limit:
@@ -125,10 +151,6 @@ def BuildEnergySystem(es: EnsysEnergysystem, file, solver, solver_verbose):
             elif constraint.typ == Constraints.equate_variables:
                 solph.constraints.equate_variables(model=model, **kwargs)
 
-            else:
-                # do nothing
-                pass
-
     ##########################################################################
     # solving...
     ##########################################################################
@@ -149,7 +171,7 @@ def BuildEnergySystem(es: EnsysEnergysystem, file, solver, solver_verbose):
     oemof_es.results["meta"] = solph.processing.meta_results(model)
     oemof_es.results["verification"] = solph.processing.create_dataframe(model)
 
-    #print(model.integral_limit_emission_factor())
+    # print(model.integral_limit_emission_factor())
 
     logger.info("Dump file with results to: " + os.path.join(wdir, filename))
 

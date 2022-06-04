@@ -1,12 +1,11 @@
 import os
 
-import ensys
-
 from configs.ENSYS.SWE2021_V08_O4_2045_BEW0_S1_Geoth_Wind import createConfigBinary
-from configs.ENSYS.allround_sample import CreateSampleConfiguration
+from configs.ENSYS.allround_sample import CreateAllroundSampleConfiguration
+from configs.ENSYS.basic_sample import CreateBasisSampleConfiguration
 from configs.OEMOF.oemof_SWE2021_V08_O4_2045_BEW0_S1_Geoth_Wind import oemof_swe_test
 from configs.OEMOF.oemof_allround_sample import oemofAllroundSample
-
+from configs.OEMOF.oemof_basic_sample import oemofBasicSample
 from ensys import Verification, PrintResultsFromDump, ModelBuilder
 from hsncommon.log import HsnLogger
 
@@ -33,8 +32,7 @@ def swe_samples(goOemof, goEnsys):
         configfile = createConfigBinary(datadir)
 
         ModelBuilder(ConfigFile=configfile,
-                     DumpFile=dumpfile,
-                     solver_verbose=True)
+                     DumpFile=dumpfile)
 
     logger.info("Start verifying.")
 
@@ -62,20 +60,58 @@ def allround_samples(goOemof, goEnsys):
         oemofAllroundSample(orig_dumpfile)
 
         logger.info("Print results from sample.")
-        PrintResultsFromDump(dumpfile=orig_dumpfile, output=os.path.join(os.getcwd(), "output", "oemof_out"))
+        PrintResultsFromDump(dumpfile=orig_dumpfile, output=os.path.join(os.getcwd(), "output", "oemof_allround_out"))
 
         logger.info("Fin with oemof-Sample")
 
     if goEnsys:
-        configfile = CreateSampleConfiguration()
+        configfile = CreateAllroundSampleConfiguration()
 
         ModelBuilder(configfile, dumpfile)
-        PrintResultsFromDump(dumpfile=dumpfile, output=os.path.join(os.getcwd(), "output", "ensys_out"))
+        PrintResultsFromDump(dumpfile=dumpfile, output=os.path.join(os.getcwd(), "output", "ensys_allround_out"))
 
     logger.info("Start verifying.")
 
     verify.dataframes([orig_dumpfile, dumpfile])
-    verify.files("output/ensys_out", "output/oemof_out")
+    verify.files("output/ensys_allround_out", "output/oemof_allround_out")
+
+    logger.info("Fin.")
+
+    logger.info("Größe Ensys-Dumpfile: " + str(os.path.getsize(dumpfile)))
+    logger.info("Größe Oemof-Dumpfile: " + str(os.path.getsize(orig_dumpfile)))
+
+
+def basic_samples(goOemof, goEnsys):
+    filename = "basic_energy_system"
+    wkdir = os.path.join(os.getcwd(), "dumps")
+    dumpfile = os.path.join(wkdir, filename + ".dump")
+    orig_dumpfile = os.path.join(wkdir, filename + "_orig.dump")
+
+    for file in [dumpfile, orig_dumpfile]:
+        if os.path.exists(file):
+            os.remove(file)
+
+    verify = Verification()
+
+    if goOemof:
+        logger.info("Start oemof-Sample")
+        oemofBasicSample(orig_dumpfile)
+
+        logger.info("Print results from sample.")
+        PrintResultsFromDump(dumpfile=orig_dumpfile, output=os.path.join(os.getcwd(), "output", "oemof_basic_out"))
+
+        logger.info("Fin with oemof-Sample")
+
+    if goEnsys:
+        configfile = CreateBasisSampleConfiguration()
+
+        ModelBuilder(configfile, dumpfile)
+        PrintResultsFromDump(dumpfile=dumpfile, output=os.path.join(os.getcwd(), "output", "ensys_basic_out"))
+
+    logger.info("Start verifying.")
+
+    verify.dataframes([orig_dumpfile, dumpfile])
+    verify.files("output/ensys_basic_out", "output/oemof_basic_out")
 
     logger.info("Fin.")
 
@@ -85,14 +121,14 @@ def allround_samples(goOemof, goEnsys):
 
 def StartFromConfigFile(configfile, dumpfile):
     logger.info("Start Building and solving")
-    ModelBuilder(configfile, dumpfile, solver_verbose=True)
+    ModelBuilder(configfile, dumpfile)
 
 
 def BuildConfigFiles(Allround=False, SWE=True):
     configFilesList = []
 
     if Allround:
-        configFilesList.append(CreateSampleConfiguration())
+        configFilesList.append(CreateAllroundSampleConfiguration())
 
     if SWE:
         datadir = os.path.join(os.getcwd(), "configs", "DATEN", "SWE Test")
@@ -104,6 +140,8 @@ def BuildConfigFiles(Allround=False, SWE=True):
 
 
 def main(*args, **kwargs):
+    # pro job ein config file > was mit args gestartet wird
+    # ensys package als wheel
     # Only Ensys Energysystems
     wkdir = os.getcwd()
     dumpdir = os.path.join(wkdir, "dumps")
@@ -118,16 +156,15 @@ def main(*args, **kwargs):
         logger.info("Config: " + configfile)
 
         StartFromConfigFile(configfile, dumpfile)
-        PrintResultsFromDump(dumpfile=dumpfile, output=os.path.join(os.getcwd(), "output", "ensys_out"))
+        # PrintResultsFromDump(dumpfile=dumpfile, output=os.path.join(os.getcwd(), "output", "ensys_out"))
 
         i += 1
 
 
 if __name__ == "__main__":
-    print(ensys.__all__)
-
-    # main(sys.argv[1:])
+    # main()
 
     # For Debugging
     allround_samples(goOemof=True, goEnsys=True)
+    # basic_samples(goOemof=True, goEnsys=True)
     # swe_samples(goOemof=True, goEnsys=True)

@@ -13,6 +13,10 @@ class HsnLogger:
         *args,
         **kwargs
     ) -> None:
+        """
+
+        :rtype: object
+        """
         self.__debug_level = debug_level
 
     def output(self, msg):

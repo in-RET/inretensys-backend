@@ -14,8 +14,9 @@ from ensys.components.transformer import EnsysTransformer
 from ensys.components.energysystem import EnsysEnergysystem
 from ensys.components.genericstorage import EnsysStorage
 from ensys.components.constraints import EnsysConstraints
+from ensys.components.model import InRetSysModel
 # Systembuilder
 from ensys.modelbuilder import ModelBuilder
 
 __all__ = ['EnsysConfigContainer', 'EnsysFlow', 'EnsysBus', 'EnsysSink', 'EnsysSource', 'EnsysNonConvex', 'EnsysInvestment', 'EnsysTransformer',
-           'EnsysEnergysystem', 'EnsysStorage', 'EnsysConstraints', 'ModelBuilder']
+           'EnsysEnergysystem', 'EnsysStorage', 'EnsysConstraints', 'InRetSysModel']

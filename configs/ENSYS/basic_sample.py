@@ -3,10 +3,12 @@ import pickle
 
 import pandas as pd
 
-from ensys import EnsysBus, EnsysSource, EnsysFlow, EnsysSink, EnsysTransformer, EnsysEnergysystem, EnsysStorage
+from ensys import EnsysBus, EnsysSource, EnsysFlow, EnsysSink, EnsysTransformer, EnsysEnergysystem, EnsysStorage, \
+    InRetSysModel
+from ensys.types import Frequencies, Solver
 
 
-def CreateSampleConfiguration(filename):
+def CreateBasisSampleConfiguration():
     data_file = "/Users/pyrokar/Documents/GitHub/python/oemof/examples/basic_example/basic_example.csv"
     data = pd.read_csv(data_file)
 
@@ -63,7 +65,7 @@ def CreateSampleConfiguration(filename):
             nominal_value=10e10,
             variable_costs=50
         )},
-        conversion_factors={bel: 0.58},
+        conversion_factors={bel.label: 0.58},
     )
 
     storage = EnsysStorage(
@@ -84,24 +86,29 @@ def CreateSampleConfiguration(filename):
     )
 
     number_of_time_steps = 24 * 7 * 8
-    date_time_index = pd.date_range(
-        "1/1/2012", periods=number_of_time_steps, freq="H"
-    )
 
     es = EnsysEnergysystem(
-        label="ensys Energysystem",
         busses=[bel, bgas],
         sinks=[demand_bel, excess_bel],
         sources=[wind, pv, rgas],
         transformers=[pp_gas],
         storages=[storage],
-        timeindex=date_time_index
+        time_steps=number_of_time_steps,
+        start_date="1/1/2012",
+        frequenz=Frequencies.hourly
     )
 
-    wkdir = os.path.join(os.getcwd())
+    model = InRetSysModel(
+        energysystem=es,
+        solver=Solver.gurobi
+    )
+
+    wkdir = os.path.join(os.path.dirname(__file__))
     filename = "ensys_basic_config.bin"
     file = os.path.join(wkdir, filename)
 
     xf = open(file, 'wb')
-    pickle.dump(es, xf)
+    pickle.dump(model, xf)
     xf.close()
+
+    return file

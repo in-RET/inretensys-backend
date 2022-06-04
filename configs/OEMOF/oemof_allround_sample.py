@@ -1,3 +1,4 @@
+import json
 import math
 import os
 import time
@@ -196,3 +197,5 @@ def oemofAllroundSample(dumpfile, solver_verbose=False):
     wdir = os.path.dirname(dumpfile)
     dumpfilename = os.path.basename(dumpfile)
     es.dump(dpath=wdir, filename=dumpfilename)
+
+

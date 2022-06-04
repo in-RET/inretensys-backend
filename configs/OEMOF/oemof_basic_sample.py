@@ -4,10 +4,10 @@ import pandas as pd
 from oemof import solph
 
 
-def oemofSample(dumpfile):
-    solver = "cbc"  # 'glpk', 'gurobi',....
+def oemofBasicSample(dumpfile):
+    solver = "gurobi"  # 'glpk', 'gurobi',....
     number_of_time_steps = 24 * 7 * 8
-    solver_verbose = False  # show/hide solver output
+    solver_verbose = True  # show/hide solver output
 
     date_time_index = pd.date_range(
         "1/1/2012", periods=number_of_time_steps, freq="H"
@@ -110,7 +110,7 @@ def oemofSample(dumpfile):
     # add results to the energy system to make it possible to store them.
     energysystem.results["main"] = solph.processing.results(model)
     energysystem.results["meta"] = solph.processing.meta_results(model)
-    energysystem.results["compare"] = solph.processing.create_dataframe(model)
+    energysystem.results["verification"] = solph.processing.create_dataframe(model)
 
     # store energy system with results
     wdir = os.path.dirname(dumpfile)

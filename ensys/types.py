@@ -19,3 +19,12 @@ class Frequencies(Enum):
     daily = 3,
     weekly = 4,
     monthly = 5
+
+
+class Solver(Enum):
+    cbc = 0,
+    gurobi = 1,
+    gurobi_direct = 2,
+    glpk = 3,
+    cplex = 4,
+    kiwi = 5

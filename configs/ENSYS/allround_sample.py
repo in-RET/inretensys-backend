@@ -1,3 +1,4 @@
+import json
 import math
 import os
 import pickle
@@ -7,11 +8,11 @@ import pandas as pd
 from oemof.tools import economics
 
 from ensys import *
-from ensys.types import Constraints, Frequencies
+from ensys.types import Constraints, Frequencies, Solver
 from hsncommon.log import HsnLogger
 
 
-def CreateSampleConfiguration():
+def CreateAllroundSampleConfiguration():
     logger = HsnLogger()
 
     number_of_time_steps = 24 * 7 * 12
@@ -33,18 +34,13 @@ def CreateSampleConfiguration():
     tmp = {'demand_el': demand_el, 'import_el': import_el}
     data = pd.DataFrame(tmp)
 
-    bel = EnsysBus(
-        label="electricity"
-    )
+    bel = EnsysBus(label="electricity")
 
-    bgas = EnsysBus(
-        label="natural_gas"
-    )
+    bgas = EnsysBus(label="natural_gas")
 
     excess_bel = EnsysSink(
         label="excess_bel",
-        inputs={bel.label: EnsysFlow(
-        )}
+        inputs={bel.label: EnsysFlow()}
     )
 
     demand_el = EnsysSink(
@@ -75,7 +71,7 @@ def CreateSampleConfiguration():
         label="biomass",
         outputs={bel.label: EnsysFlow(
             nonconvex=EnsysNonConvex(),
-            # fix=data["import_el"],
+            # fix=data["import_el"].tolist(),
             nominal_value=53000,  # 53000
             emission_factor=0.01
         )}
@@ -138,7 +134,6 @@ def CreateSampleConfiguration():
                                    limit=9900000)
 
     es = EnsysEnergysystem(
-        label="ensys Energysystem",
         busses=[bel, bgas],
         sinks=[excess_bel, demand_el],
         sources=[import_el, rgas],
@@ -150,12 +145,16 @@ def CreateSampleConfiguration():
         frequenz=Frequencies.hourly
     )
 
+    allround_model = InRetSysModel(energysystem=es,
+                                   solver=Solver.gurobi,
+                                   solver_verbose=False)
+
     wkdir = os.path.join(os.path.dirname(__file__))
     filename = "ensys_allround_config.bin"
     file = os.path.join(wkdir, filename)
 
     xf = open(file, 'wb')
-    pickle.dump(es, xf)
+    pickle.dump(allround_model, xf)
     xf.close()
 
     return file

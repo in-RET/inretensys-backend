@@ -1,57 +1,30 @@
+from typing import Union, Dict
 from oemof import solph
 
 from ensys import EnsysConfigContainer
 
 
 class EnsysNonConvex(EnsysConfigContainer):
-    startup_costs: float = None
-    shutdown_costs: float = None
-    activity_costs: float = None
-    minimum_uptime: int = None
-    minimum_downtime: int = None
-    maximum_startups: int = None
-    maximum_shutdowns: int = None
+    startup_costs: Union[None, float] = None
+    shutdown_costs: Union[None, float] = None
+    activity_costs: Union[None, float] = None
+    minimum_uptime: Union[None, int] = None
+    minimum_downtime: Union[None, int] = None
+    maximum_startups: Union[None, int] = None
+    maximum_shutdowns: Union[None, int] = None
     # 0/False = off, 1/True = on
     initial_status: int = 0
-    positive_gradient: dict = None
-    negative_gradient: dict = None
-
-    def __init__(self,
-                 startup_costs=None,
-                 shutdown_costs=None,
-                 activity_costs=None,
-                 minimum_uptime: int = None,
-                 minimum_downtime: int = None,
-                 maximum_startups: int = None,
-                 maximum_shutdowns: int = None,
-                 # 0/False = off, 1/True = on
-                 initial_status: int = 0,
-                 positive_gradient: dict = None,
-                 negative_gradient: dict = None
-                 ):
-        """Init the EnsysNonconvex object."""
-        super().__init__()
-        self.startup_costs = startup_costs
-        self.shutdown_costs = shutdown_costs
-        self.activity_costs = activity_costs
-        self.minimum_uptime = minimum_uptime
-        self.minimum_downtime = minimum_downtime
-        self.maximum_startups = maximum_startups
-        self.maximum_shutdowns = maximum_shutdowns
-        self.initial_status = initial_status
-
-        if positive_gradient is None:
-            self.positive_gradient = {"ub": None, "costs": 0}
-        else:
-            self.positive_gradient = positive_gradient
-
-        if negative_gradient is None:
-            self.negative_gradient = {"ub": None, "costs": 0}
-        else:
-            self.negative_gradient = negative_gradient
+    positive_gradient: Union[None, Dict] = None
+    negative_gradient: Union[None, Dict] = None
 
     def to_oemof(self, energysystem: solph.EnergySystem) -> solph.NonConvex:
-        """Converts the given object to an oemof object."""
+        """
+        Return an oemof-object build with the args of the object.
+        :return: oemof-NonConvex-object
+        :rtype: solph.NonConvex
+        :param energysystem: the oemof-energysystem to build the kwargs of the object
+        :type energysystem: solph.Energysystem
+        """
         kwargs = self.build_kwargs(energysystem)
 
         return solph.NonConvex(**kwargs)

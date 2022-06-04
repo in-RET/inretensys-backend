@@ -1,16 +1,44 @@
-from pydantic import BaseModel
+from typing import Dict
+
+import pydantic
+from oemof import solph
+from pydantic import BaseModel, Extra
 
 
 class EnsysConfigContainer(BaseModel):
-    def __init__(self):
-        """Default config container."""
-        super().__init__()
+    @pydantic.root_validator(pre=False)
+    def check(cls, values):
+        retVal = {}
 
-    def to_oemof(self, **kwargs):
+        for value in values:
+            if values[value] is not None:
+                retVal[value] = values[value]
+
+        return retVal
+
+    class Config:
+        arbitrary_types_allowed = True
+        extra = Extra.allow
+
+    def to_oemof(self, **kwargs: Dict[str, dict]) -> None:
+        """
+        Abstract function for subclasses to build the Oemof-Object from an Ensys-Object
+        :return: Nothing.
+        :rtype: None
+        :param kwargs: Dictionary with all arguments from the configuration object.
+        :type kwargs: Dict[str, dict]
+        """
         pass
 
-    def build_kwargs(self, energysystem=None):
-        """Build a dict of arguments for the init of the oemof objects."""
+    def build_kwargs(self, energysystem: solph.EnergySystem) -> Dict[str, dict]:
+        """
+        Build a dict of arguments for the init of the oemof objects.
+
+        :return: Dictionary with all variables of the given object.
+        :rtype: dict[str, dict]
+        :param energysystem: Oemof-Energysystem
+        :type energysystem: solph.EnergySystem
+        """
         kwargs = {}
         special_keys = ["inputs", "outputs", "conversion_factors"]
 
@@ -18,34 +46,29 @@ class EnsysConfigContainer(BaseModel):
 
         for key in args:
             value = args[key]
-            if value is not None and key != "typ":
-                if key in special_keys:
-                    oemof_io = {}
-                    io_keys = list(value.keys())
+            if key in special_keys:
+                oemof_io = {}
+                io_keys = list(value.keys())
 
-                    for io_key in io_keys:
-                        bus = energysystem.groups[io_key]
-                        if isinstance(value[io_key], float) or isinstance(value[io_key], list):
-                            oemof_io[bus] = value[io_key]
-                        else:
-                            oemof_io[bus] = value[io_key].to_oemof(energysystem)
-
-                    kwargs[key] = oemof_io
-
-                elif key == "nonconvex":
-                    if value is False or value is True:
-                        kwargs[key] = value
+                for io_key in io_keys:
+                    bus = energysystem.groups[io_key]
+                    if isinstance(value[io_key], float) or isinstance(value[io_key], list):
+                        oemof_io[bus] = value[io_key]
                     else:
-                        kwargs[key] = value.to_oemof(energysystem)
+                        oemof_io[bus] = value[io_key].to_oemof(energysystem)
 
-                elif key == "investment":
+                kwargs[key] = oemof_io
+
+            elif key == "nonconvex":
+                if type(value) is bool:
+                    kwargs[key] = value
+                else:
                     kwargs[key] = value.to_oemof(energysystem)
 
-                elif key == "kwargs":
-                    for arg in args[key]:
-                        kwargs[arg] = args[key][arg]
+            elif key == "investment":
+                kwargs[key] = value.to_oemof(energysystem)
 
-                else:
-                    kwargs[key] = value
+            else:
+                kwargs[key] = value
 
         return kwargs
