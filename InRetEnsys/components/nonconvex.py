@@ -1,4 +1,5 @@
 from typing import Union, Dict
+
 from oemof import solph
 
 from InRetEnsys import InRetEnsysConfigContainer
@@ -20,6 +21,7 @@ class InRetEnsysNonConvex(InRetEnsysConfigContainer):
     def to_oemof(self, energysystem: solph.EnergySystem) -> solph.NonConvex:
         """
         Return an oemof-object build with the args of the object.
+
         :return: oemof-NonConvex-object
         :rtype: solph.NonConvex
         :param energysystem: the oemof-energysystem to build the kwargs of the object

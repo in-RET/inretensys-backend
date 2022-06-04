@@ -1,7 +1,7 @@
 import os.path
 
-from oemof import solph
 from matplotlib import pyplot as plt
+from oemof import solph
 
 
 def PrintResultsFromDump(output, dumpfile=None, energysystem=None):
@@ -98,8 +98,3 @@ def PrintResultsFromDump(output, dumpfile=None, energysystem=None):
         print(my_results, file=xfile)
 
     xfile.close()
-
-
-
-
-

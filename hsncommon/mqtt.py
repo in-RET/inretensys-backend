@@ -1,8 +1,10 @@
-import paho.mqtt.client as mqtt
-import jsons
 import atexit
 
+import jsons
+import paho.mqtt.client as mqtt
+
 from .log import HsnLogger
+
 log = HsnLogger()
 
 

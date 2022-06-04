@@ -20,16 +20,6 @@ class InRetEnsysConfigContainer(BaseModel):
         arbitrary_types_allowed = True
         extra = Extra.allow
 
-    def to_oemof(self, **kwargs: Dict[str, dict]) -> None:
-        """
-        Abstract function for subclasses to build the Oemof-Object from an Ensys-Object
-        :return: Nothing.
-        :rtype: None
-        :param kwargs: Dictionary with all arguments from the configuration object.
-        :type kwargs: Dict[str, dict]
-        """
-        pass
-
     def build_kwargs(self, energysystem: solph.EnergySystem) -> Dict[str, dict]:
         """
         Build a dict of arguments for the init of the oemof objects.
@@ -60,7 +50,7 @@ class InRetEnsysConfigContainer(BaseModel):
                 kwargs[key] = oemof_io
 
             elif key == "nonconvex":
-                if type(value) is bool:
+                if isinstance(value, bool):
                     kwargs[key] = value
                 else:
                     kwargs[key] = value.to_oemof(energysystem)

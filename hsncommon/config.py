@@ -1,6 +1,7 @@
-import jsons
-import pickle
 import inspect
+import pickle
+
+import jsons
 
 
 class HsnConfigContainer(object):
@@ -36,5 +37,3 @@ def set_init_function_args_as_instance_args(s, l):
     args_dict = get_function_args(s.__init__, l)
     for key in args_dict:
         setattr(s, key, args_dict[key])
-
-

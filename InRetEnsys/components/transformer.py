@@ -1,7 +1,8 @@
-from oemof import solph
 from typing import Dict
+from oemof import solph
 
-from InRetEnsys import InRetEnsysFlow, InRetEnsysConfigContainer
+from InRetEnsys.common.config import InRetEnsysConfigContainer
+from InRetEnsys.components.flow import InRetEnsysFlow
 
 
 class InRetEnsysTransformer(InRetEnsysConfigContainer):
@@ -13,6 +14,7 @@ class InRetEnsysTransformer(InRetEnsysConfigContainer):
     def to_oemof(self, energysystem: solph.EnergySystem) -> solph.Transformer:
         """
         Return an oemof-object build with the args of the object.
+
         :return: oemof-Transformer-object
         :rtype: solph.Transformer
         :param energysystem: the oemof-energysystem to build the kwargs of the object

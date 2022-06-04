@@ -1,7 +1,10 @@
 from typing import Union, Dict
 
 from oemof import solph
-from InRetEnsys import InRetEnsysFlow, InRetEnsysInvestment, InRetEnsysConfigContainer
+
+from InRetEnsys.common.config import InRetEnsysConfigContainer
+from InRetEnsys.components.flow import InRetEnsysFlow
+from InRetEnsys.components.investment import InRetEnsysInvestment
 
 
 class InRetEnsysStorage(InRetEnsysConfigContainer):
@@ -26,6 +29,7 @@ class InRetEnsysStorage(InRetEnsysConfigContainer):
     def to_oemof(self, energysystem: solph.EnergySystem) -> solph.GenericStorage:
         """
         Return an oemof-object build with the args of the object.
+
         :return: oemof-GenericStorage-object
         :rtype: solph.GenericStorage
         :param energysystem: the oemof-energysystem to build the kwargs of the object

@@ -1,9 +1,10 @@
-import threading
 import atexit
+import threading
 import time
 import uuid
 
 from .log import HsnLogger
+
 log = HsnLogger()
 
 class HsnBackgroundThreadHandler(object):

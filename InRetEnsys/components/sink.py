@@ -1,7 +1,8 @@
 from typing import Dict
 from oemof import solph
 
-from InRetEnsys import InRetEnsysFlow, InRetEnsysConfigContainer
+from InRetEnsys.common.config import InRetEnsysConfigContainer
+from InRetEnsys.components.flow import InRetEnsysFlow
 
 
 class InRetEnsysSink(InRetEnsysConfigContainer):
@@ -11,6 +12,7 @@ class InRetEnsysSink(InRetEnsysConfigContainer):
     def to_oemof(self, energysystem: solph.EnergySystem) -> solph.Sink:
         """
         Return an oemof-object build with the args of the object.
+
         :return: oemof-Sink-object
         :rtype: solph.Sink
         :param energysystem: the oemof-energysystem to build the kwargs of the object

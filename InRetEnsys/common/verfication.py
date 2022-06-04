@@ -2,8 +2,8 @@ import os.path
 from hashlib import sha256
 from typing import List
 
-import pandas as pd
 from oemof import solph
+
 from hsncommon.log import HsnLogger
 
 
@@ -19,14 +19,11 @@ def calculateSHA256(filepath):
 
 
 class Verification:
-    def __init__(self):
-        """Init verification class."""
-        pass
-
     @classmethod
     def files(cls, filepathA: str, filepathB: str) -> None:
         """
         Verifies two given files.
+
         :return: Nothing
         :rtype: None
         :param filepathA: Filepath of file A to compare

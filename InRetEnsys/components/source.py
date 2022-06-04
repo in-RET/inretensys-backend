@@ -1,7 +1,8 @@
 from typing import Dict
 from oemof import solph
 
-from InRetEnsys import InRetEnsysFlow, InRetEnsysConfigContainer
+from InRetEnsys.common.config import InRetEnsysConfigContainer
+from InRetEnsys.components.flow import InRetEnsysFlow
 
 
 class InRetEnsysSource(InRetEnsysConfigContainer):
@@ -11,6 +12,7 @@ class InRetEnsysSource(InRetEnsysConfigContainer):
     def to_oemof(self, energysystem: solph.EnergySystem) -> solph.Source:
         """
         Return an oemof-object build with the args of the object.
+
         :return: oemof-Source-object
         :rtype: solph.Source
         :param energysystem: the oemof-energysystem to build the kwargs of the object

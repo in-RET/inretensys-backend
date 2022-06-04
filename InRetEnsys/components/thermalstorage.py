@@ -22,6 +22,7 @@ class InRetEnsysThermalStorage(InRetEnsysConfigContainer):
     def to_oemof(self, energysystem: solph.EnergySystem) -> StratifiedThermalStorage:
         """
         Return an oemof-object build with the args of the object.
+
         :return: oemof-StratifiedThermalStorage-object
         :rtype: solph.StratifiedThermalStorage
         :param energysystem: the oemof-energysystem to build the kwargs of the object

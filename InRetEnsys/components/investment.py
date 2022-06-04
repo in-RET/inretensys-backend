@@ -1,4 +1,5 @@
 from typing import Union, Dict
+
 from oemof import solph
 
 from InRetEnsys import InRetEnsysConfigContainer
@@ -16,6 +17,7 @@ class InRetEnsysInvestment(InRetEnsysConfigContainer):
     def to_oemof(self, energysystem: solph.EnergySystem) -> solph.Investment:
         """
         Return an oemof-object build with the args of the object.
+
         :return: oemof-investment-object
         :rtype: solph.Investment
         :param energysystem: the oemof-energysystem to build the kwargs of the object

@@ -1,12 +1,12 @@
 import os
 
+from InRetEnsys import Verification, PrintResultsFromDump, ModelBuilder
 from configs.ENSYS.SWE2021_V08_O4_2045_BEW0_S1_Geoth_Wind import createConfigBinary
 from configs.ENSYS.allround_sample import CreateAllroundSampleConfiguration
 from configs.ENSYS.basic_sample import CreateBasisSampleConfiguration
 from configs.OEMOF.oemof_SWE2021_V08_O4_2045_BEW0_S1_Geoth_Wind import oemof_swe_test
 from configs.OEMOF.oemof_allround_sample import oemofAllroundSample
 from configs.OEMOF.oemof_basic_sample import oemofBasicSample
-from InRetEnsys import Verification, PrintResultsFromDump, ModelBuilder
 from hsncommon.log import HsnLogger
 
 logger = HsnLogger()

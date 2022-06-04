@@ -1,12 +1,12 @@
 from typing import Union
 
-from InRetEnsys.components.bus import InRetInRetEnsysBus
 from InRetEnsys.common.config import InRetEnsysConfigContainer
-from InRetEnsys.components.source import InRetEnsysSource
-from InRetEnsys.components.sink import InRetEnsysSink
-from InRetEnsys.components.transformer import InRetEnsysTransformer
-from InRetEnsys.components.genericstorage import InRetEnsysStorage
+from InRetEnsys.components.bus import InRetInRetEnsysBus
 from InRetEnsys.components.constraints import InRetEnsysConstraints
+from InRetEnsys.components.genericstorage import InRetEnsysStorage
+from InRetEnsys.components.sink import InRetEnsysSink
+from InRetEnsys.components.source import InRetEnsysSource
+from InRetEnsys.components.transformer import InRetEnsysTransformer
 from InRetEnsys.types import Frequencies
 
 
