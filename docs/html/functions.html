@@ -9,6 +9,10 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -47,6 +51,22 @@ $(function() {
 </script>
 <div id="main-nav"></div>
 </div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('functions.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -62,17 +82,104 @@ $(function() {
 </div>
 
 <div class="contents">
-<div class="textblock">Here is a list of all documented class members with links to the class documentation for each member:</div><ul>
-<li>__init__()&#160;:&#160;<a class="el" href="d5/d2e/class_in_ret_ensys_1_1common_1_1verfication_1_1_verification.html#a92c6c69838bd87ebb527b9256f6ee567">InRetEnsys.common.verfication.Verification</a>, <a class="el" href="de/d9f/class_in_ret_ensys_1_1modelbuilder_1_1_model_builder.html#afdc881ce4abdfae21d261150b0962903">InRetEnsys.modelbuilder.ModelBuilder</a></li>
+<div class="textblock">Here is a list of all documented class members with links to the class documentation for each member:</div>
+
+<h3><a id="index_a" name="index_a"></a>- a -</h3><ul>
+<li>additional_investment_flow_limit&#160;:&#160;<a class="el" href="d6/da3/class_in_ret_ensys_1_1types_1_1_constraints.html#a7de1cc7aee36f64d2c65dd38ee854a75">InRetEnsys.types.Constraints</a></li>
+<li>arbitrary_types_allowed&#160;:&#160;<a class="el" href="d4/d38/class_in_ret_ensys_1_1common_1_1config_1_1_in_ret_ensys_config_container_1_1_config.html#ac7ffc17e0c54498207ddd7fa9b0b162d">InRetEnsys.common.config.InRetEnsysConfigContainer.Config</a></li>
+</ul>
+
+
+<h3><a id="index_b" name="index_b"></a>- b -</h3><ul>
 <li>build_kwargs()&#160;:&#160;<a class="el" href="dd/dbf/class_in_ret_ensys_1_1common_1_1config_1_1_in_ret_ensys_config_container.html#a638bab167ff117fe6baea0b2cdd97731">InRetEnsys.common.config.InRetEnsysConfigContainer</a></li>
+</ul>
+
+
+<h3><a id="index_c" name="index_c"></a>- c -</h3><ul>
+<li>cbc&#160;:&#160;<a class="el" href="df/dce/class_in_ret_ensys_1_1types_1_1_solver.html#a74c7a41dbe0d597c00edc779d09b288f">InRetEnsys.types.Solver</a></li>
+<li>check()&#160;:&#160;<a class="el" href="dd/dbf/class_in_ret_ensys_1_1common_1_1config_1_1_in_ret_ensys_config_container.html#ac887d707c7f62a096b51ade7479cbbd2">InRetEnsys.common.config.InRetEnsysConfigContainer</a></li>
+<li>cplex&#160;:&#160;<a class="el" href="df/dce/class_in_ret_ensys_1_1types_1_1_solver.html#af92aa9749d82d7398385998d07fd6692">InRetEnsys.types.Solver</a></li>
+</ul>
+
+
+<h3><a id="index_d" name="index_d"></a>- d -</h3><ul>
+<li>daily&#160;:&#160;<a class="el" href="d9/d0b/class_in_ret_ensys_1_1types_1_1_frequencies.html#a2111d661cb9fa3052e3d1b1acc7ac00c">InRetEnsys.types.Frequencies</a></li>
 <li>dataframes()&#160;:&#160;<a class="el" href="d5/d2e/class_in_ret_ensys_1_1common_1_1verfication_1_1_verification.html#a77d42afd844e21ef666c9d830600c629">InRetEnsys.common.verfication.Verification</a></li>
+</ul>
+
+
+<h3><a id="index_e" name="index_e"></a>- e -</h3><ul>
+<li>emission_limit&#160;:&#160;<a class="el" href="d6/da3/class_in_ret_ensys_1_1types_1_1_constraints.html#acf088cabd9c9f67dcd07b3226cf65499">InRetEnsys.types.Constraints</a></li>
+<li>equate_variables&#160;:&#160;<a class="el" href="d6/da3/class_in_ret_ensys_1_1types_1_1_constraints.html#a0efd7a67460db29e39b0ab9ea112ac55">InRetEnsys.types.Constraints</a></li>
+<li>extra&#160;:&#160;<a class="el" href="d4/d38/class_in_ret_ensys_1_1common_1_1config_1_1_in_ret_ensys_config_container_1_1_config.html#a9217964650c4fa87c0d672ff2e53045a">InRetEnsys.common.config.InRetEnsysConfigContainer.Config</a></li>
+</ul>
+
+
+<h3><a id="index_f" name="index_f"></a>- f -</h3><ul>
 <li>files()&#160;:&#160;<a class="el" href="d5/d2e/class_in_ret_ensys_1_1common_1_1verfication_1_1_verification.html#a225c5ef225a2494d254cbf3454411dc8">InRetEnsys.common.verfication.Verification</a></li>
-<li>to_oemof()&#160;:&#160;<a class="el" href="dd/dbf/class_in_ret_ensys_1_1common_1_1config_1_1_in_ret_ensys_config_container.html#a28c08aa42410ba6a09622407dab9414c">InRetEnsys.common.config.InRetEnsysConfigContainer</a>, <a class="el" href="d3/d61/class_in_ret_ensys_1_1components_1_1bus_1_1_in_ret_in_ret_ensys_bus.html#afbdeda46343e2144def8792e16bd3042">InRetEnsys.components.bus.InRetInRetEnsysBus</a>, <a class="el" href="d9/da6/class_in_ret_ensys_1_1components_1_1constraints_1_1_in_ret_ensys_constraints.html#a24ebd8ac2ecc24d101937c29b7427ecf">InRetEnsys.components.constraints.InRetEnsysConstraints</a>, <a class="el" href="d8/d13/class_in_ret_ensys_1_1components_1_1flow_1_1_in_ret_ensys_flow.html#a18af6fbb7aaf8d3629ad3d9712e18270">InRetEnsys.components.flow.InRetEnsysFlow</a>, <a class="el" href="d4/ddc/class_in_ret_ensys_1_1components_1_1genericstorage_1_1_in_ret_ensys_storage.html#a1e91da5525453408f34781953874611f">InRetEnsys.components.genericstorage.InRetEnsysStorage</a>, <a class="el" href="d2/d38/class_in_ret_ensys_1_1components_1_1investment_1_1_in_ret_ensys_investment.html#acf154c47a202f2bc301e47a4db992ec7">InRetEnsys.components.investment.InRetEnsysInvestment</a>, <a class="el" href="d3/ded/class_in_ret_ensys_1_1components_1_1nonconvex_1_1_in_ret_ensys_non_convex.html#a9f928b2c655ffbe19e1763b527f8ea57">InRetEnsys.components.nonconvex.InRetEnsysNonConvex</a>, <a class="el" href="d9/d60/class_in_ret_ensys_1_1components_1_1sink_1_1_in_ret_ensys_sink.html#ae8cb79ae2137bf74b293676d0fcffb65">InRetEnsys.components.sink.InRetEnsysSink</a>, <a class="el" href="d7/db4/class_in_ret_ensys_1_1components_1_1source_1_1_in_ret_ensys_source.html#acf7ad844ac5e5d45d55c2a750ecf560e">InRetEnsys.components.source.InRetEnsysSource</a>, <a class="el" href="d0/d0a/class_in_ret_ensys_1_1components_1_1thermalstorage_1_1_in_ret_ensys_thermal_storage.html#aa0991204881bcbbfae2e5130e3bb1066">InRetEnsys.components.thermalstorage.InRetEnsysThermalStorage</a>, <a class="el" href="d1/d3c/class_in_ret_ensys_1_1components_1_1transformer_1_1_in_ret_ensys_transformer.html#aab4d95838a20802133cecc105a694a29">InRetEnsys.components.transformer.InRetEnsysTransformer</a></li>
+</ul>
+
+
+<h3><a id="index_g" name="index_g"></a>- g -</h3><ul>
+<li>generic_integral_limit&#160;:&#160;<a class="el" href="d6/da3/class_in_ret_ensys_1_1types_1_1_constraints.html#ae66c12ca1616d9dc228ccd95e8f9166f">InRetEnsys.types.Constraints</a></li>
+<li>glpk&#160;:&#160;<a class="el" href="df/dce/class_in_ret_ensys_1_1types_1_1_solver.html#a1219cde496b21cd03304838852698496">InRetEnsys.types.Solver</a></li>
+<li>gurobi&#160;:&#160;<a class="el" href="df/dce/class_in_ret_ensys_1_1types_1_1_solver.html#a3ddbb4a20d1b4c851577050dd8dd362c">InRetEnsys.types.Solver</a></li>
+<li>gurobi_direct&#160;:&#160;<a class="el" href="df/dce/class_in_ret_ensys_1_1types_1_1_solver.html#a6513240b09826d7c89358ef573fc6953">InRetEnsys.types.Solver</a></li>
+</ul>
+
+
+<h3><a id="index_h" name="index_h"></a>- h -</h3><ul>
+<li>half_hourly&#160;:&#160;<a class="el" href="d9/d0b/class_in_ret_ensys_1_1types_1_1_frequencies.html#a2cf6985a8dc7e6a9975beaafa8dc58bb">InRetEnsys.types.Frequencies</a></li>
+<li>hourly&#160;:&#160;<a class="el" href="d9/d0b/class_in_ret_ensys_1_1types_1_1_frequencies.html#a1436933d0384986c0c618775716d09b1">InRetEnsys.types.Frequencies</a></li>
+</ul>
+
+
+<h3><a id="index_i" name="index_i"></a>- i -</h3><ul>
+<li>investment_limit&#160;:&#160;<a class="el" href="d6/da3/class_in_ret_ensys_1_1types_1_1_constraints.html#a61099b948f021ae5b12a88e3e60cc2e4">InRetEnsys.types.Constraints</a></li>
+</ul>
+
+
+<h3><a id="index_k" name="index_k"></a>- k -</h3><ul>
+<li>kiwi&#160;:&#160;<a class="el" href="df/dce/class_in_ret_ensys_1_1types_1_1_solver.html#a79a870ce85d25e1a840011c4ea744d3d">InRetEnsys.types.Solver</a></li>
+</ul>
+
+
+<h3><a id="index_l" name="index_l"></a>- l -</h3><ul>
+<li>limit_active_flow_count&#160;:&#160;<a class="el" href="d6/da3/class_in_ret_ensys_1_1types_1_1_constraints.html#a2c2fe3af6b3927e64bbf5a56b3f7532e">InRetEnsys.types.Constraints</a></li>
+<li>limit_active_flow_count_by_keyword&#160;:&#160;<a class="el" href="d6/da3/class_in_ret_ensys_1_1types_1_1_constraints.html#a54152c69442deb05f64ad20c67d9460e">InRetEnsys.types.Constraints</a></li>
+</ul>
+
+
+<h3><a id="index_m" name="index_m"></a>- m -</h3><ul>
+<li>monthly&#160;:&#160;<a class="el" href="d9/d0b/class_in_ret_ensys_1_1types_1_1_frequencies.html#ab0fc1eddc9c3d8fd44223c92d04166d0">InRetEnsys.types.Frequencies</a></li>
+</ul>
+
+
+<h3><a id="index_q" name="index_q"></a>- q -</h3><ul>
+<li>quarter_hourly&#160;:&#160;<a class="el" href="d9/d0b/class_in_ret_ensys_1_1types_1_1_frequencies.html#af53ee1092ce064c95272a90d7dd224fc">InRetEnsys.types.Frequencies</a></li>
+</ul>
+
+
+<h3><a id="index_s" name="index_s"></a>- s -</h3><ul>
+<li>shared_limit&#160;:&#160;<a class="el" href="d6/da3/class_in_ret_ensys_1_1types_1_1_constraints.html#a62b25f4c80af51a7b09f73057cec0da7">InRetEnsys.types.Constraints</a></li>
+</ul>
+
+
+<h3><a id="index_t" name="index_t"></a>- t -</h3><ul>
+<li>to_oemof()&#160;:&#160;<a class="el" href="db/dd8/class_in_ret_ensys_1_1components_1_1bus_1_1_in_ret_ensys_bus.html#afb9fcc175039936ffa9e095db1d1dac9">InRetEnsys.components.bus.InRetEnsysBus</a>, <a class="el" href="d9/da6/class_in_ret_ensys_1_1components_1_1constraints_1_1_in_ret_ensys_constraints.html#a24ebd8ac2ecc24d101937c29b7427ecf">InRetEnsys.components.constraints.InRetEnsysConstraints</a>, <a class="el" href="d8/d13/class_in_ret_ensys_1_1components_1_1flow_1_1_in_ret_ensys_flow.html#a18af6fbb7aaf8d3629ad3d9712e18270">InRetEnsys.components.flow.InRetEnsysFlow</a>, <a class="el" href="d4/ddc/class_in_ret_ensys_1_1components_1_1genericstorage_1_1_in_ret_ensys_storage.html#a1e91da5525453408f34781953874611f">InRetEnsys.components.genericstorage.InRetEnsysStorage</a>, <a class="el" href="d2/d38/class_in_ret_ensys_1_1components_1_1investment_1_1_in_ret_ensys_investment.html#acf154c47a202f2bc301e47a4db992ec7">InRetEnsys.components.investment.InRetEnsysInvestment</a>, <a class="el" href="d3/ded/class_in_ret_ensys_1_1components_1_1nonconvex_1_1_in_ret_ensys_non_convex.html#a9f928b2c655ffbe19e1763b527f8ea57">InRetEnsys.components.nonconvex.InRetEnsysNonConvex</a>, <a class="el" href="d9/d60/class_in_ret_ensys_1_1components_1_1sink_1_1_in_ret_ensys_sink.html#ae8cb79ae2137bf74b293676d0fcffb65">InRetEnsys.components.sink.InRetEnsysSink</a>, <a class="el" href="d7/db4/class_in_ret_ensys_1_1components_1_1source_1_1_in_ret_ensys_source.html#acf7ad844ac5e5d45d55c2a750ecf560e">InRetEnsys.components.source.InRetEnsysSource</a>, <a class="el" href="d0/d0a/class_in_ret_ensys_1_1components_1_1thermalstorage_1_1_in_ret_ensys_thermal_storage.html#aa0991204881bcbbfae2e5130e3bb1066">InRetEnsys.components.thermalstorage.InRetEnsysThermalStorage</a>, <a class="el" href="d1/d3c/class_in_ret_ensys_1_1components_1_1transformer_1_1_in_ret_ensys_transformer.html#aab4d95838a20802133cecc105a694a29">InRetEnsys.components.transformer.InRetEnsysTransformer</a></li>
+</ul>
+
+
+<h3><a id="index_w" name="index_w"></a>- w -</h3><ul>
+<li>weekly&#160;:&#160;<a class="el" href="d9/d0b/class_in_ret_ensys_1_1types_1_1_frequencies.html#afd2ada9f5d6ef5c0bcf8d133fd9c3bcf">InRetEnsys.types.Frequencies</a></li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4 </li>
+  </ul>
+</div>
 </body>
 </html>

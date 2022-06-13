@@ -1,5 +1,10 @@
 \hypertarget{class_in_ret_ensys_1_1types_1_1_solver}{}\doxysection{In\+Ret\+Ensys.\+types.\+Solver Class Reference}
 \label{class_in_ret_ensys_1_1types_1_1_solver}\index{InRetEnsys.types.Solver@{InRetEnsys.types.Solver}}
+
+
+Enumeration for all selectable solvers.  
+
+
 Inheritance diagram for In\+Ret\+Ensys.\+types.\+Solver\+:\begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -11,24 +16,29 @@ Inheritance diagram for In\+Ret\+Ensys.\+types.\+Solver\+:\begin{figure}[H]
 \item 
 \mbox{\Hypertarget{class_in_ret_ensys_1_1types_1_1_solver_a74c7a41dbe0d597c00edc779d09b288f}\label{class_in_ret_ensys_1_1types_1_1_solver_a74c7a41dbe0d597c00edc779d09b288f}} 
 int {\bfseries cbc} = 0,
-\item 
+\begin{DoxyCompactList}\small\item\em COIN-\/\+OR Branch-\/and-\/\+Cut \mbox{\hyperlink{class_in_ret_ensys_1_1types_1_1_solver}{Solver}}. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_in_ret_ensys_1_1types_1_1_solver_a3ddbb4a20d1b4c851577050dd8dd362c}\label{class_in_ret_ensys_1_1types_1_1_solver_a3ddbb4a20d1b4c851577050dd8dd362c}} 
 int {\bfseries gurobi} = 1,
-\item 
+\begin{DoxyCompactList}\small\item\em Gurobi MILP \mbox{\hyperlink{class_in_ret_ensys_1_1types_1_1_solver}{Solver}}. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_in_ret_ensys_1_1types_1_1_solver_a6513240b09826d7c89358ef573fc6953}\label{class_in_ret_ensys_1_1types_1_1_solver_a6513240b09826d7c89358ef573fc6953}} 
 int {\bfseries gurobi\+\_\+direct} = 2,
-\item 
+\begin{DoxyCompactList}\small\item\em Gurobi MILP \mbox{\hyperlink{class_in_ret_ensys_1_1types_1_1_solver}{Solver}}. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_in_ret_ensys_1_1types_1_1_solver_a1219cde496b21cd03304838852698496}\label{class_in_ret_ensys_1_1types_1_1_solver_a1219cde496b21cd03304838852698496}} 
 int {\bfseries glpk} = 3,
-\item 
+\begin{DoxyCompactList}\small\item\em GNU Linear Programming Kit \mbox{\hyperlink{class_in_ret_ensys_1_1types_1_1_solver}{Solver}}. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_in_ret_ensys_1_1types_1_1_solver_af92aa9749d82d7398385998d07fd6692}\label{class_in_ret_ensys_1_1types_1_1_solver_af92aa9749d82d7398385998d07fd6692}} 
 int {\bfseries cplex} = 4,
-\item 
+\begin{DoxyCompactList}\small\item\em IBM ILOG CPLEX Optimization. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_in_ret_ensys_1_1types_1_1_solver_a79a870ce85d25e1a840011c4ea744d3d}\label{class_in_ret_ensys_1_1types_1_1_solver_a79a870ce85d25e1a840011c4ea744d3d}} 
 int {\bfseries kiwi} = 5
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em kiwisolver from pypi \end{DoxyCompactList}\end{DoxyCompactItemize}
 
+
+\doxysubsection{Detailed Description}
+Enumeration for all selectable solvers. 
+
+gurobi is the default solver of a In\+Ret\+Ensys-\/\+Model, but it requires a license. cbc is freely avaiable but not so performant. 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-In\+Ret\+Ensys/types.\+py\end{DoxyCompactItemize}
+In\+Ret\+Ensys/\mbox{\hyperlink{types_8py}{types.\+py}}\end{DoxyCompactItemize}

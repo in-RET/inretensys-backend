@@ -1,5 +1,10 @@
 \hypertarget{class_in_ret_ensys_1_1components_1_1flow_1_1_in_ret_ensys_flow}{}\doxysection{In\+Ret\+Ensys.\+components.\+flow.\+In\+Ret\+Ensys\+Flow Class Reference}
 \label{class_in_ret_ensys_1_1components_1_1flow_1_1_in_ret_ensys_flow}\index{InRetEnsys.components.flow.InRetEnsysFlow@{InRetEnsys.components.flow.InRetEnsysFlow}}
+
+
+Container which contains the params for an oemof-\/flow.  
+
+
 Inheritance diagram for In\+Ret\+Ensys.\+components.\+flow.\+In\+Ret\+Ensys\+Flow\+:\begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -10,7 +15,39 @@ Inheritance diagram for In\+Ret\+Ensys.\+components.\+flow.\+In\+Ret\+Ensys\+Flo
 \begin{DoxyCompactItemize}
 \item 
 solph.\+Flow \mbox{\hyperlink{class_in_ret_ensys_1_1components_1_1flow_1_1_in_ret_ensys_flow_a18af6fbb7aaf8d3629ad3d9712e18270}{to\+\_\+oemof}} (self, solph.\+Energy\+System energysystem)
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Returns an oemof-\/object from the given args of this object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Container which contains the params for an oemof-\/flow. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nominal\+\_\+value} & \\
+\hline
+{\em fix} & \\
+\hline
+{\em min} & \\
+\hline
+{\em max} & \\
+\hline
+{\em positive\+\_\+gradient} & \\
+\hline
+{\em negative\+\_\+gradient} & \\
+\hline
+{\em summed\+\_\+max} & \\
+\hline
+{\em summed\+\_\+min} & \\
+\hline
+{\em variable\+\_\+costs} & \\
+\hline
+{\em investement} & In\+Ret\+Ensys-\/\+Investment-\/\+Object, if the Flow should be optimized for an Investmentlimit. \\
+\hline
+{\em nonconvex} & In\+Ret\+Ensys-\/\+Non\+Convex-\/\+Object, if the Flow should be nonconvex. Non possible if the flow is an Investmentflow. \\
+\hline
+{\em kwargs} & Keyword-\/\+Arguments for special Keywords, used by constraints. \\
+\hline
+\end{DoxyParams}
 
 
 \doxysubsection{Member Function Documentation}
@@ -20,16 +57,22 @@ solph.\+Flow \mbox{\hyperlink{class_in_ret_ensys_1_1components_1_1flow_1_1_in_re
 \doxysubsubsection{\texorpdfstring{to\_oemof()}{to\_oemof()}}
 {\footnotesize\ttfamily  solph.\+Flow In\+Ret\+Ensys.\+components.\+flow.\+In\+Ret\+Ensys\+Flow.\+to\+\_\+oemof (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{solph.\+Energy\+System}]{energysystem }\end{DoxyParamCaption})}
 
-\begin{DoxyVerb}Return an oemof-object build with the args of the object.
-:return: oemof-Flow-object
-:rtype: solph.Flow
-:param energysystem: the oemof-energysystem to build the kwargs of the object
-:type energysystem: solph.Energysystem
-\end{DoxyVerb}
- 
 
-Reimplemented from \mbox{\hyperlink{class_in_ret_ensys_1_1common_1_1config_1_1_in_ret_ensys_config_container_a28c08aa42410ba6a09622407dab9414c}{In\+Ret\+Ensys.\+common.\+config.\+In\+Ret\+Ensys\+Config\+Container}}.
 
+Returns an oemof-\/object from the given args of this object. 
+
+Builts a dictionary with all keywords given by the object and returns the oemof object initialised with these \textquotesingle{}kwargs\textquotesingle{}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The Object Pointer \\
+\hline
+{\em energysystem} & The oemof-\/\+Energysystem to reference other objects i.\+e. for flows. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+solph.\+Flow-\/Object (oemof) 
+\end{DoxyReturn}
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}

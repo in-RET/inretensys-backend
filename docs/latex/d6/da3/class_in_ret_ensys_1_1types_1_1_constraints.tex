@@ -1,5 +1,10 @@
 \hypertarget{class_in_ret_ensys_1_1types_1_1_constraints}{}\doxysection{In\+Ret\+Ensys.\+types.\+Constraints Class Reference}
 \label{class_in_ret_ensys_1_1types_1_1_constraints}\index{InRetEnsys.types.Constraints@{InRetEnsys.types.Constraints}}
+
+
+Enumeration for all selectable \mbox{\hyperlink{class_in_ret_ensys_1_1types_1_1_constraints}{Constraints}} which can be added to an Py\+Omo-\/\+Model.  
+
+
 Inheritance diagram for In\+Ret\+Ensys.\+types.\+Constraints\+:\begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -11,30 +16,72 @@ Inheritance diagram for In\+Ret\+Ensys.\+types.\+Constraints\+:\begin{figure}[H]
 \item 
 \mbox{\Hypertarget{class_in_ret_ensys_1_1types_1_1_constraints_a62b25f4c80af51a7b09f73057cec0da7}\label{class_in_ret_ensys_1_1types_1_1_constraints_a62b25f4c80af51a7b09f73057cec0da7}} 
 int {\bfseries shared\+\_\+limit} = 0
-\item 
+\begin{DoxyCompactList}\small\item\em Adds a constraint to the given model that restricts the weighted sum of variables to a corridor. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_in_ret_ensys_1_1types_1_1_constraints_a61099b948f021ae5b12a88e3e60cc2e4}\label{class_in_ret_ensys_1_1types_1_1_constraints_a61099b948f021ae5b12a88e3e60cc2e4}} 
 int {\bfseries investment\+\_\+limit} = 1
-\item 
-\mbox{\Hypertarget{class_in_ret_ensys_1_1types_1_1_constraints_a7de1cc7aee36f64d2c65dd38ee854a75}\label{class_in_ret_ensys_1_1types_1_1_constraints_a7de1cc7aee36f64d2c65dd38ee854a75}} 
-int {\bfseries additional\+\_\+investment\+\_\+flow\+\_\+limit} = 2
-\item 
-\mbox{\Hypertarget{class_in_ret_ensys_1_1types_1_1_constraints_ae66c12ca1616d9dc228ccd95e8f9166f}\label{class_in_ret_ensys_1_1types_1_1_constraints_ae66c12ca1616d9dc228ccd95e8f9166f}} 
-int {\bfseries generic\+\_\+integral\+\_\+limit} = 3
-\item 
+\begin{DoxyCompactList}\small\item\em Set an absolute limit for the total investment costs of an investment optimization problem\+: \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_in_ret_ensys_1_1types_1_1_constraints_a7de1cc7aee36f64d2c65dd38ee854a75}{additional\+\_\+investment\+\_\+flow\+\_\+limit}} = 2
+\begin{DoxyCompactList}\small\item\em Global limit for investment flows weighted by an attribute keyword. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_in_ret_ensys_1_1types_1_1_constraints_ae66c12ca1616d9dc228ccd95e8f9166f}{generic\+\_\+integral\+\_\+limit}} = 3
+\begin{DoxyCompactList}\small\item\em Set a global limit for flows weighted by attribute called keyword. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_in_ret_ensys_1_1types_1_1_constraints_acf088cabd9c9f67dcd07b3226cf65499}\label{class_in_ret_ensys_1_1types_1_1_constraints_acf088cabd9c9f67dcd07b3226cf65499}} 
 int {\bfseries emission\+\_\+limit} = 4
-\item 
-\mbox{\Hypertarget{class_in_ret_ensys_1_1types_1_1_constraints_a2c2fe3af6b3927e64bbf5a56b3f7532e}\label{class_in_ret_ensys_1_1types_1_1_constraints_a2c2fe3af6b3927e64bbf5a56b3f7532e}} 
-int {\bfseries limit\+\_\+active\+\_\+flow\+\_\+count} = 5
-\item 
-\mbox{\Hypertarget{class_in_ret_ensys_1_1types_1_1_constraints_a54152c69442deb05f64ad20c67d9460e}\label{class_in_ret_ensys_1_1types_1_1_constraints_a54152c69442deb05f64ad20c67d9460e}} 
-int {\bfseries limit\+\_\+active\+\_\+flow\+\_\+count\+\_\+by\+\_\+keyword} = 6
-\item 
+\begin{DoxyCompactList}\small\item\em Short handle for \mbox{\hyperlink{class_in_ret_ensys_1_1types_1_1_constraints_ae66c12ca1616d9dc228ccd95e8f9166f}{generic\+\_\+integral\+\_\+limit()}} with keyword=”emission\+\_\+factor”. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_in_ret_ensys_1_1types_1_1_constraints_a2c2fe3af6b3927e64bbf5a56b3f7532e}{limit\+\_\+active\+\_\+flow\+\_\+count}} = 5
+\begin{DoxyCompactList}\small\item\em Set limits (lower and/or upper) for the number of concurrently active Non\+Convex flows. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_in_ret_ensys_1_1types_1_1_constraints_a54152c69442deb05f64ad20c67d9460e}{limit\+\_\+active\+\_\+flow\+\_\+count\+\_\+by\+\_\+keyword}} = 6
+\begin{DoxyCompactList}\small\item\em This wrapper for limit\+\_\+active\+\_\+flow\+\_\+count allows to set limits to the count of concurrently active flows by using a keyword instead of a list. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_in_ret_ensys_1_1types_1_1_constraints_a0efd7a67460db29e39b0ab9ea112ac55}\label{class_in_ret_ensys_1_1types_1_1_constraints_a0efd7a67460db29e39b0ab9ea112ac55}} 
 int {\bfseries equate\+\_\+variables} = 7
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Adds a constraint to the given model that set two variables to equal adaptable by a factor. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
+
+\doxysubsection{Detailed Description}
+Enumeration for all selectable \mbox{\hyperlink{class_in_ret_ensys_1_1types_1_1_constraints}{Constraints}} which can be added to an Py\+Omo-\/\+Model. 
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_in_ret_ensys_1_1types_1_1_constraints_a7de1cc7aee36f64d2c65dd38ee854a75}\label{class_in_ret_ensys_1_1types_1_1_constraints_a7de1cc7aee36f64d2c65dd38ee854a75}} 
+\index{InRetEnsys.types.Constraints@{InRetEnsys.types.Constraints}!additional\_investment\_flow\_limit@{additional\_investment\_flow\_limit}}
+\index{additional\_investment\_flow\_limit@{additional\_investment\_flow\_limit}!InRetEnsys.types.Constraints@{InRetEnsys.types.Constraints}}
+\doxysubsubsection{\texorpdfstring{additional\_investment\_flow\_limit}{additional\_investment\_flow\_limit}}
+{\footnotesize\ttfamily int In\+Ret\+Ensys.\+types.\+Constraints.\+additional\+\_\+investment\+\_\+flow\+\_\+limit = 2\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Global limit for investment flows weighted by an attribute keyword. 
+
+This constraint is only valid for Flows not for components such as an investment storage. The attribute named by keyword has to be added to every Investment attribute of the flow you want to take into account. Total value of keyword attributes after optimization can be retrieved calling the oemof.\+solph.\+Model.\+invest\+\_\+limit\+\_\+\$\{keyword\}(). \[{\sum_{i \in IF}  P_i \cdot w_i \leq limit} \] With IF being the set of Investment\+Flows considered for the integral limit. \mbox{\Hypertarget{class_in_ret_ensys_1_1types_1_1_constraints_ae66c12ca1616d9dc228ccd95e8f9166f}\label{class_in_ret_ensys_1_1types_1_1_constraints_ae66c12ca1616d9dc228ccd95e8f9166f}} 
+\index{InRetEnsys.types.Constraints@{InRetEnsys.types.Constraints}!generic\_integral\_limit@{generic\_integral\_limit}}
+\index{generic\_integral\_limit@{generic\_integral\_limit}!InRetEnsys.types.Constraints@{InRetEnsys.types.Constraints}}
+\doxysubsubsection{\texorpdfstring{generic\_integral\_limit}{generic\_integral\_limit}}
+{\footnotesize\ttfamily int In\+Ret\+Ensys.\+types.\+Constraints.\+generic\+\_\+integral\+\_\+limit = 3\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Set a global limit for flows weighted by attribute called keyword. 
+
+The attribute named by keyword has to be added to every flow you want to take into account. \mbox{\Hypertarget{class_in_ret_ensys_1_1types_1_1_constraints_a2c2fe3af6b3927e64bbf5a56b3f7532e}\label{class_in_ret_ensys_1_1types_1_1_constraints_a2c2fe3af6b3927e64bbf5a56b3f7532e}} 
+\index{InRetEnsys.types.Constraints@{InRetEnsys.types.Constraints}!limit\_active\_flow\_count@{limit\_active\_flow\_count}}
+\index{limit\_active\_flow\_count@{limit\_active\_flow\_count}!InRetEnsys.types.Constraints@{InRetEnsys.types.Constraints}}
+\doxysubsubsection{\texorpdfstring{limit\_active\_flow\_count}{limit\_active\_flow\_count}}
+{\footnotesize\ttfamily int In\+Ret\+Ensys.\+types.\+Constraints.\+limit\+\_\+active\+\_\+flow\+\_\+count = 5\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Set limits (lower and/or upper) for the number of concurrently active Non\+Convex flows. 
+
+The flows are given as a list. \mbox{\Hypertarget{class_in_ret_ensys_1_1types_1_1_constraints_a54152c69442deb05f64ad20c67d9460e}\label{class_in_ret_ensys_1_1types_1_1_constraints_a54152c69442deb05f64ad20c67d9460e}} 
+\index{InRetEnsys.types.Constraints@{InRetEnsys.types.Constraints}!limit\_active\_flow\_count\_by\_keyword@{limit\_active\_flow\_count\_by\_keyword}}
+\index{limit\_active\_flow\_count\_by\_keyword@{limit\_active\_flow\_count\_by\_keyword}!InRetEnsys.types.Constraints@{InRetEnsys.types.Constraints}}
+\doxysubsubsection{\texorpdfstring{limit\_active\_flow\_count\_by\_keyword}{limit\_active\_flow\_count\_by\_keyword}}
+{\footnotesize\ttfamily int In\+Ret\+Ensys.\+types.\+Constraints.\+limit\+\_\+active\+\_\+flow\+\_\+count\+\_\+by\+\_\+keyword = 6\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+This wrapper for limit\+\_\+active\+\_\+flow\+\_\+count allows to set limits to the count of concurrently active flows by using a keyword instead of a list. 
+
+The constraint will be named \+\_\+count. 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-In\+Ret\+Ensys/types.\+py\end{DoxyCompactItemize}
+In\+Ret\+Ensys/\mbox{\hyperlink{types_8py}{types.\+py}}\end{DoxyCompactItemize}

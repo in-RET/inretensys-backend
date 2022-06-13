@@ -1,5 +1,10 @@
 \hypertarget{class_in_ret_ensys_1_1components_1_1genericstorage_1_1_in_ret_ensys_storage}{}\doxysection{In\+Ret\+Ensys.\+components.\+genericstorage.\+In\+Ret\+Ensys\+Storage Class Reference}
 \label{class_in_ret_ensys_1_1components_1_1genericstorage_1_1_in_ret_ensys_storage}\index{InRetEnsys.components.genericstorage.InRetEnsysStorage@{InRetEnsys.components.genericstorage.InRetEnsysStorage}}
+
+
+Container which contains the params for an oemof-\/genericstorage.  
+
+
 Inheritance diagram for In\+Ret\+Ensys.\+components.\+genericstorage.\+In\+Ret\+Ensys\+Storage\+:\begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -10,7 +15,7 @@ Inheritance diagram for In\+Ret\+Ensys.\+components.\+genericstorage.\+In\+Ret\+
 \begin{DoxyCompactItemize}
 \item 
 solph.\+Generic\+Storage \mbox{\hyperlink{class_in_ret_ensys_1_1components_1_1genericstorage_1_1_in_ret_ensys_storage_a1e91da5525453408f34781953874611f}{to\+\_\+oemof}} (self, solph.\+Energy\+System energysystem)
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Returns an oemof-\/object from the given args of this object. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Static Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -25,6 +30,48 @@ solph.\+Generic\+Storage \mbox{\hyperlink{class_in_ret_ensys_1_1components_1_1ge
 \end{DoxyCompactItemize}
 
 
+\doxysubsection{Detailed Description}
+Container which contains the params for an oemof-\/genericstorage. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em label} & str = \char`\"{}\+Default Storage\char`\"{} \\
+\hline
+{\em inputs} & Dict\mbox{[}str, In\+Ret\+Ensys\+Flow\mbox{]} \\
+\hline
+{\em outputs} & Dict\mbox{[}str, In\+Ret\+Ensys\+Flow\mbox{]} \\
+\hline
+{\em nominal\+\_\+storage\+\_\+capacity} & Union\mbox{[}None, float\mbox{]} = None \\
+\hline
+{\em invest\+\_\+relation\+\_\+input\+\_\+capacity} & Union\mbox{[}None, float\mbox{]} = None \\
+\hline
+{\em invest\+\_\+relation\+\_\+output\+\_\+capacity} & Union\mbox{[}None, float\mbox{]} = None \\
+\hline
+{\em invest\+\_\+relation\+\_\+input\+\_\+output} & Union\mbox{[}None, float\mbox{]} = None \\
+\hline
+{\em initial\+\_\+storage\+\_\+level} & Union\mbox{[}None, float\mbox{]} = None \\
+\hline
+{\em balanced} & bool = True \\
+\hline
+{\em loss\+\_\+rate} & float = 0.\+0 \\
+\hline
+{\em fixed\+\_\+losses\+\_\+relative} & Union\mbox{[}None, float\mbox{]} = None \\
+\hline
+{\em fixed\+\_\+losses\+\_\+absolute} & Union\mbox{[}None, float\mbox{]} = None \\
+\hline
+{\em inflow\+\_\+conversion\+\_\+factor} & float = 1 \\
+\hline
+{\em outflow\+\_\+conversion\+\_\+factor} & float = 1 \\
+\hline
+{\em min\+\_\+storage\+\_\+level} & float = 0 \\
+\hline
+{\em max\+\_\+storage\+\_\+level} & float = 1 \\
+\hline
+{\em investment} & Union\mbox{[}None, In\+Ret\+Ensys\+Investment\mbox{]} = None \\
+\hline
+\end{DoxyParams}
+
+
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{class_in_ret_ensys_1_1components_1_1genericstorage_1_1_in_ret_ensys_storage_a1e91da5525453408f34781953874611f}\label{class_in_ret_ensys_1_1components_1_1genericstorage_1_1_in_ret_ensys_storage_a1e91da5525453408f34781953874611f}} 
 \index{InRetEnsys.components.genericstorage.InRetEnsysStorage@{InRetEnsys.components.genericstorage.InRetEnsysStorage}!to\_oemof@{to\_oemof}}
@@ -32,16 +79,22 @@ solph.\+Generic\+Storage \mbox{\hyperlink{class_in_ret_ensys_1_1components_1_1ge
 \doxysubsubsection{\texorpdfstring{to\_oemof()}{to\_oemof()}}
 {\footnotesize\ttfamily  solph.\+Generic\+Storage In\+Ret\+Ensys.\+components.\+genericstorage.\+In\+Ret\+Ensys\+Storage.\+to\+\_\+oemof (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{solph.\+Energy\+System}]{energysystem }\end{DoxyParamCaption})}
 
-\begin{DoxyVerb}Return an oemof-object build with the args of the object.
-:return: oemof-GenericStorage-object
-:rtype: solph.GenericStorage
-:param energysystem: the oemof-energysystem to build the kwargs of the object
-:type energysystem: solph.Energysystem
-\end{DoxyVerb}
- 
 
-Reimplemented from \mbox{\hyperlink{class_in_ret_ensys_1_1common_1_1config_1_1_in_ret_ensys_config_container_a28c08aa42410ba6a09622407dab9414c}{In\+Ret\+Ensys.\+common.\+config.\+In\+Ret\+Ensys\+Config\+Container}}.
 
+Returns an oemof-\/object from the given args of this object. 
+
+Builts a dictionary with all keywords given by the object and returns the oemof object initialised with these \textquotesingle{}kwargs\textquotesingle{}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The Object Pointer \\
+\hline
+{\em energysystem} & The oemof-\/\+Energysystem to reference other objects i.\+e. for flows. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+solph.\+Generic\+Storage-\/Object (oemof) 
+\end{DoxyReturn}
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}

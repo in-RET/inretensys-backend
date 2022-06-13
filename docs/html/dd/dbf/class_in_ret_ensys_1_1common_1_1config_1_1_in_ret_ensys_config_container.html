@@ -9,6 +9,10 @@
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
+<link href="../../navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../resize.js"></script>
+<script type="text/javascript" src="../../navtreedata.js"></script>
+<script type="text/javascript" src="../../navtree.js"></script>
 <link href="../../search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../search/searchdata.js"></script>
 <script type="text/javascript" src="../../search/search.js"></script>
@@ -46,6 +50,23 @@ $(function() {
 /* @license-end */
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('dd/dbf/class_in_ret_ensys_1_1common_1_1config_1_1_in_ret_ensys_config_container.html','../../'); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -60,11 +81,6 @@ $(function() {
 </iframe>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="../../df/da1/namespace_in_ret_ensys.html">InRetEnsys</a></li><li class="navelem"><b>common</b></li><li class="navelem"><b>config</b></li><li class="navelem"><a class="el" href="../../dd/dbf/class_in_ret_ensys_1_1common_1_1config_1_1_in_ret_ensys_config_container.html">InRetEnsysConfigContainer</a></li>  </ul>
-</div>
-</div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
@@ -73,43 +89,49 @@ $(function() {
   <div class="headertitle"><div class="title">InRetEnsys.common.config.InRetEnsysConfigContainer Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>container for a configuration  
+ <a href="../../dd/dbf/class_in_ret_ensys_1_1common_1_1config_1_1_in_ret_ensys_config_container.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for InRetEnsys.common.config.InRetEnsysConfigContainer:</div>
 <div class="dyncontent">
  <div class="center">
   <img src="../../dd/dbf/class_in_ret_ensys_1_1common_1_1config_1_1_in_ret_ensys_config_container.png" usemap="#InRetEnsys.common.config.InRetEnsysConfigContainer_map" alt=""/>
   <map id="InRetEnsys.common.config.InRetEnsysConfigContainer_map" name="InRetEnsys.common.config.InRetEnsysConfigContainer_map">
-<area href="../../d3/d61/class_in_ret_ensys_1_1components_1_1bus_1_1_in_ret_in_ret_ensys_bus.html" alt="InRetEnsys.components.bus.InRetInRetEnsysBus" shape="rect" coords="397,112,784,136"/>
-<area href="../../d9/da6/class_in_ret_ensys_1_1components_1_1constraints_1_1_in_ret_ensys_constraints.html" alt="InRetEnsys.components.constraints.InRetEnsysConstraints" shape="rect" coords="397,168,784,192"/>
-<area href="../../de/de2/class_in_ret_ensys_1_1components_1_1energysystem_1_1_in_ret_ensys_energysystem.html" alt="InRetEnsys.components.energysystem.InRetEnsysEnergysystem" shape="rect" coords="397,224,784,248"/>
-<area href="../../d8/d13/class_in_ret_ensys_1_1components_1_1flow_1_1_in_ret_ensys_flow.html" alt="InRetEnsys.components.flow.InRetEnsysFlow" shape="rect" coords="397,280,784,304"/>
-<area href="../../d4/ddc/class_in_ret_ensys_1_1components_1_1genericstorage_1_1_in_ret_ensys_storage.html" alt="InRetEnsys.components.genericstorage.InRetEnsysStorage" shape="rect" coords="397,336,784,360"/>
-<area href="../../d2/d38/class_in_ret_ensys_1_1components_1_1investment_1_1_in_ret_ensys_investment.html" alt="InRetEnsys.components.investment.InRetEnsysInvestment" shape="rect" coords="397,392,784,416"/>
-<area href="../../de/da0/class_in_ret_ensys_1_1components_1_1model_1_1_in_ret_ensys_model.html" alt="InRetEnsys.components.model.InRetEnsysModel" shape="rect" coords="397,448,784,472"/>
-<area href="../../d3/ded/class_in_ret_ensys_1_1components_1_1nonconvex_1_1_in_ret_ensys_non_convex.html" alt="InRetEnsys.components.nonconvex.InRetEnsysNonConvex" shape="rect" coords="397,504,784,528"/>
-<area href="../../d9/d60/class_in_ret_ensys_1_1components_1_1sink_1_1_in_ret_ensys_sink.html" alt="InRetEnsys.components.sink.InRetEnsysSink" shape="rect" coords="397,560,784,584"/>
-<area href="../../d7/db4/class_in_ret_ensys_1_1components_1_1source_1_1_in_ret_ensys_source.html" alt="InRetEnsys.components.source.InRetEnsysSource" shape="rect" coords="397,616,784,640"/>
-<area href="../../d0/d0a/class_in_ret_ensys_1_1components_1_1thermalstorage_1_1_in_ret_ensys_thermal_storage.html" alt="InRetEnsys.components.thermalstorage.InRetEnsysThermalStorage" shape="rect" coords="397,672,784,696"/>
-<area href="../../d1/d3c/class_in_ret_ensys_1_1components_1_1transformer_1_1_in_ret_ensys_transformer.html" alt="InRetEnsys.components.transformer.InRetEnsysTransformer" shape="rect" coords="397,728,784,752"/>
+<area href="../../db/dd8/class_in_ret_ensys_1_1components_1_1bus_1_1_in_ret_ensys_bus.html" title="Container which contains the params for an oemof-Bus." alt="InRetEnsys.components.bus.InRetEnsysBus" shape="rect" coords="397,112,784,136"/>
+<area href="../../d9/da6/class_in_ret_ensys_1_1components_1_1constraints_1_1_in_ret_ensys_constraints.html" title="Container which contains the params for constraints." alt="InRetEnsys.components.constraints.InRetEnsysConstraints" shape="rect" coords="397,168,784,192"/>
+<area href="../../de/de2/class_in_ret_ensys_1_1components_1_1energysystem_1_1_in_ret_ensys_energysystem.html" title="Container which contains the params for an InRetEnergysystem." alt="InRetEnsys.components.energysystem.InRetEnsysEnergysystem" shape="rect" coords="397,224,784,248"/>
+<area href="../../d8/d13/class_in_ret_ensys_1_1components_1_1flow_1_1_in_ret_ensys_flow.html" title="Container which contains the params for an oemof-flow." alt="InRetEnsys.components.flow.InRetEnsysFlow" shape="rect" coords="397,280,784,304"/>
+<area href="../../d4/ddc/class_in_ret_ensys_1_1components_1_1genericstorage_1_1_in_ret_ensys_storage.html" title="Container which contains the params for an oemof-genericstorage." alt="InRetEnsys.components.genericstorage.InRetEnsysStorage" shape="rect" coords="397,336,784,360"/>
+<area href="../../d2/d38/class_in_ret_ensys_1_1components_1_1investment_1_1_in_ret_ensys_investment.html" title="Container which contains the params for an oemof-investment." alt="InRetEnsys.components.investment.InRetEnsysInvestment" shape="rect" coords="397,392,784,416"/>
+<area href="../../de/da0/class_in_ret_ensys_1_1components_1_1model_1_1_in_ret_ensys_model.html" title="Container which contains the params for an InRetEnsys-Model." alt="InRetEnsys.components.model.InRetEnsysModel" shape="rect" coords="397,448,784,472"/>
+<area href="../../d3/ded/class_in_ret_ensys_1_1components_1_1nonconvex_1_1_in_ret_ensys_non_convex.html" title="Container which contains the params for an InRetEnsys-NonConvex-Object." alt="InRetEnsys.components.nonconvex.InRetEnsysNonConvex" shape="rect" coords="397,504,784,528"/>
+<area href="../../d9/d60/class_in_ret_ensys_1_1components_1_1sink_1_1_in_ret_ensys_sink.html" title="Container which contains the params for an InRetEnsys-Sink-Object." alt="InRetEnsys.components.sink.InRetEnsysSink" shape="rect" coords="397,560,784,584"/>
+<area href="../../d7/db4/class_in_ret_ensys_1_1components_1_1source_1_1_in_ret_ensys_source.html" title="Container which contains the params for an InRetEnsys-Source-Object." alt="InRetEnsys.components.source.InRetEnsysSource" shape="rect" coords="397,616,784,640"/>
+<area href="../../d0/d0a/class_in_ret_ensys_1_1components_1_1thermalstorage_1_1_in_ret_ensys_thermal_storage.html" title="Container which contains the params for an InRetEnsys-ThermalStorage-Object." alt="InRetEnsys.components.thermalstorage.InRetEnsysThermalStorage" shape="rect" coords="397,672,784,696"/>
+<area href="../../d1/d3c/class_in_ret_ensys_1_1components_1_1transformer_1_1_in_ret_ensys_transformer.html" title="Container which contains the params for an InRetEnsys-Transformer-Object." alt="InRetEnsys.components.transformer.InRetEnsysTransformer" shape="rect" coords="397,728,784,752"/>
   </map>
 </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d38/class_in_ret_ensys_1_1common_1_1config_1_1_in_ret_ensys_config_container_1_1_config.html">Config</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">pydantic subclass to add special configurations.  <a href="../../d4/d38/class_in_ret_ensys_1_1common_1_1config_1_1_in_ret_ensys_config_container_1_1_config.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ac887d707c7f62a096b51ade7479cbbd2"><td class="memItemLeft" align="right" valign="top"><a id="ac887d707c7f62a096b51ade7479cbbd2" name="ac887d707c7f62a096b51ade7479cbbd2"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><b>check</b> (cls, values)</td></tr>
+<tr class="memdesc:ac887d707c7f62a096b51ade7479cbbd2"><td class="mdescLeft">&#160;</td><td class="mdescRight">pydantic root validator to check and filter all none-type values. <br /></td></tr>
 <tr class="separator:ac887d707c7f62a096b51ade7479cbbd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a28c08aa42410ba6a09622407dab9414c"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/dbf/class_in_ret_ensys_1_1common_1_1config_1_1_in_ret_ensys_config_container.html#a28c08aa42410ba6a09622407dab9414c">to_oemof</a> (self, **Dict[str, dict] kwargs)</td></tr>
-<tr class="separator:a28c08aa42410ba6a09622407dab9414c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a638bab167ff117fe6baea0b2cdd97731"><td class="memItemLeft" align="right" valign="top">Dict[str, dict]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/dbf/class_in_ret_ensys_1_1common_1_1config_1_1_in_ret_ensys_config_container.html#a638bab167ff117fe6baea0b2cdd97731">build_kwargs</a> (self, solph.EnergySystem energysystem)</td></tr>
+<tr class="memdesc:a638bab167ff117fe6baea0b2cdd97731"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build a dict of arguments for the init of the oemof objects.  <a href="../../dd/dbf/class_in_ret_ensys_1_1common_1_1config_1_1_in_ret_ensys_config_container.html#a638bab167ff117fe6baea0b2cdd97731">More...</a><br /></td></tr>
 <tr class="separator:a638bab167ff117fe6baea0b2cdd97731"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p >container for a configuration </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a638bab167ff117fe6baea0b2cdd97731" name="a638bab167ff117fe6baea0b2cdd97731"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a638bab167ff117fe6baea0b2cdd97731">&#9670;&nbsp;</a></span>build_kwargs()</h2>
 
@@ -135,47 +157,16 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>check</b> (cls, values
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">Build a dict of arguments for the init of the oemof objects.
 
-:return: Dictionary with all variables of the given object.
-:rtype: dict[str, dict]
-:param energysystem: Oemof-Energysystem
-:type energysystem: solph.EnergySystem
-</pre> 
-</div>
-</div>
-<a id="a28c08aa42410ba6a09622407dab9414c" name="a28c08aa42410ba6a09622407dab9414c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a28c08aa42410ba6a09622407dab9414c">&#9670;&nbsp;</a></span>to_oemof()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"> None InRetEnsys.common.config.InRetEnsysConfigContainer.to_oemof </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>self</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">**Dict[str, dict]&#160;</td>
-          <td class="paramname"><em>kwargs</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<pre class="fragment">Abstract function for subclasses to build the Oemof-Object from an Ensys-Object
-:return: Nothing.
-:rtype: None
-:param kwargs: Dictionary with all arguments from the configuration object.
-:type kwargs: Dict[str, dict]
-</pre> 
-<p>Reimplemented in <a class="el" href="../../d9/da6/class_in_ret_ensys_1_1components_1_1constraints_1_1_in_ret_ensys_constraints.html#a24ebd8ac2ecc24d101937c29b7427ecf">InRetEnsys.components.constraints.InRetEnsysConstraints</a>, <a class="el" href="../../d3/d61/class_in_ret_ensys_1_1components_1_1bus_1_1_in_ret_in_ret_ensys_bus.html#afbdeda46343e2144def8792e16bd3042">InRetEnsys.components.bus.InRetInRetEnsysBus</a>, <a class="el" href="../../d8/d13/class_in_ret_ensys_1_1components_1_1flow_1_1_in_ret_ensys_flow.html#a18af6fbb7aaf8d3629ad3d9712e18270">InRetEnsys.components.flow.InRetEnsysFlow</a>, <a class="el" href="../../d4/ddc/class_in_ret_ensys_1_1components_1_1genericstorage_1_1_in_ret_ensys_storage.html#a1e91da5525453408f34781953874611f">InRetEnsys.components.genericstorage.InRetEnsysStorage</a>, <a class="el" href="../../d2/d38/class_in_ret_ensys_1_1components_1_1investment_1_1_in_ret_ensys_investment.html#acf154c47a202f2bc301e47a4db992ec7">InRetEnsys.components.investment.InRetEnsysInvestment</a>, <a class="el" href="../../d3/ded/class_in_ret_ensys_1_1components_1_1nonconvex_1_1_in_ret_ensys_non_convex.html#a9f928b2c655ffbe19e1763b527f8ea57">InRetEnsys.components.nonconvex.InRetEnsysNonConvex</a>, <a class="el" href="../../d9/d60/class_in_ret_ensys_1_1components_1_1sink_1_1_in_ret_ensys_sink.html#ae8cb79ae2137bf74b293676d0fcffb65">InRetEnsys.components.sink.InRetEnsysSink</a>, <a class="el" href="../../d7/db4/class_in_ret_ensys_1_1components_1_1source_1_1_in_ret_ensys_source.html#acf7ad844ac5e5d45d55c2a750ecf560e">InRetEnsys.components.source.InRetEnsysSource</a>, <a class="el" href="../../d0/d0a/class_in_ret_ensys_1_1components_1_1thermalstorage_1_1_in_ret_ensys_thermal_storage.html#aa0991204881bcbbfae2e5130e3bb1066">InRetEnsys.components.thermalstorage.InRetEnsysThermalStorage</a>, and <a class="el" href="../../d1/d3c/class_in_ret_ensys_1_1components_1_1transformer_1_1_in_ret_ensys_transformer.html#aab4d95838a20802133cecc105a694a29">InRetEnsys.components.transformer.InRetEnsysTransformer</a>.</p>
+<p>Build a dict of arguments for the init of the oemof objects. </p>
+<dl class="section return"><dt>Returns</dt><dd>Dictionary with all variables of the given object. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">self</td><td>The Object pointer </td></tr>
+    <tr><td class="paramname">energysystem</td><td>Oemof-Energysystem </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -183,9 +174,13 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>check</b> (cls, values
 <li>InRetEnsys/common/config.py</li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="../../df/da1/namespace_in_ret_ensys.html">InRetEnsys</a></li><li class="navelem"><b>common</b></li><li class="navelem"><b>config</b></li><li class="navelem"><a class="el" href="../../dd/dbf/class_in_ret_ensys_1_1common_1_1config_1_1_in_ret_ensys_config_container.html">InRetEnsysConfigContainer</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4 </li>
+  </ul>
+</div>
 </body>
 </html>

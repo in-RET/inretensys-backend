@@ -6,26 +6,22 @@ import pandas as pd
 from oemof import solph
 from oemof_visio import ESGraphRenderer
 
-from InRetEnsys import InRetEnsysEnergysystem
+from InRetEnsys import InRetEnsysEnergysystem, InRetEnsysStorage
 from InRetEnsys.types import Constraints, Frequencies, Solver
 from hsncommon.log import HsnLogger
 
 logger = HsnLogger()
 
 
+##  Init Modelbuilder, load and optimise the configuration.
+#
+#   @param ConfigFile Path to the Configfile which contains the EnsysConfiguration
+#   @param DumpFile Path to the Dumpfile where the oemof-energysystem and the results should be stored.
 class ModelBuilder:
     def __init__(self,
                  ConfigFile: str,
                  DumpFile: str
                  ) -> None:
-        """
-        Init Modelbuilder and if given load and optimise the configuration.
-
-        :return: Nothing
-        :rtype: None
-        :param ConfigFile: Path to the Configfile which contains the EnsysConfiguration
-        :param DumpFile: Path to the Dumpfile where the oemof-energysystem and the results should be stored.
-        """
         xf = open(ConfigFile, 'rb')
         model = load(xf)
         xf.close()
@@ -48,20 +44,13 @@ class ModelBuilder:
         BuildEnergySystem(model.energysystem, DumpFile, solver, model.solver_verbose)
 
 
-def BuildEnergySystem(es: InRetEnsysEnergysystem, file: str, solver: str, solver_verbose: bool) -> None:
-    """
-    Build an energysystem from the config.
-
-    :rtype: None
-    :param es: energysystem from the binary config file
-    :type es: InRetEnsysEnergysystem
-    :param file: filename of the final dumpfile
-    :type file: str
-    :param solver: Solver to use for optimisation in Pyomo
-    :type solver: str
-    :param solver_verbose: Should the Solver print the output
-    :type solver_verbose: bool
-    """
+##  Build an energysystem from the config.
+#
+#   @param es energysystem from the binary config file
+#   @param file filename of the final dumpfile
+#   @param solver Solver to use for optimisation in Pyomo
+#   @param solver_verbose Should the Solver print the output
+def BuildEnergySystem(es: InRetEnsysEnergysystem, file: str, solver: str, solver_verbose: bool):
     logger.info("Build an Energysystem from config file.")
     filename = os.path.basename(file)
     wdir = os.path.dirname(file)
@@ -170,8 +159,6 @@ def BuildEnergySystem(es: InRetEnsysEnergysystem, file: str, solver: str, solver
     oemof_es.results["main"] = solph.processing.results(model)
     oemof_es.results["meta"] = solph.processing.meta_results(model)
     oemof_es.results["verification"] = solph.processing.create_dataframe(model)
-
-    # print(model.integral_limit_emission_factor())
 
     logger.info("Dump file with results to: " + os.path.join(wdir, filename))
 

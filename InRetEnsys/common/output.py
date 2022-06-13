@@ -4,10 +4,7 @@ from matplotlib import pyplot as plt
 from oemof import solph
 
 
-def PrintResultsFromDump(output, dumpfile=None, energysystem=None):
-    # ****************************************************************************
-    # ********** PART 2 - Processing the results *********************************
-    # ****************************************************************************
+def PrintResults(output, dumpfile):
     if dumpfile is not None:
         energysystem = solph.EnergySystem()
         energysystem.restore(dpath=os.path.dirname(dumpfile), filename=os.path.basename(dumpfile))
@@ -15,8 +12,6 @@ def PrintResultsFromDump(output, dumpfile=None, energysystem=None):
     # define an alias for shorter calls below (optional)
     results = energysystem.results["main"]
     storage = energysystem.groups["storage"]
-
-    #bel = SearchNode(energysystem.nodes, "electricity")
     bel = energysystem.groups["electricity"]
 
     if os.path.exists(output):
@@ -64,20 +59,12 @@ def PrintResultsFromDump(output, dumpfile=None, energysystem=None):
 
         plt.tight_layout()
         plt.show()
-        
-    # print the solver results
-    #print("********* Meta results *********", file=xfile)
-    # Meta results are others for every system e.g. wallclocktime
-    #print(energysystem.results["meta"], file=xfile)
 
     # print the sums of the flows around the electricity bus
     print("********* Main results *********", file=xfile)
     print(electricity_bus["sequences"].sum(axis=0), file=xfile)
 
-    if True is True:
-        print("Investment Gas (Limit: 29000):", solph.views.node(results, 'rgas')["scalars"][0], file=xfile)
-
-    if True is False:
+    if "scalars" in electricity_bus.keys():
         my_results = electricity_bus["scalars"]
 
         # installed capacity of storage in GWh
@@ -87,13 +74,8 @@ def PrintResultsFromDump(output, dumpfile=None, energysystem=None):
 
         print(my_results, file=xfile)
 
-    if True is False:
+    if "scalars" in natural_gas_bus.keys():
         my_results = natural_gas_bus["scalars"]
-
-        # installed capacity of storage in GWh
-        my_results["gas_invest_GWh"] = (
-                results[(pp_gas, bel)]["scalars"]["invest"] / 1e6
-        )
 
         print(my_results, file=xfile)
 

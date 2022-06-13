@@ -5,7 +5,9 @@ from oemof import solph
 from pydantic import BaseModel, Extra
 
 
+##  container for a configuration
 class InRetEnsysConfigContainer(BaseModel):
+    ## pydantic root validator to check and filter all none-type values.
     @pydantic.root_validator(pre=False)
     def check(cls, values):
         retVal = {}
@@ -16,19 +18,20 @@ class InRetEnsysConfigContainer(BaseModel):
 
         return retVal
 
+    ##  pydantic subclass to add special configurations.
     class Config:
+        ## Allow arbitrary_types like pandas.DataFrames / pandas.Series which are not allow by default.
         arbitrary_types_allowed = True
+
+        ## Without this configuration its impossible to pass extra **kwargs to pydantic.baseModel-Objects.
         extra = Extra.allow
 
+    ##  Build a dict of arguments for the init of the oemof objects.
+    #   
+    #   @return Dictionary with all variables of the given object.
+    #   @param self The Object pointer
+    #   @param energysystem Oemof-Energysystem
     def build_kwargs(self, energysystem: solph.EnergySystem) -> Dict[str, dict]:
-        """
-        Build a dict of arguments for the init of the oemof objects.
-
-        :return: Dictionary with all variables of the given object.
-        :rtype: dict[str, dict]
-        :param energysystem: Oemof-Energysystem
-        :type energysystem: solph.EnergySystem
-        """
         kwargs = {}
         special_keys = ["inputs", "outputs", "conversion_factors"]
 

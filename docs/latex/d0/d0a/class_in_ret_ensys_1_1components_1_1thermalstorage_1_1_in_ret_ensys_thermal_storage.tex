@@ -1,5 +1,10 @@
 \hypertarget{class_in_ret_ensys_1_1components_1_1thermalstorage_1_1_in_ret_ensys_thermal_storage}{}\doxysection{In\+Ret\+Ensys.\+components.\+thermalstorage.\+In\+Ret\+Ensys\+Thermal\+Storage Class Reference}
 \label{class_in_ret_ensys_1_1components_1_1thermalstorage_1_1_in_ret_ensys_thermal_storage}\index{InRetEnsys.components.thermalstorage.InRetEnsysThermalStorage@{InRetEnsys.components.thermalstorage.InRetEnsysThermalStorage}}
+
+
+Container which contains the params for an In\+Ret\+Ensys-\/\+Thermal\+Storage-\/\+Object.  
+
+
 Inheritance diagram for In\+Ret\+Ensys.\+components.\+thermalstorage.\+In\+Ret\+Ensys\+Thermal\+Storage\+:\begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -10,15 +15,15 @@ Inheritance diagram for In\+Ret\+Ensys.\+components.\+thermalstorage.\+In\+Ret\+
 \begin{DoxyCompactItemize}
 \item 
 Stratified\+Thermal\+Storage \mbox{\hyperlink{class_in_ret_ensys_1_1components_1_1thermalstorage_1_1_in_ret_ensys_thermal_storage_aa0991204881bcbbfae2e5130e3bb1066}{to\+\_\+oemof}} (self, solph.\+Energy\+System energysystem)
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Returns an oemof-\/object from the given args of this object. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Static Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\Hypertarget{class_in_ret_ensys_1_1components_1_1thermalstorage_1_1_in_ret_ensys_thermal_storage_a6d163031762dd91f665aba9906a6227b}\label{class_in_ret_ensys_1_1components_1_1thermalstorage_1_1_in_ret_ensys_thermal_storage_a6d163031762dd91f665aba9906a6227b}} 
 {\bfseries str}
 \item 
-\mbox{\Hypertarget{class_in_ret_ensys_1_1components_1_1thermalstorage_1_1_in_ret_ensys_thermal_storage_aa5d6639453e22cdba486a8bb106ebdc2}\label{class_in_ret_ensys_1_1components_1_1thermalstorage_1_1_in_ret_ensys_thermal_storage_aa5d6639453e22cdba486a8bb106ebdc2}} 
-{\bfseries In\+Ret\+In\+Ret\+Ensys\+Bus}
+\mbox{\Hypertarget{class_in_ret_ensys_1_1components_1_1thermalstorage_1_1_in_ret_ensys_thermal_storage_a0ed4b85118f4565f0eb7ab76ae515657}\label{class_in_ret_ensys_1_1components_1_1thermalstorage_1_1_in_ret_ensys_thermal_storage_a0ed4b85118f4565f0eb7ab76ae515657}} 
+{\bfseries In\+Ret\+Ensys\+Bus}
 \item 
 \mbox{\Hypertarget{class_in_ret_ensys_1_1components_1_1thermalstorage_1_1_in_ret_ensys_thermal_storage_a3493673db54fa078b1d3a90ac7b4b89a}\label{class_in_ret_ensys_1_1components_1_1thermalstorage_1_1_in_ret_ensys_thermal_storage_a3493673db54fa078b1d3a90ac7b4b89a}} 
 {\bfseries float}
@@ -31,6 +36,40 @@ Stratified\+Thermal\+Storage \mbox{\hyperlink{class_in_ret_ensys_1_1components_1
 \end{DoxyCompactItemize}
 
 
+\doxysubsection{Detailed Description}
+Container which contains the params for an In\+Ret\+Ensys-\/\+Thermal\+Storage-\/\+Object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em label} & str = \char`\"{}\+Default Storage\char`\"{} \\
+\hline
+{\em bus} & In\+Ret\+Ensys\+Bus = None, \\
+\hline
+{\em diameter} & float = 2, \\
+\hline
+{\em height} & float = 5, \\
+\hline
+{\em temp\+\_\+h} & int = 95, \\
+\hline
+{\em temp\+\_\+c} & int = 60, \\
+\hline
+{\em temp\+\_\+env} & int = 10, \\
+\hline
+{\em u\+\_\+value} & = None, \\
+\hline
+{\em min\+\_\+storage\+\_\+level} & float = 0.\+05, \\
+\hline
+{\em max\+\_\+storage\+\_\+level} & float = 0.\+95, \\
+\hline
+{\em capacity} & int = 1, \\
+\hline
+{\em efficiency} & float = 0.\+9, \\
+\hline
+{\em marginal\+\_\+cost} & float = 0.\+0001 \\
+\hline
+\end{DoxyParams}
+
+
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{class_in_ret_ensys_1_1components_1_1thermalstorage_1_1_in_ret_ensys_thermal_storage_aa0991204881bcbbfae2e5130e3bb1066}\label{class_in_ret_ensys_1_1components_1_1thermalstorage_1_1_in_ret_ensys_thermal_storage_aa0991204881bcbbfae2e5130e3bb1066}} 
 \index{InRetEnsys.components.thermalstorage.InRetEnsysThermalStorage@{InRetEnsys.components.thermalstorage.InRetEnsysThermalStorage}!to\_oemof@{to\_oemof}}
@@ -38,16 +77,22 @@ Stratified\+Thermal\+Storage \mbox{\hyperlink{class_in_ret_ensys_1_1components_1
 \doxysubsubsection{\texorpdfstring{to\_oemof()}{to\_oemof()}}
 {\footnotesize\ttfamily  Stratified\+Thermal\+Storage In\+Ret\+Ensys.\+components.\+thermalstorage.\+In\+Ret\+Ensys\+Thermal\+Storage.\+to\+\_\+oemof (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{solph.\+Energy\+System}]{energysystem }\end{DoxyParamCaption})}
 
-\begin{DoxyVerb}Return an oemof-object build with the args of the object.
-:return: oemof-StratifiedThermalStorage-object
-:rtype: solph.StratifiedThermalStorage
-:param energysystem: the oemof-energysystem to build the kwargs of the object
-:type energysystem: solph.Energysystem
-\end{DoxyVerb}
- 
 
-Reimplemented from \mbox{\hyperlink{class_in_ret_ensys_1_1common_1_1config_1_1_in_ret_ensys_config_container_a28c08aa42410ba6a09622407dab9414c}{In\+Ret\+Ensys.\+common.\+config.\+In\+Ret\+Ensys\+Config\+Container}}.
 
+Returns an oemof-\/object from the given args of this object. 
+
+Builts a dictionary with all keywords given by the object and returns the oemof object initialised with these \textquotesingle{}kwargs\textquotesingle{}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The Object Pointer \\
+\hline
+{\em energysystem} & The oemof-\/\+Energysystem to reference other objects i.\+e. for flows. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+solph.\+thermal.\+Stratified\+Thermal\+Storage-\/Object (oemof) 
+\end{DoxyReturn}
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}

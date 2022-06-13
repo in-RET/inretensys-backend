@@ -3,21 +3,21 @@ import pickle
 
 import pandas as pd
 
-from InRetEnsys import InRetInRetEnsysBus, InRetEnsysSource, InRetEnsysFlow, InRetEnsysSink, InRetEnsysTransformer, \
+from InRetEnsys import InRetEnsysBus, InRetEnsysSource, InRetEnsysFlow, InRetEnsysSink, InRetEnsysTransformer, \
     InRetEnsysEnergysystem, InRetEnsysStorage
 from InRetEnsys.components.model import InRetEnsysModel
 from InRetEnsys.types import Frequencies, Solver
 
 
-def CreateBasisSampleConfiguration():
-    data_file = "/Users/pyrokar/Documents/GitHub/python/oemof/examples/basic_example/basic_example.csv"
+def CreateConfiguration():
+    data_file = "/Users/pyrokar/Documents/GitHub/python/InRetEnsys/configs/DATEN/Basic/basic_example.csv"
     data = pd.read_csv(data_file)
 
-    bel = InRetInRetEnsysBus(
+    bel = InRetEnsysBus(
         label="electricity"
     )
 
-    bgas = InRetInRetEnsysBus(
+    bgas = InRetEnsysBus(
         label="natural_gas"
     )
 
@@ -101,7 +101,8 @@ def CreateBasisSampleConfiguration():
 
     model = InRetEnsysModel(
         energysystem=es,
-        solver=Solver.gurobi
+        solver=Solver.gurobi,
+        solver_verbose=False
     )
 
     wkdir = os.path.join(os.path.dirname(__file__))
@@ -113,3 +114,6 @@ def CreateBasisSampleConfiguration():
     xf.close()
 
     return file
+
+
+CreateConfiguration()

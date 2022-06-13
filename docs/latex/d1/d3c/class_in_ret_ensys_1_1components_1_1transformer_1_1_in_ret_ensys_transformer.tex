@@ -1,5 +1,10 @@
 \hypertarget{class_in_ret_ensys_1_1components_1_1transformer_1_1_in_ret_ensys_transformer}{}\doxysection{In\+Ret\+Ensys.\+components.\+transformer.\+In\+Ret\+Ensys\+Transformer Class Reference}
 \label{class_in_ret_ensys_1_1components_1_1transformer_1_1_in_ret_ensys_transformer}\index{InRetEnsys.components.transformer.InRetEnsysTransformer@{InRetEnsys.components.transformer.InRetEnsysTransformer}}
+
+
+Container which contains the params for an In\+Ret\+Ensys-\/\+Transformer-\/\+Object.  
+
+
 Inheritance diagram for In\+Ret\+Ensys.\+components.\+transformer.\+In\+Ret\+Ensys\+Transformer\+:\begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -10,7 +15,7 @@ Inheritance diagram for In\+Ret\+Ensys.\+components.\+transformer.\+In\+Ret\+Ens
 \begin{DoxyCompactItemize}
 \item 
 solph.\+Transformer \mbox{\hyperlink{class_in_ret_ensys_1_1components_1_1transformer_1_1_in_ret_ensys_transformer_aab4d95838a20802133cecc105a694a29}{to\+\_\+oemof}} (self, solph.\+Energy\+System energysystem)
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Returns an oemof-\/object from the given args of this object. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Static Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -22,6 +27,22 @@ solph.\+Transformer \mbox{\hyperlink{class_in_ret_ensys_1_1components_1_1transfo
 \end{DoxyCompactItemize}
 
 
+\doxysubsection{Detailed Description}
+Container which contains the params for an In\+Ret\+Ensys-\/\+Transformer-\/\+Object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em label} & str = \char`\"{}\+Default Transformer\char`\"{} \\
+\hline
+{\em inputs} & Dict\mbox{[}str, In\+Ret\+Ensys\+Flow\mbox{]} = None \\
+\hline
+{\em outputs} & Dict\mbox{[}str, In\+Ret\+Ensys\+Flow\mbox{]} = None \\
+\hline
+{\em conversion\+\_\+factors} & Dict = None \\
+\hline
+\end{DoxyParams}
+
+
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{class_in_ret_ensys_1_1components_1_1transformer_1_1_in_ret_ensys_transformer_aab4d95838a20802133cecc105a694a29}\label{class_in_ret_ensys_1_1components_1_1transformer_1_1_in_ret_ensys_transformer_aab4d95838a20802133cecc105a694a29}} 
 \index{InRetEnsys.components.transformer.InRetEnsysTransformer@{InRetEnsys.components.transformer.InRetEnsysTransformer}!to\_oemof@{to\_oemof}}
@@ -29,16 +50,22 @@ solph.\+Transformer \mbox{\hyperlink{class_in_ret_ensys_1_1components_1_1transfo
 \doxysubsubsection{\texorpdfstring{to\_oemof()}{to\_oemof()}}
 {\footnotesize\ttfamily  solph.\+Transformer In\+Ret\+Ensys.\+components.\+transformer.\+In\+Ret\+Ensys\+Transformer.\+to\+\_\+oemof (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{solph.\+Energy\+System}]{energysystem }\end{DoxyParamCaption})}
 
-\begin{DoxyVerb}Return an oemof-object build with the args of the object.
-:return: oemof-Transformer-object
-:rtype: solph.Transformer
-:param energysystem: the oemof-energysystem to build the kwargs of the object
-:type energysystem: solph.Energysystem
-\end{DoxyVerb}
- 
 
-Reimplemented from \mbox{\hyperlink{class_in_ret_ensys_1_1common_1_1config_1_1_in_ret_ensys_config_container_a28c08aa42410ba6a09622407dab9414c}{In\+Ret\+Ensys.\+common.\+config.\+In\+Ret\+Ensys\+Config\+Container}}.
 
+Returns an oemof-\/object from the given args of this object. 
+
+Builts a dictionary with all keywords given by the object and returns the oemof object initialised with these \textquotesingle{}kwargs\textquotesingle{}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The Object Pointer \\
+\hline
+{\em energysystem} & The oemof-\/\+Energysystem to reference other objects i.\+e. for flows. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+solph.\+Transformer-\/Object (oemof) 
+\end{DoxyReturn}
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}

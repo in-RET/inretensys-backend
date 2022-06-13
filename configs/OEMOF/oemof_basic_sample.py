@@ -7,7 +7,7 @@ from oemof import solph
 def oemofBasicSample(dumpfile):
     solver = "gurobi"  # 'glpk', 'gurobi',....
     number_of_time_steps = 24 * 7 * 8
-    solver_verbose = True  # show/hide solver output
+    solver_verbose = False  # show/hide solver output
 
     date_time_index = pd.date_range(
         "1/1/2012", periods=number_of_time_steps, freq="H"
@@ -16,7 +16,7 @@ def oemofBasicSample(dumpfile):
     energysystem = solph.EnergySystem(timeindex=date_time_index)
 
     # Read data file
-    data = pd.read_csv("/Users/pyrokar/Documents/GitHub/python/oemof/examples/basic_example/basic_example.csv")
+    data = pd.read_csv("/Users/pyrokar/Documents/GitHub/python/InRetEnsys/configs/DATEN/Basic/basic_example.csv")
 
     ##########################################################################
     # Create oemof object

@@ -1,5 +1,10 @@
 \hypertarget{class_in_ret_ensys_1_1components_1_1sink_1_1_in_ret_ensys_sink}{}\doxysection{In\+Ret\+Ensys.\+components.\+sink.\+In\+Ret\+Ensys\+Sink Class Reference}
 \label{class_in_ret_ensys_1_1components_1_1sink_1_1_in_ret_ensys_sink}\index{InRetEnsys.components.sink.InRetEnsysSink@{InRetEnsys.components.sink.InRetEnsysSink}}
+
+
+Container which contains the params for an In\+Ret\+Ensys-\/\+Sink-\/\+Object.  
+
+
 Inheritance diagram for In\+Ret\+Ensys.\+components.\+sink.\+In\+Ret\+Ensys\+Sink\+:\begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -10,13 +15,25 @@ Inheritance diagram for In\+Ret\+Ensys.\+components.\+sink.\+In\+Ret\+Ensys\+Sin
 \begin{DoxyCompactItemize}
 \item 
 solph.\+Sink \mbox{\hyperlink{class_in_ret_ensys_1_1components_1_1sink_1_1_in_ret_ensys_sink_ae8cb79ae2137bf74b293676d0fcffb65}{to\+\_\+oemof}} (self, solph.\+Energy\+System energysystem)
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Returns an oemof-\/object from the given args of this object. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Static Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\Hypertarget{class_in_ret_ensys_1_1components_1_1sink_1_1_in_ret_ensys_sink_ac8460f34bd28c637d1e5f188420be7ee}\label{class_in_ret_ensys_1_1components_1_1sink_1_1_in_ret_ensys_sink_ac8460f34bd28c637d1e5f188420be7ee}} 
 {\bfseries str}
 \end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Container which contains the params for an In\+Ret\+Ensys-\/\+Sink-\/\+Object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em label} & str = \char`\"{}\+Default Sink\char`\"{} \\
+\hline
+{\em inputs} & Dict\mbox{[}str, In\+Ret\+Ensys\+Flow\mbox{]} \\
+\hline
+\end{DoxyParams}
 
 
 \doxysubsection{Member Function Documentation}
@@ -26,16 +43,22 @@ solph.\+Sink \mbox{\hyperlink{class_in_ret_ensys_1_1components_1_1sink_1_1_in_re
 \doxysubsubsection{\texorpdfstring{to\_oemof()}{to\_oemof()}}
 {\footnotesize\ttfamily  solph.\+Sink In\+Ret\+Ensys.\+components.\+sink.\+In\+Ret\+Ensys\+Sink.\+to\+\_\+oemof (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{solph.\+Energy\+System}]{energysystem }\end{DoxyParamCaption})}
 
-\begin{DoxyVerb}Return an oemof-object build with the args of the object.
-:return: oemof-Sink-object
-:rtype: solph.Sink
-:param energysystem: the oemof-energysystem to build the kwargs of the object
-:type energysystem: solph.Energysystem
-\end{DoxyVerb}
- 
 
-Reimplemented from \mbox{\hyperlink{class_in_ret_ensys_1_1common_1_1config_1_1_in_ret_ensys_config_container_a28c08aa42410ba6a09622407dab9414c}{In\+Ret\+Ensys.\+common.\+config.\+In\+Ret\+Ensys\+Config\+Container}}.
 
+Returns an oemof-\/object from the given args of this object. 
+
+Builts a dictionary with all keywords given by the object and returns the oemof object initialised with these \textquotesingle{}kwargs\textquotesingle{}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The Object Pointer \\
+\hline
+{\em energysystem} & The oemof-\/\+Energysystem to reference other objects i.\+e. for flows. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+solph.\+Sink-\/Object (oemof) 
+\end{DoxyReturn}
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}

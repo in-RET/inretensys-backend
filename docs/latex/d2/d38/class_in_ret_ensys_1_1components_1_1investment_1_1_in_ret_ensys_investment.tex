@@ -1,5 +1,10 @@
 \hypertarget{class_in_ret_ensys_1_1components_1_1investment_1_1_in_ret_ensys_investment}{}\doxysection{In\+Ret\+Ensys.\+components.\+investment.\+In\+Ret\+Ensys\+Investment Class Reference}
 \label{class_in_ret_ensys_1_1components_1_1investment_1_1_in_ret_ensys_investment}\index{InRetEnsys.components.investment.InRetEnsysInvestment@{InRetEnsys.components.investment.InRetEnsysInvestment}}
+
+
+Container which contains the params for an oemof-\/investment.  
+
+
 Inheritance diagram for In\+Ret\+Ensys.\+components.\+investment.\+In\+Ret\+Ensys\+Investment\+:\begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -10,7 +15,7 @@ Inheritance diagram for In\+Ret\+Ensys.\+components.\+investment.\+In\+Ret\+Ensy
 \begin{DoxyCompactItemize}
 \item 
 solph.\+Investment \mbox{\hyperlink{class_in_ret_ensys_1_1components_1_1investment_1_1_in_ret_ensys_investment_acf154c47a202f2bc301e47a4db992ec7}{to\+\_\+oemof}} (self, solph.\+Energy\+System energysystem)
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Returns an oemof-\/object from the given args of this object. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Static Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -22,6 +27,28 @@ solph.\+Investment \mbox{\hyperlink{class_in_ret_ensys_1_1components_1_1investme
 \end{DoxyCompactItemize}
 
 
+\doxysubsection{Detailed Description}
+Container which contains the params for an oemof-\/investment. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em maximum} & float = float(\char`\"{}+inf\char`\"{}) \\
+\hline
+{\em minimum} & float = 0.\+0 \\
+\hline
+{\em ep\+\_\+costs} & float = 0.\+0 \\
+\hline
+{\em existing} & float = 0.\+0 \\
+\hline
+{\em nonconvex} & bool = False \\
+\hline
+{\em offset} & float = 0.\+0 \\
+\hline
+{\em kwargs} & Union\mbox{[}None, Dict\mbox{]} = None \\
+\hline
+\end{DoxyParams}
+
+
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{class_in_ret_ensys_1_1components_1_1investment_1_1_in_ret_ensys_investment_acf154c47a202f2bc301e47a4db992ec7}\label{class_in_ret_ensys_1_1components_1_1investment_1_1_in_ret_ensys_investment_acf154c47a202f2bc301e47a4db992ec7}} 
 \index{InRetEnsys.components.investment.InRetEnsysInvestment@{InRetEnsys.components.investment.InRetEnsysInvestment}!to\_oemof@{to\_oemof}}
@@ -29,16 +56,22 @@ solph.\+Investment \mbox{\hyperlink{class_in_ret_ensys_1_1components_1_1investme
 \doxysubsubsection{\texorpdfstring{to\_oemof()}{to\_oemof()}}
 {\footnotesize\ttfamily  solph.\+Investment In\+Ret\+Ensys.\+components.\+investment.\+In\+Ret\+Ensys\+Investment.\+to\+\_\+oemof (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{solph.\+Energy\+System}]{energysystem }\end{DoxyParamCaption})}
 
-\begin{DoxyVerb}Return an oemof-object build with the args of the object.
-:return: oemof-investment-object
-:rtype: solph.Investment
-:param energysystem: the oemof-energysystem to build the kwargs of the object
-:type energysystem: solph.Energysystem
-\end{DoxyVerb}
- 
 
-Reimplemented from \mbox{\hyperlink{class_in_ret_ensys_1_1common_1_1config_1_1_in_ret_ensys_config_container_a28c08aa42410ba6a09622407dab9414c}{In\+Ret\+Ensys.\+common.\+config.\+In\+Ret\+Ensys\+Config\+Container}}.
 
+Returns an oemof-\/object from the given args of this object. 
+
+Builts a dictionary with all keywords given by the object and returns the oemof object initialised with these \textquotesingle{}kwargs\textquotesingle{}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The Object Pointer \\
+\hline
+{\em energysystem} & The oemof-\/\+Energysystem to reference other objects i.\+e. for flows. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+solph.\+Investment-\/Object (oemof) 
+\end{DoxyReturn}
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}

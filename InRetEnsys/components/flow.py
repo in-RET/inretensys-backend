@@ -7,7 +7,20 @@ from InRetEnsys import InRetEnsysConfigContainer
 from InRetEnsys.components.investment import InRetEnsysInvestment
 from InRetEnsys.components.nonconvex import InRetEnsysNonConvex
 
-
+##  Container which contains the params for an oemof-flow
+#   
+#   @param nominal_value 
+#   @param fix
+#   @param min
+#   @param max
+#   @param positive_gradient
+#   @param negative_gradient 
+#   @param summed_max
+#   @param summed_min 
+#   @param variable_costs 
+#   @param investement InRetEnsys-Investment-Object, if the Flow should be optimized for an Investmentlimit.
+#   @param nonconvex InRetEnsys-NonConvex-Object, if the Flow should be nonconvex. Non possible if the flow is an Investmentflow. 
+#   @param kwargs Keyword-Arguments for special Keywords, used by constraints.
 class InRetEnsysFlow(InRetEnsysConfigContainer):
     nominal_value: Union[None, float] = None
     # numeric or sequence or None
@@ -25,14 +38,14 @@ class InRetEnsysFlow(InRetEnsysConfigContainer):
     nonconvex: Union[None, InRetEnsysNonConvex] = None
     kwargs: Union[None, Dict] = None
 
+    ##  Returns an oemof-object from the given args of this object.
+    #
+    #   Builts a dictionary with all keywords given by the object and returns the oemof object initialised with these 'kwargs'.
+    #
+    #   @param self The Object Pointer
+    #   @param energysystem The oemof-Energysystem to reference other objects i.e. for flows.
+    #   @return solph.Flow-Object (oemof)
     def to_oemof(self, energysystem: solph.EnergySystem) -> solph.Flow:
-        """
-        Return an oemof-object build with the args of the object.
-        :return: oemof-Flow-object
-        :rtype: solph.Flow
-        :param energysystem: the oemof-energysystem to build the kwargs of the object
-        :type energysystem: solph.Energysystem
-        """
         kwargs = self.build_kwargs(energysystem)
 
         return solph.Flow(**kwargs)

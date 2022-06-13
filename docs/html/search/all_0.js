@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['_5f_5finit_5f_5f_0',['__init__',['../d5/d2e/class_in_ret_ensys_1_1common_1_1verfication_1_1_verification.html#a92c6c69838bd87ebb527b9256f6ee567',1,'InRetEnsys.common.verfication.Verification.__init__()'],['../de/d9f/class_in_ret_ensys_1_1modelbuilder_1_1_model_builder.html#afdc881ce4abdfae21d261150b0962903',1,'InRetEnsys.modelbuilder.ModelBuilder.__init__()']]]
+  ['additional_5finvestment_5fflow_5flimit_0',['additional_investment_flow_limit',['../d6/da3/class_in_ret_ensys_1_1types_1_1_constraints.html#a7de1cc7aee36f64d2c65dd38ee854a75',1,'InRetEnsys::types::Constraints']]],
+  ['arbitrary_5ftypes_5fallowed_1',['arbitrary_types_allowed',['../d4/d38/class_in_ret_ensys_1_1common_1_1config_1_1_in_ret_ensys_config_container_1_1_config.html#ac7ffc17e0c54498207ddd7fa9b0b162d',1,'InRetEnsys::common::config::InRetEnsysConfigContainer::Config']]]
 ];

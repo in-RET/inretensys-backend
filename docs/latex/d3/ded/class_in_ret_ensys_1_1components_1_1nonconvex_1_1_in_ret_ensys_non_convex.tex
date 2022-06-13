@@ -1,5 +1,10 @@
 \hypertarget{class_in_ret_ensys_1_1components_1_1nonconvex_1_1_in_ret_ensys_non_convex}{}\doxysection{In\+Ret\+Ensys.\+components.\+nonconvex.\+In\+Ret\+Ensys\+Non\+Convex Class Reference}
 \label{class_in_ret_ensys_1_1components_1_1nonconvex_1_1_in_ret_ensys_non_convex}\index{InRetEnsys.components.nonconvex.InRetEnsysNonConvex@{InRetEnsys.components.nonconvex.InRetEnsysNonConvex}}
+
+
+Container which contains the params for an In\+Ret\+Ensys-\/\+Non\+Convex-\/\+Object.  
+
+
 Inheritance diagram for In\+Ret\+Ensys.\+components.\+nonconvex.\+In\+Ret\+Ensys\+Non\+Convex\+:\begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -10,13 +15,61 @@ Inheritance diagram for In\+Ret\+Ensys.\+components.\+nonconvex.\+In\+Ret\+Ensys
 \begin{DoxyCompactItemize}
 \item 
 solph.\+Non\+Convex \mbox{\hyperlink{class_in_ret_ensys_1_1components_1_1nonconvex_1_1_in_ret_ensys_non_convex_a9f928b2c655ffbe19e1763b527f8ea57}{to\+\_\+oemof}} (self, solph.\+Energy\+System energysystem)
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Returns an oemof-\/object from the given args of this object. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Static Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\Hypertarget{class_in_ret_ensys_1_1components_1_1nonconvex_1_1_in_ret_ensys_non_convex_ad955117419ab8d34c7463e475e39071c}\label{class_in_ret_ensys_1_1components_1_1nonconvex_1_1_in_ret_ensys_non_convex_ad955117419ab8d34c7463e475e39071c}} 
 {\bfseries int}
 \end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Container which contains the params for an In\+Ret\+Ensys-\/\+Non\+Convex-\/\+Object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em startup\+\_\+costs} & Union\mbox{[}None, float\mbox{]} = None \\
+\hline
+{\em shutdown\+\_\+costs} & Union\mbox{[}None, float\mbox{]} = None \\
+\hline
+{\em activity\+\_\+costs} & Union\mbox{[}None, float\mbox{]} = None \\
+\hline
+{\em minimum\+\_\+uptime} & Union\mbox{[}None, int\mbox{]} = None \\
+\hline
+{\em minimum\+\_\+downtime} & Union\mbox{[}None, int\mbox{]} = None \\
+\hline
+{\em maximum\+\_\+startups} & Union\mbox{[}None, int\mbox{]} = None \\
+\hline
+{\em maximum\+\_\+shutdowns} & Union\mbox{[}None, int\mbox{]} = None \\
+\hline
+{\em initial\+\_\+status} & int = 0 \\
+\hline
+{\em positive\+\_\+gradient} & Union\mbox{[}None, Dict\mbox{]} = None \\
+\hline
+{\em negative\+\_\+gradient} & Union\mbox{[}None, Dict\mbox{]} = None \\
+\hline
+{\em startup\+\_\+costs} & Union\mbox{[}None, float\mbox{]} = None \\
+\hline
+{\em shutdown\+\_\+costs} & Union\mbox{[}None, float\mbox{]} = None \\
+\hline
+{\em activity\+\_\+costs} & Union\mbox{[}None, float\mbox{]} = None \\
+\hline
+{\em minimum\+\_\+uptime} & Union\mbox{[}None, int\mbox{]} = None \\
+\hline
+{\em minimum\+\_\+downtime} & Union\mbox{[}None, int\mbox{]} = None \\
+\hline
+{\em maximum\+\_\+startups} & Union\mbox{[}None, int\mbox{]} = None \\
+\hline
+{\em maximum\+\_\+shutdowns} & Union\mbox{[}None, int\mbox{]} = None \\
+\hline
+{\em initial\+\_\+status} & int = 0 \\
+\hline
+{\em positive\+\_\+gradient} & Union\mbox{[}None, Dict\mbox{]} = None \\
+\hline
+{\em negative\+\_\+gradient} & Union\mbox{[}None, Dict\mbox{]} = None \\
+\hline
+\end{DoxyParams}
 
 
 \doxysubsection{Member Function Documentation}
@@ -26,16 +79,22 @@ solph.\+Non\+Convex \mbox{\hyperlink{class_in_ret_ensys_1_1components_1_1nonconv
 \doxysubsubsection{\texorpdfstring{to\_oemof()}{to\_oemof()}}
 {\footnotesize\ttfamily  solph.\+Non\+Convex In\+Ret\+Ensys.\+components.\+nonconvex.\+In\+Ret\+Ensys\+Non\+Convex.\+to\+\_\+oemof (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{solph.\+Energy\+System}]{energysystem }\end{DoxyParamCaption})}
 
-\begin{DoxyVerb}Return an oemof-object build with the args of the object.
-:return: oemof-NonConvex-object
-:rtype: solph.NonConvex
-:param energysystem: the oemof-energysystem to build the kwargs of the object
-:type energysystem: solph.Energysystem
-\end{DoxyVerb}
- 
 
-Reimplemented from \mbox{\hyperlink{class_in_ret_ensys_1_1common_1_1config_1_1_in_ret_ensys_config_container_a28c08aa42410ba6a09622407dab9414c}{In\+Ret\+Ensys.\+common.\+config.\+In\+Ret\+Ensys\+Config\+Container}}.
 
+Returns an oemof-\/object from the given args of this object. 
+
+Builts a dictionary with all keywords given by the object and returns the oemof object initialised with these \textquotesingle{}kwargs\textquotesingle{}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em self} & The Object Pointer \\
+\hline
+{\em energysystem} & The oemof-\/\+Energysystem to reference other objects i.\+e. for flows. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+solph.\+Non\+Convex-\/Object (oemof) 
+\end{DoxyReturn}
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
