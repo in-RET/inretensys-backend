@@ -3,10 +3,10 @@ import pickle
 
 import pandas as pd
 
-from InRetEnsys import InRetEnsysBus, InRetEnsysSource, InRetEnsysFlow, InRetEnsysSink, InRetEnsysTransformer, \
+from src.InRetEnsys import InRetEnsysBus, InRetEnsysSource, InRetEnsysFlow, InRetEnsysSink, InRetEnsysTransformer, \
     InRetEnsysEnergysystem, InRetEnsysStorage
-from InRetEnsys.components.model import InRetEnsysModel
-from InRetEnsys.types import Frequencies, Solver
+from src.InRetEnsys.components.model import InRetEnsysModel
+from src.InRetEnsys import Frequencies, Solver
 
 
 def CreateConfiguration():

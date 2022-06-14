@@ -3,7 +3,7 @@ import unittest
 import pandas as pd
 from oemof import solph
 
-from InRetEnsys import InRetEnsysBus, InRetEnsysSink, InRetEnsysFlow, InRetEnsysSource
+from src.InRetEnsys import InRetEnsysBus, InRetEnsysSink, InRetEnsysFlow, InRetEnsysSource
 
 
 class InRetEnsysTestCase(unittest.TestCase):

@@ -3,9 +3,9 @@ from typing import Sequence, Union, Dict
 import pandas as pd
 from oemof import solph
 
-from InRetEnsys import InRetEnsysConfigContainer
-from InRetEnsys.components.investment import InRetEnsysInvestment
-from InRetEnsys.components.nonconvex import InRetEnsysNonConvex
+from src.InRetEnsys import InRetEnsysConfigContainer
+from src.InRetEnsys.components.investment import InRetEnsysInvestment
+from src.InRetEnsys.components.nonconvex import InRetEnsysNonConvex
 
 ##  Container which contains the params for an oemof-flow
 #   

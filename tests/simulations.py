@@ -11,7 +11,7 @@ import configs.OEMOF.oemof_allround2_sample
 import configs.OEMOF.oemof_allround3_sample
 
 from hsncommon.log import HsnLogger
-from InRetEnsys import ModelBuilder, PrintResults
+from src.InRetEnsys import ModelBuilder, PrintResults
 
 
 def simulations(basic=False,

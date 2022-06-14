@@ -1,10 +1,8 @@
 import os
 
-from InRetEnsys import Verification
-from InRetEnsys.modelbuilder import logger, ModelBuilder
+from src.InRetEnsys import Verification
+from src.InRetEnsys import logger, ModelBuilder
 from configs.ENSYS.SWE2021_V08_O4_2045_BEW0_S1_Geoth_Wind import createConfigBinary
-from configs.OEMOF.oemof_SWE2021_V08_O4_2045_BEW0_S1_Geoth_Wind import oemof_swe_test
-
 
 # goOemof und goEnsys als keyword args
 args = ""

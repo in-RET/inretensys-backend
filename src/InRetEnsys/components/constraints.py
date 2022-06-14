@@ -1,7 +1,7 @@
 from typing import Union, List, Dict
 
-from InRetEnsys import InRetEnsysConfigContainer
-from InRetEnsys.types import Constraints
+from src.InRetEnsys import InRetEnsysConfigContainer
+from src.InRetEnsys.types import Constraints
 
 ##  Container which contains the params for constraints
 #   

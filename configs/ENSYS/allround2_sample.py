@@ -7,9 +7,9 @@ import numpy as np
 import pandas as pd
 from oemof.tools import economics
 
-from InRetEnsys import InRetEnsysFlow, InRetEnsysSource, InRetEnsysEnergysystem, InRetEnsysInvestment, InRetEnsysSink, \
+from src.InRetEnsys import InRetEnsysFlow, InRetEnsysSource, InRetEnsysEnergysystem, InRetEnsysInvestment, InRetEnsysSink, \
     InRetEnsysStorage, InRetEnsysModel, InRetEnsysTransformer, InRetEnsysBus
-from InRetEnsys.types import Frequencies, Solver
+from src.InRetEnsys import Frequencies, Solver
 from hsncommon.log import HsnLogger
 
 

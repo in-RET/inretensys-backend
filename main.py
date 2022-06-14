@@ -1,7 +1,7 @@
 import os
 import sys
 
-from InRetEnsys import ModelBuilder
+from src.InRetEnsys import ModelBuilder
 from hsncommon.log import HsnLogger
 
 

@@ -1,7 +1,7 @@
 import os
 
-from InRetEnsys import Verification, PrintResultsFromDump, ModelBuilder
-from InRetEnsys.modelbuilder import logger
+from src.InRetEnsys import Verification, PrintResultsFromDump, ModelBuilder
+from src.InRetEnsys import logger
 from configs.ENSYS.allround1_sample import CreateAllroundSampleConfiguration
 
 filename = "allround_energy_system"
