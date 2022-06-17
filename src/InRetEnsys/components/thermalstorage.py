@@ -1,7 +1,7 @@
 from oemof import solph
 from oemof.thermal.facades import StratifiedThermalStorage
+from InRetEnsys import InRetEnsysConfigContainer, InRetEnsysBus
 
-from src.InRetEnsys import InRetEnsysConfigContainer, InRetEnsysBus
 
 ##  Container which contains the params for an InRetEnsys-ThermalStorage-Object
 #   

@@ -3,14 +3,14 @@ import pickle
 
 import pandas as pd
 
-from src.InRetEnsys import InRetEnsysBus, InRetEnsysSource, InRetEnsysFlow, InRetEnsysSink, InRetEnsysTransformer, \
+from InRetEnsys import InRetEnsysBus, InRetEnsysSource, InRetEnsysFlow, InRetEnsysSink, InRetEnsysTransformer, \
     InRetEnsysEnergysystem, InRetEnsysStorage
-from src.InRetEnsys.components.model import InRetEnsysModel
-from src.InRetEnsys import Frequencies, Solver
+from InRetEnsys.components.model import InRetEnsysModel
+from InRetEnsys import Frequencies, Solver
 
 
 def CreateConfiguration():
-    data_file = "/Users/pyrokar/Documents/GitHub/python/InRetEnsys/configs/DATEN/Basic/basic_example.csv"
+    data_file = os.path.join(os.getcwd(), "configs/DATEN/Basic/basic_example.csv")
     data = pd.read_csv(data_file)
 
     bel = InRetEnsysBus(
@@ -105,8 +105,8 @@ def CreateConfiguration():
         solver_verbose=False
     )
 
-    wkdir = os.path.join(os.path.dirname(__file__))
-    filename = "ensys_basic_config.bin"
+    wkdir = os.getcwd()
+    filename = "binaries/ensys_basic_config.bin"
     file = os.path.join(wkdir, filename)
 
     xf = open(file, 'wb')

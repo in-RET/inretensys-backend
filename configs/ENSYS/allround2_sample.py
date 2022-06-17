@@ -7,9 +7,9 @@ import numpy as np
 import pandas as pd
 from oemof.tools import economics
 
-from src.InRetEnsys import InRetEnsysFlow, InRetEnsysSource, InRetEnsysEnergysystem, InRetEnsysInvestment, InRetEnsysSink, \
+from InRetEnsys import InRetEnsysFlow, InRetEnsysSource, InRetEnsysEnergysystem, InRetEnsysInvestment, InRetEnsysSink, \
     InRetEnsysStorage, InRetEnsysModel, InRetEnsysTransformer, InRetEnsysBus
-from src.InRetEnsys import Frequencies, Solver
+from InRetEnsys import Frequencies, Solver
 from hsncommon.log import HsnLogger
 
 
@@ -129,8 +129,8 @@ def CreateConfiguration():
                                      solver=Solver.gurobi,
                                      solver_verbose=False)
 
-    wkdir = os.path.join(os.path.dirname(__file__))
-    filename = "ensys_allround2_config.bin"
+    wkdir = os.getcwd()
+    filename = "binaries/ensys_allround2_config.bin"
     file = os.path.join(wkdir, filename)
 
     logger.info("Write file to " + file)

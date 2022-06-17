@@ -4,10 +4,9 @@ from pickle import load
 
 import pandas as pd
 from oemof import solph
-from oemof_visio import ESGraphRenderer
 
-from src.InRetEnsys import InRetEnsysEnergysystem
-from src.InRetEnsys.types import Constraints, Frequencies, Solver
+from InRetEnsys import InRetEnsysEnergysystem
+from InRetEnsys.types import Constraints, Frequencies, Solver
 from hsncommon.log import HsnLogger
 
 logger = HsnLogger()
@@ -99,9 +98,6 @@ def BuildEnergySystem(es: InRetEnsysEnergysystem, file: str, solver: str, solver
     ##########################################################################
     filepath = "images/energy_system"
     logger.info("Print energysystem as graph")
-
-    gr = ESGraphRenderer(energy_system=oemof_es, filepath=filepath)
-    # gr.view()
 
     ##########################################################################
     # Initiate the energy system model

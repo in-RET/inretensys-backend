@@ -1,7 +1,7 @@
 from typing import Union, List, Dict
+from InRetEnsys import InRetEnsysConfigContainer
+from InRetEnsys.types import Constraints
 
-from src.InRetEnsys import InRetEnsysConfigContainer
-from src.InRetEnsys.types import Constraints
 
 ##  Container which contains the params for constraints
 #   
@@ -32,7 +32,7 @@ class InRetEnsysConstraints(InRetEnsysConfigContainer):
     components: Union[None, List] = None
     weights: Union[None, List[float]] = None
     limit: Union[None, float] = None
-    flows: Union[None, list, dict] = None
+    flows: Union[None, List, dict] = None
     constraint_name: Union[None, str] = None
     upper_limit: Union[None, int] = None
     lower_limit: Union[None, int] = None

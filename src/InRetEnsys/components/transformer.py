@@ -1,8 +1,9 @@
 from typing import Dict
 from oemof import solph
 
-from src.InRetEnsys.common.config import InRetEnsysConfigContainer
-from src.InRetEnsys.components.flow import InRetEnsysFlow
+from InRetEnsys.common.config import InRetEnsysConfigContainer
+from InRetEnsys.components.flow import InRetEnsysFlow
+
 
 ##  Container which contains the params for an InRetEnsys-Transformer-Object
 #   

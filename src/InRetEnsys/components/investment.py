@@ -1,8 +1,6 @@
 from typing import Union, Dict
-
 from oemof import solph
-
-from src.InRetEnsys import InRetEnsysConfigContainer
+from InRetEnsys import InRetEnsysConfigContainer
 
 
 ##  Container which contains the params for an oemof-investment

@@ -9,9 +9,10 @@ import configs.OEMOF.oemof_basic_sample
 import configs.OEMOF.oemof_allround1_sample
 import configs.OEMOF.oemof_allround2_sample
 import configs.OEMOF.oemof_allround3_sample
+from InRetEnsys.common.output import PrintResults
 
 from hsncommon.log import HsnLogger
-from src.InRetEnsys import ModelBuilder, PrintResults
+from InRetEnsys import ModelBuilder
 
 
 def simulations(basic=False,

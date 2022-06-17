@@ -16,7 +16,7 @@ def oemofBasicSample(dumpfile):
     energysystem = solph.EnergySystem(timeindex=date_time_index)
 
     # Read data file
-    data = pd.read_csv("/Users/pyrokar/Documents/GitHub/python/InRetEnsys/configs/DATEN/Basic/basic_example.csv")
+    data = pd.read_csv(os.path.join(os.getcwd(), "configs/DATEN/Basic/basic_example.csv"))
 
     ##########################################################################
     # Create oemof object

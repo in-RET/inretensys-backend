@@ -38,19 +38,19 @@ def PrintResults(output, dumpfile):
         fig, axs = plt.subplots(nrows=4, ncols=1, sharex='all', figsize=(8, 11))
         ax11, ax12, ax13, ax14 = axs
 
-        custom_storage["sequences"].plot(
+        ax11 = custom_storage["sequences"].plot(
             fig=fig, ax=ax11, kind="line", drawstyle="steps-post", title="Speicher"
         )
 
-        excess_bel["sequences"].plot(
+        ax12 = excess_bel["sequences"].plot(
             fig=fig, ax=ax12, kind="line", drawstyle="steps-post", title="Überschüssiger Strom"
         )
 
-        pp_gas["sequences"].plot(
+        ax13 = pp_gas["sequences"].plot(
             fig=fig, ax=ax13, kind="line", drawstyle="steps-post", title="Transformator Gas > Strom"
         )
 
-        electricity_bus["sequences"].plot(
+        ax14 = electricity_bus["sequences"].plot(
             fig=fig, ax=ax14, kind="line", drawstyle="steps-post", title="Strombus"
         )
 
@@ -58,7 +58,21 @@ def PrintResults(output, dumpfile):
             ax.legend(bbox_to_anchor=(1, 1), loc="upper left", fontsize="8")
 
         plt.tight_layout()
-        plt.show()
+        # plt.show()
+
+        plotdir = os.path.join(os.getcwd(), "images")
+        if not os.path.exists(plotdir):
+            os.mkdir(plotdir)
+
+        plt.savefig(fig=fig,
+                    ax=axs,
+                    fname=os.path.join(plotdir, os.path.basename(output) + ".png"),
+                    dpi=None,
+                    facecolor='w',
+                    edgecolor='w',
+                    transparent=False,
+                    bbox_inches=None,
+                    pad_inches=0.1)
 
     # print the sums of the flows around the electricity bus
     print("********* Main results *********", file=xfile)

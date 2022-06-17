@@ -1,6 +1,6 @@
 from oemof import solph
+from InRetEnsys import InRetEnsysConfigContainer
 
-from src.InRetEnsys import InRetEnsysConfigContainer
 
 ##  Container which contains the params for an oemof-Bus
 #   

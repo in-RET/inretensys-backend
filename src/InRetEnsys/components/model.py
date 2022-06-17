@@ -1,7 +1,7 @@
 from pydantic import validator
+from InRetEnsys import InRetEnsysConfigContainer, InRetEnsysEnergysystem
+from InRetEnsys.types import Solver
 
-from src.InRetEnsys import InRetEnsysConfigContainer, InRetEnsysEnergysystem
-from src.InRetEnsys.types import Solver
 
 ##  Container which contains the params for an InRetEnsys-Model
 #   
