@@ -1,0 +1,17 @@
+FROM python:3.9-slim-bullseye
+
+# Install cbc
+RUN apt update
+RUN apt install coinor-cbc coinor-libcbc-dev -y
+
+# Install InRetEnsys with all dependencies, wheels are nice!
+WORKDIR /app
+
+ADD dist/InRetEnsys-0.2a1-py3-none-any.whl .
+RUN pip install InRetEnsys-0.2a1-py3-none-any.whl
+
+# Add Files
+ADD hsncommon .
+ADD main.py .
+
+CMD [ "python", "main.py" ]

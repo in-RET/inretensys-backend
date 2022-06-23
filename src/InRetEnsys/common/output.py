@@ -14,6 +14,9 @@ def PrintResults(output, dumpfile):
     storage = energysystem.groups["storage"]
     bel = energysystem.groups["electricity"]
 
+    if not os.path.exists(os.path.dirname(output)):
+        os.makedirs(os.path.dirname(output))
+
     if os.path.exists(output):
         os.remove(output)
 

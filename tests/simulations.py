@@ -9,6 +9,7 @@ import configs.OEMOF.oemof_basic_sample
 import configs.OEMOF.oemof_allround1_sample
 import configs.OEMOF.oemof_allround2_sample
 import configs.OEMOF.oemof_allround3_sample
+import configs.OEMOF.oemof_allround3_sample
 from InRetEnsys.common.output import PrintResults
 
 from hsncommon.log import HsnLogger
@@ -19,8 +20,6 @@ def simulations(basic=False,
                 allround1=False,
                 allround2=False,
                 allround3=False,
-                allround4=False,
-                allround5=False,
                 swe=False
                 ):
     wkdir = os.getcwd()
@@ -78,12 +77,6 @@ def simulations(basic=False,
         HsnLogger().info("Start Building and solving")
         ModelBuilder(configfile, dumpfile)
 
-    if allround4:
-        raise NotImplementedError
-
-    if allround5:
-        raise NotImplementedError
-
     if swe:
         raise NotImplementedError
 
@@ -99,7 +92,5 @@ simulations(basic=True,
             allround1=True,
             allround2=True,
             allround3=True,
-            allround4=False,
-            allround5=False,
             swe=False
             )

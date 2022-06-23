@@ -6,7 +6,6 @@ import numpy as np
 import pandas as pd
 from oemof import solph
 from oemof.tools import economics
-from oemof_visio import ESGraphRenderer
 
 from hsncommon.log import HsnLogger
 
@@ -151,10 +150,6 @@ def oemofAllroundSample(dumpfile, solver_verbose=False):
     storage = solph.GenericStorage(**kwargs)
 
     es.add(storage)
-
-    filepath = "images/energy_system"
-    gr = ESGraphRenderer(energy_system=es, filepath=filepath)
-    #gr.view()
 
     ##########################################################################
     # Optimise the energy system and plot the results

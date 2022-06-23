@@ -109,6 +109,9 @@ def CreateConfiguration():
     filename = "binaries/ensys_basic_config.bin"
     file = os.path.join(wkdir, filename)
 
+    if not os.path.exists(os.path.dirname(file)):
+        os.makedirs(os.path.dirname(file))
+
     xf = open(file, 'wb')
     pickle.dump(model, xf)
     xf.close()

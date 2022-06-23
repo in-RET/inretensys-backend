@@ -35,8 +35,6 @@ class ModelBuilder:
             solver = 'glpk'
         elif model.solver is Solver.cplex:
             solver = 'cplex'
-        elif model.solver is Solver.kiwi:
-            solver = 'kiwisolver'
         else:
             solver = 'gurobi'
 
@@ -157,6 +155,9 @@ def BuildEnergySystem(es: InRetEnsysEnergysystem, file: str, solver: str, solver
     oemof_es.results["verification"] = solph.processing.create_dataframe(model)
 
     logger.info("Dump file with results to: " + os.path.join(wdir, filename))
+
+    if not os.path.exists(wdir):
+        os.makedirs(wdir)
 
     oemof_es.dump(dpath=wdir, filename=filename)
     logger.info("Fin.")

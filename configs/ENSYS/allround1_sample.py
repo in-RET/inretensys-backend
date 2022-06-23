@@ -153,6 +153,9 @@ def CreateConfiguration():
     filename = "binaries/ensys_allround1_config.bin"
     file = os.path.join(wkdir, filename)
 
+    if not os.path.exists(os.path.dirname(file)):
+        os.makedirs(os.path.dirname(file))
+
     logger.info("Write file to " + file)
     xf = open(file, 'wb')
     pickle.dump(allround_model, xf)
