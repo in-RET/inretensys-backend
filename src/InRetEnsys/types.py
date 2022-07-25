@@ -28,6 +28,7 @@ class Constraints(Enum):
     ## Adds a constraint to the given model that set two variables to equal adaptable by a factor.
     equate_variables = 7
 
+
 ##  Enumeration for the frequenz of the pandas.date_range needed by the oemof energysystem.
 #   
 class Frequencies(Enum):
@@ -48,6 +49,7 @@ class Frequencies(Enum):
     
     ## Timestep is 30 Days
     monthly = 5
+
 
 ##  Enumeration for all selectable solvers.
 #

@@ -9,7 +9,7 @@ from InRetEnsys.components.flow import InRetEnsysFlow
 #   @param label: str = "Default Sink"
 #   @param outputs: Dict[str, InRetEnsysFlow]
 class InRetEnsysSource(InRetEnsysConfigContainer):
-    label: str = "Default Source",
+    label: str = "Default Source"
     outputs: Dict[str, InRetEnsysFlow]
 
     ##  Returns an oemof-object from the given args of this object.

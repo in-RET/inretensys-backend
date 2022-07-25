@@ -1,3 +1,5 @@
+from typing import Dict, Union
+
 from pydantic import validator
 from InRetEnsys import InRetEnsysConfigContainer, InRetEnsysEnergysystem
 from InRetEnsys.types import Solver
@@ -12,6 +14,7 @@ class InRetEnsysModel(InRetEnsysConfigContainer):
     energysystem: InRetEnsysEnergysystem
     solver: Solver = Solver.gurobi
     solver_verbose: bool = True
+    solver_kwargs: Dict[str, Union[bool, str, int, float]] = None
 
     @classmethod
     @validator('energysystem')

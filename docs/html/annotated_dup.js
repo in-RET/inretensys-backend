@@ -4,9 +4,6 @@ var annotated_dup =
       [ "common", null, [
         [ "config", null, [
           [ "InRetEnsysConfigContainer", "dd/dbf/class_in_ret_ensys_1_1common_1_1config_1_1_in_ret_ensys_config_container.html", "dd/dbf/class_in_ret_ensys_1_1common_1_1config_1_1_in_ret_ensys_config_container" ]
-        ] ],
-        [ "verfication", null, [
-          [ "Verification", "d5/d2e/class_in_ret_ensys_1_1common_1_1verfication_1_1_verification.html", "d5/d2e/class_in_ret_ensys_1_1common_1_1verfication_1_1_verification" ]
         ] ]
       ] ],
       [ "components", null, [

@@ -2,7 +2,6 @@ var hierarchy =
 [
     [ "InRetEnsys.common.config.InRetEnsysConfigContainer.Config", "d4/d38/class_in_ret_ensys_1_1common_1_1config_1_1_in_ret_ensys_config_container_1_1_config.html", null ],
     [ "InRetEnsys.modelbuilder.ModelBuilder", "de/d9f/class_in_ret_ensys_1_1modelbuilder_1_1_model_builder.html", null ],
-    [ "InRetEnsys.common.verfication.Verification", "d5/d2e/class_in_ret_ensys_1_1common_1_1verfication_1_1_verification.html", null ],
     [ "BaseModel", null, [
       [ "InRetEnsys.common.config.InRetEnsysConfigContainer", "dd/dbf/class_in_ret_ensys_1_1common_1_1config_1_1_in_ret_ensys_config_container.html", [
         [ "InRetEnsys.components.bus.InRetEnsysBus", "db/dd8/class_in_ret_ensys_1_1components_1_1bus_1_1_in_ret_ensys_bus.html", null ],

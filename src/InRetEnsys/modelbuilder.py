@@ -1,12 +1,13 @@
 import os.path
 import time
 from pickle import load
+from typing import Dict
 
 import pandas as pd
 from oemof import solph
 
 from InRetEnsys import InRetEnsysEnergysystem
-from InRetEnsys.types import Constraints, Frequencies, Solver
+from InRetEnsys.types import Frequencies, Solver, Constraints
 from hsncommon.log import HsnLogger
 
 logger = HsnLogger()
@@ -38,7 +39,12 @@ class ModelBuilder:
         else:
             solver = 'gurobi'
 
-        BuildEnergySystem(model.energysystem, DumpFile, solver, model.solver_verbose)
+        if hasattr(model, "solver_kwargs"):
+            cmdline_opts = model.solver_kwargs
+        else:
+            cmdline_opts = {}
+
+        BuildEnergySystem(model.energysystem, DumpFile, solver, model.solver_verbose, cmdline_opts=cmdline_opts)
 
 
 ##  Build an energysystem from the config.
@@ -47,15 +53,18 @@ class ModelBuilder:
 #   @param file filename of the final dumpfile
 #   @param solver Solver to use for optimisation in Pyomo
 #   @param solver_verbose Should the Solver print the output
-def BuildEnergySystem(es: InRetEnsysEnergysystem, file: str, solver: str, solver_verbose: bool):
+def BuildEnergySystem(es: InRetEnsysEnergysystem, file: str, solver: str, solver_verbose: bool, cmdline_opts: Dict):
     logger.info("Build an Energysystem from config file.")
     filename = os.path.basename(file)
     wdir = os.path.dirname(file)
 
+    ##########################################################################
+    # Build the oemof-energysystem
+    ##########################################################################
     if es.frequenz is Frequencies.quarter_hourly:
         freq = "15min"
     elif es.frequenz is Frequencies.half_hourly:
-        freq = "15min"
+        freq = "30min"
     elif es.frequenz is Frequencies.hourly:
         freq = "H"
     elif es.frequenz is Frequencies.daily:
@@ -76,7 +85,7 @@ def BuildEnergySystem(es: InRetEnsysEnergysystem, file: str, solver: str, solver
     )
 
     except_vars = ["label", "start_date", "time_steps", "frequenz", "constraints"]
-
+    
     for attr in vars(es):
         if attr not in except_vars:
             logger.info("Build " + attr)
@@ -92,12 +101,6 @@ def BuildEnergySystem(es: InRetEnsysEnergysystem, file: str, solver: str, solver
     logger.info("Build completed.")
 
     ##########################################################################
-    # Print the EnergySystem as Graph
-    ##########################################################################
-    filepath = "images/energy_system"
-    logger.info("Print energysystem as graph")
-
-    ##########################################################################
     # Initiate the energy system model
     ##########################################################################
     logger.info("Initiate the energy system model.")
@@ -107,39 +110,51 @@ def BuildEnergySystem(es: InRetEnsysEnergysystem, file: str, solver: str, solver
     # Add Constraints to the model
     ##########################################################################
     if hasattr(es, "constraints"):
-        for constraint in es.constraints:
-            kwargs = constraint.to_oemof()
+        for constr in es.constraints:
+            kwargs = constr.to_oemof()
 
-            if constraint.typ == Constraints.shared_limit:
+            if constr.typ == Constraints.shared_limit:
                 solph.constraints.shared_limit(model=model, **kwargs)
 
-            elif constraint.typ == Constraints.investment_limit:
+            elif constr.typ == Constraints.investment_limit:
                 model = solph.constraints.investment_limit(model=model, **kwargs)
 
-            elif constraint.typ == Constraints.additional_investment_flow_limit:
+            elif constr.typ == Constraints.additional_investment_flow_limit:
                 model = solph.constraints.additional_investment_flow_limit(model=model, **kwargs)
 
-            elif constraint.typ == Constraints.generic_integral_limit:
+            elif constr.typ == Constraints.generic_integral_limit:
                 model = solph.constraints.generic_integral_limit(om=model, **kwargs)
 
-            elif constraint.typ == Constraints.emission_limit:
+            elif constr.typ == Constraints.emission_limit:
                 solph.constraints.emission_limit(om=model, **kwargs)
 
-            elif constraint.typ == Constraints.limit_active_flow_count:
+            elif constr.typ == Constraints.limit_active_flow_count:
                 model = solph.constraints.limit_active_flow_count(model=model, **kwargs)
 
-            elif constraint.typ == Constraints.limit_active_flow_count_by_keyword:
+            elif constr.typ == Constraints.limit_active_flow_count_by_keyword:
                 model = solph.constraints.limit_active_flow_count_by_keyword(model=model, **kwargs)
 
-            elif constraint.typ == Constraints.equate_variables:
+            elif constr.typ == Constraints.equate_variables:
                 solph.constraints.equate_variables(model=model, **kwargs)
 
     ##########################################################################
     # solving...
     ##########################################################################
     logger.info("Solve the optimization problem.")
+    
+    logdir = os.path.join(os.getcwd(), "logs")
+    if not os.path.exists(logdir):
+        os.makedirs(logdir)
+
+    logfile = os.path.join(logdir, filename.replace(".dump", "_solver.log"))
+    logger.info("Logfile: " + logdir)
+
+    cmdline_opts["logfile"] = logfile
+
     t_start = time.time()
-    model.solve(solver=solver, solve_kwargs={"tee": solver_verbose})
+    model.solve(solver=solver,
+                solve_kwargs={"tee": solver_verbose},
+                cmdline_options=cmdline_opts)
     t_end = time.time()
 
     logger.info("Completed after " + str(round(t_end - t_start, 2)) + " seconds.")
@@ -153,7 +168,7 @@ def BuildEnergySystem(es: InRetEnsysEnergysystem, file: str, solver: str, solver
     oemof_es.results["main"] = solph.processing.results(model)
     oemof_es.results["meta"] = solph.processing.meta_results(model)
     oemof_es.results["verification"] = solph.processing.create_dataframe(model)
-
+    
     logger.info("Dump file with results to: " + os.path.join(wdir, filename))
 
     if not os.path.exists(wdir):

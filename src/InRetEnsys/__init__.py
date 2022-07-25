@@ -22,7 +22,6 @@
 
 # Common
 from InRetEnsys.common.config import InRetEnsysConfigContainer
-from InRetEnsys.common.verfication import Verification
 
 # Components
 from InRetEnsys.components.bus import InRetEnsysBus
