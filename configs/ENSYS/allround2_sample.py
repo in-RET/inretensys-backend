@@ -10,14 +10,10 @@ from oemof.tools import economics
 from InRetEnsys import InRetEnsysFlow, InRetEnsysSource, InRetEnsysEnergysystem, InRetEnsysInvestment, InRetEnsysSink, \
     InRetEnsysStorage, InRetEnsysModel, InRetEnsysTransformer, InRetEnsysBus
 from InRetEnsys import Frequencies, Solver
-from hsncommon.log import HsnLogger
 
 
 def CreateConfiguration():
-    logger = HsnLogger()
-
     number_of_time_steps = 24 * 7 * 12
-
     import_el = []
 
     N = number_of_time_steps  # sample count
@@ -54,7 +50,7 @@ def CreateConfiguration():
 
     price_gas = 0.04
     epc_rgas = economics.annuity(capex=1000, n=20, wacc=0.05)
-    logger.info("epc_rgas: " + str(epc_rgas))
+    print("epc_rgas: " + str(epc_rgas))
 
     rgas = InRetEnsysSource(
         label="rgas",
@@ -75,7 +71,7 @@ def CreateConfiguration():
     )
 
     epc_pp_gas = economics.annuity(capex=2000, n=20, wacc=0.05)
-    logger.info("epc_pp_gas: " + str(epc_pp_gas))
+    print("epc_pp_gas: " + str(epc_pp_gas))
 
     pp_gas = InRetEnsysTransformer(
         label="pp_gas",
@@ -92,7 +88,7 @@ def CreateConfiguration():
     # If the period is one year the equivalent periodical costs (epc) of an
     # investment are equal to the annuity. Use oemof's economic tools.
     epc_storage = economics.annuity(capex=30, n=20, wacc=0.05)
-    logger.info("epc_storage: " + str(epc_storage))
+    print("epc_storage: " + str(epc_storage))
 
     storage = InRetEnsysStorage(
         label="storage",
@@ -136,7 +132,7 @@ def CreateConfiguration():
     if not os.path.exists(os.path.dirname(file)):
         os.makedirs(os.path.dirname(file))
 
-    logger.info("Write file to " + file)
+    print("Write file to " + file)
     xf = open(file, 'wb')
     pickle.dump(allround_model, xf)
     xf.close()

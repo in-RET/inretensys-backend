@@ -86,11 +86,11 @@ def PrintResults(output, dumpfile):
         my_results = electricity_bus["scalars"]
 
         # installed capacity of storage in GWh
-        my_results["storage_invest_GWh"] = (
-                results[(storage, None)]["scalars"]["invest"] / 1e6
-        )
+        my_results["storage_invest_GWh"] = (results[(storage, None)]["scalars"]["invest"] / 1e6)
 
         print(my_results, file=xfile)
+
+    print(natural_gas_bus["sequences"].sum(axis=0), file=xfile)
 
     if "scalars" in natural_gas_bus.keys():
         my_results = natural_gas_bus["scalars"]

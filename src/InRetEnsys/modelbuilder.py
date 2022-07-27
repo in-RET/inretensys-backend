@@ -7,10 +7,8 @@ import pandas as pd
 from oemof import solph
 
 from InRetEnsys import InRetEnsysEnergysystem
+from InRetEnsys.common.log import InRetEnsysLogger
 from InRetEnsys.types import Frequencies, Solver, Constraints
-from hsncommon.log import HsnLogger
-
-logger = HsnLogger()
 
 
 ##  Init Modelbuilder, load and optimise the configuration.
@@ -18,6 +16,8 @@ logger = HsnLogger()
 #   @param ConfigFile Path to the Configfile which contains the EnsysConfiguration
 #   @param DumpFile Path to the Dumpfile where the oemof-energysystem and the results should be stored.
 class ModelBuilder:
+    logger = None
+
     def __init__(self,
                  ConfigFile: str,
                  DumpFile: str
@@ -25,6 +25,12 @@ class ModelBuilder:
         xf = open(ConfigFile, 'rb')
         model = load(xf)
         xf.close()
+
+        #logfile = os.path.join(os.getcwd(), "logs", os.path.basename(ConfigFile).replace(".bin", "") + "-" + str(datetime.datetime.now()) + ".log")
+        logfile = os.path.join(os.getcwd(), "logs", os.path.basename(ConfigFile).replace(".bin", ".log"))
+
+        self.logger = InRetEnsysLogger("OutputLogger", logfile)
+        self.logger.info("Start Building and solving")
 
         if model.solver is Solver.gurobi:
             solver = 'gurobi'
@@ -44,7 +50,7 @@ class ModelBuilder:
         else:
             cmdline_opts = {}
 
-        BuildEnergySystem(model.energysystem, DumpFile, solver, model.solver_verbose, cmdline_opts=cmdline_opts)
+        BuildEnergySystem(model.energysystem, DumpFile, solver, model.solver_verbose, cmdline_opts=cmdline_opts, logger=self.logger)
 
 
 ##  Build an energysystem from the config.
@@ -53,8 +59,9 @@ class ModelBuilder:
 #   @param file filename of the final dumpfile
 #   @param solver Solver to use for optimisation in Pyomo
 #   @param solver_verbose Should the Solver print the output
-def BuildEnergySystem(es: InRetEnsysEnergysystem, file: str, solver: str, solver_verbose: bool, cmdline_opts: Dict):
+def BuildEnergySystem(es: InRetEnsysEnergysystem, file: str, solver: str, solver_verbose: bool, cmdline_opts: Dict, logger):
     logger.info("Build an Energysystem from config file.")
+
     filename = os.path.basename(file)
     wdir = os.path.dirname(file)
 

@@ -7,11 +7,10 @@ import pandas as pd
 from oemof import solph
 from oemof.tools import economics
 
-from hsncommon.log import HsnLogger
+from InRetEnsys.common.log import InRetEnsysLogger
 
 
 def oemofAllroundSample(dumpfile, solver_verbose=False):
-    logger = HsnLogger()
     solver = "gurobi"
     number_of_time_steps = 24 * 7 * 12
     solver_verbose = solver_verbose
@@ -72,7 +71,7 @@ def oemofAllroundSample(dumpfile, solver_verbose=False):
 
     price_gas = 0.04
     epc_rgas = economics.annuity(capex=1000, n=20, wacc=0.05)
-    logger.info("epc_rgas: " + str(epc_rgas))
+    print("epc_rgas: " + str(epc_rgas))
     # create source object representing the natural gas commodity (annual limit)
     es.add(
         solph.Source(
@@ -98,7 +97,7 @@ def oemofAllroundSample(dumpfile, solver_verbose=False):
 
     # create simple transformer object representing a gas power plant
     epc_pp_gas = economics.annuity(capex=2000, n=20, wacc=0.05)
-    logger.info("epc_pp_gas: " + str(epc_pp_gas))
+    print("epc_pp_gas: " + str(epc_pp_gas))
     transformer = solph.Transformer(
         label="pp_gas",
         inputs={bgas: solph.Flow()},
@@ -116,7 +115,7 @@ def oemofAllroundSample(dumpfile, solver_verbose=False):
     # If the period is one year the equivalent periodical costs (epc) of an
     # investment are equal to the annuity. Use oemof's economic tools.
     epc_storage = economics.annuity(capex=30, n=20, wacc=0.05)
-    logger.info("epc_storage: " + str(epc_storage))
+    print("epc_storage: " + str(epc_storage))
 
     kwargs = {
         "label": "storage",
@@ -144,19 +143,19 @@ def oemofAllroundSample(dumpfile, solver_verbose=False):
     # Optimise the energy system and plot the results
     ##########################################################################
 
-    logger.info("Initialise operational model.")
+    print("Initialise operational model.")
     # initialise the operational model
     model = solph.Model(es)
 
-    logger.info("Start solving.")
+    print("Start solving.")
     t_start = time.time()
     # if tee_switch is true solver messages will be displayed
     model.solve(solver=solver, solve_kwargs={"tee": solver_verbose})
     t_end = time.time()
 
-    logger.info("Completed after " + str(round(t_end - t_start, 2)) + " seconds.")
+    print("Completed after " + str(round(t_end - t_start, 2)) + " seconds.")
 
-    logger.info("Processing data.")
+    print("Processing data.")
     # add results to the energy system to make it possible to store them.
     es.results["main"] = solph.processing.results(model)
     es.results["meta"] = solph.processing.meta_results(model)
@@ -164,7 +163,7 @@ def oemofAllroundSample(dumpfile, solver_verbose=False):
 
     #print(model.integral_limit_emission_factor())
 
-    logger.info("Dump files to filesystem.")
+    print("Dump files to filesystem.")
     # store energy system with results
     wdir = os.path.dirname(dumpfile)
     dumpfilename = os.path.basename(dumpfile)

@@ -12,7 +12,6 @@ import configs.OEMOF.oemof_allround3_sample
 import configs.OEMOF.oemof_allround3_sample
 from output import PrintResults
 
-from hsncommon.log import HsnLogger
 from InRetEnsys import ModelBuilder
 
 
@@ -35,7 +34,6 @@ def simulations(basic=False,
         dumpfile = os.path.join(dumpdir, "ensys_basic.dump")
         dumpfiles.append(dumpfile)
         configfile = configs.ENSYS.basic_sample.CreateConfiguration()
-        HsnLogger().info("Start Building and solving")
         ModelBuilder(configfile, dumpfile)
 
     if allround1:
@@ -48,7 +46,6 @@ def simulations(basic=False,
         dumpfile = os.path.join(dumpdir, "ensys_allround1.dump")
         dumpfiles.append(dumpfile)
         configfile = configs.ENSYS.allround1_sample.CreateConfiguration()
-        HsnLogger().info("Start Building and solving")
         ModelBuilder(configfile, dumpfile)
 
     if allround2:
@@ -61,7 +58,6 @@ def simulations(basic=False,
         dumpfile = os.path.join(dumpdir, "ensys_allround2.dump")
         dumpfiles.append(dumpfile)
         configfile = configs.ENSYS.allround2_sample.CreateConfiguration()
-        HsnLogger().info("Start Building and solving")
         ModelBuilder(configfile, dumpfile)
 
     if allround3:
@@ -74,7 +70,6 @@ def simulations(basic=False,
         dumpfile = os.path.join(dumpdir, "ensys_allround3.dump")
         dumpfiles.append(dumpfile)
         configfile = configs.ENSYS.allround3_sample.CreateConfiguration()
-        HsnLogger().info("Start Building and solving")
         ModelBuilder(configfile, dumpfile)
 
     if swe:
@@ -88,9 +83,9 @@ def simulations(basic=False,
                          dumpfile=dumpfile)
 
 
-simulations(basic=False,
+simulations(basic=True,
             allround1=True,
-            allround2=False,
-            allround3=False,
+            allround2=True,
+            allround3=True,
             swe=False
             )
