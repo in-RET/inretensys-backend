@@ -21,7 +21,7 @@ class InRetEnsysConfigContainer(BaseModel):
     ##  pydantic subclass to add special configurations.
     class Config:
         ## Allow arbitrary_types like pandas.DataFrames / pandas.Series which are not allow by default.
-        arbitrary_types_allowed = True
+        #arbitrary_types_allowed = True
 
         ## Without this configuration its impossible to pass extra **kwargs to pydantic.baseModel-Objects.
         extra = Extra.allow

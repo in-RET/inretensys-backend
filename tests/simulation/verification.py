@@ -1,12 +1,14 @@
+import logging
 import os
 
-from hsncommon.log import HsnLogger
+from InRetEnsys.common.log import InRetEnsysLogger
 from verifier import Verifier
 
 verifier = Verifier()
-logger = HsnLogger()
 
 wdir = os.path.join(os.getcwd(), "output")
+
+logger = InRetEnsysLogger("Logger")
 
 # Verify all data
 logger.info("Basic Example")

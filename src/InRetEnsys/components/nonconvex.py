@@ -1,42 +1,136 @@
-from typing import Union, Dict
+from typing import Dict
+
 from oemof import solph
+from pydantic import Field
+
 from InRetEnsys import InRetEnsysConfigContainer
 
 
 ##  Container which contains the params for an InRetEnsys-NonConvex-Object
 #   
-#   @param startup_costs: Union[None, float] = None
-#   @param shutdown_costs: Union[None, float] = None
-#   @param activity_costs: Union[None, float] = None
-#   @param minimum_uptime: Union[None, int] = None
-#   @param minimum_downtime: Union[None, int] = None
-#   @param maximum_startups: Union[None, int] = None
-#   @param maximum_shutdowns: Union[None, int] = None
+#   @param startup_costs: float] = None
+#   @param shutdown_costs: float] = None
+#   @param activity_costs: float] = None
+#   @param minimum_uptime: int] = None
+#   @param minimum_downtime: int] = None
+#   @param maximum_startups: int] = None
+#   @param maximum_shutdowns: int] = None
 #   @param initial_status: int = 0
-#   @param positive_gradient: Union[None, Dict] = None
-#   @param negative_gradient: Union[None, Dict] = None
-#   @param startup_costs: Union[None, float] = None
-#   @param shutdown_costs: Union[None, float] = None
-#   @param activity_costs: Union[None, float] = None
-#   @param minimum_uptime: Union[None, int] = None
-#   @param minimum_downtime: Union[None, int] = None
-#   @param maximum_startups: Union[None, int] = None
-#   @param maximum_shutdowns: Union[None, int] = None
+#   @param positive_gradient: Dict] = None
+#   @param negative_gradient: Dict] = None
+#   @param startup_costs: float] = None
+#   @param shutdown_costs: float] = None
+#   @param activity_costs: float] = None
+#   @param minimum_uptime: int] = None
+#   @param minimum_downtime: int] = None
+#   @param maximum_startups: int] = None
+#   @param maximum_shutdowns: int] = None
 #   @param initial_status: int = 0
-#   @param positive_gradient: Union[None, Dict] = None
-#   @param negative_gradient: Union[None, Dict] = None
+#   @param positive_gradient: Dict] = None
+#   @param negative_gradient: Dict] = None
 class InRetEnsysNonConvex(InRetEnsysConfigContainer):
-    startup_costs: Union[None, float] = None
-    shutdown_costs: Union[None, float] = None
-    activity_costs: Union[None, float] = None
-    minimum_uptime: Union[None, int] = None
-    minimum_downtime: Union[None, int] = None
-    maximum_startups: Union[None, int] = None
-    maximum_shutdowns: Union[None, int] = None
+    startup_costs: float = Field(
+        None,
+        title='Startups Costs',
+        description='',
+        lvl_visible=21,
+        lvl_edit=42,
+        le=float("+inf"),
+        ge=0.0,
+        step=1e-3
+    )
+
+    shutdown_costs: float = Field(
+        None,
+        title='Shutdown Costs',
+        description='',
+        lvl_visible=21,
+        lvl_edit=42,
+        le=float("+inf"),
+        ge=0.0,
+        step=1e-3
+    )
+    
+    activity_costs: float = Field(
+        None,
+        title='Activity Costs',
+        description='',
+        lvl_visible=21,
+        lvl_edit=42,
+        le=float("+inf"),
+        ge=0.0,
+        step=1e-3
+    )
+
+    minimum_uptime: int = Field(
+        None,
+        title='Minimum Uptime',
+        description='',
+        lvl_visible=21,
+        lvl_edit=42,
+        le=float("+inf"),
+        ge=0,
+        step=1e-3
+    )
+    minimum_downtime: int = Field(
+        None,
+        title='Minimum Downtime',
+        description='',
+        lvl_visible=21,
+        lvl_edit=42,
+        le=float("+inf"),
+        ge=0,
+        step=1e-3
+    )
+
+    maximum_startups: int = Field(
+        None,
+        title='Maximum Startups',
+        description='',
+        lvl_visible=21,
+        lvl_edit=42,
+        le=float("+inf"),
+        ge=0,
+        step=1e-3
+    )
+
+    maximum_shutdowns: int = Field(
+        None,
+        title='Maximum Shutdowns',
+        description='',
+        lvl_visible=21,
+        lvl_edit=42,
+        le=float("+inf"),
+        ge=0,
+        step=1e-3
+    )
+
     # 0/False = off, 1/True = on
-    initial_status: int = 0
-    positive_gradient: Union[None, Dict] = None
-    negative_gradient: Union[None, Dict] = None
+    initial_status: int = Field(
+        0,
+        title='initial Status',
+        description='',
+        lvl_visible=21,
+        lvl_edit=42,
+        le=float("+inf"),
+        ge=0,
+        step=1e-3
+    )
+    positive_gradient: Dict = Field(
+        None,
+        title='positive Gradient',
+        description='',
+        lvl_visible=21,
+        lvl_edit=42
+    )
+
+    negative_gradient: Dict = Field(
+        None,
+        title='negative Gradient',
+        description='',
+        lvl_visible=21,
+        lvl_edit=42
+    )
 
     ##  Returns an oemof-object from the given args of this object.
     #

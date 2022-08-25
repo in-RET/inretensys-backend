@@ -1,10 +1,9 @@
+import logging
 import os.path
 from hashlib import sha256
 from typing import List
 
 from oemof import solph
-
-from hsncommon.log import HsnLogger
 
 
 def calculateSHA256(filepath):
@@ -34,15 +33,10 @@ class Verifier:
         hashA = calculateSHA256(filepathA)
         hashB = calculateSHA256(filepathB)
 
-        logger = HsnLogger()
+        logger = logging.getLogger('OutputLogger')
 
-        if hashA == hashB:
-            logger.info("Dateien stimmen überein!")
-        else:
-            logger.warn("Dateien stimmen nicht überein!")
-
-        logger.warn("A: " + str(hashA))
-        logger.warn("B: " + str(hashB))
+        logger.warning("A: " + str(hashA))
+        logger.warning("B: " + str(hashB))
 
     @classmethod
     def dataframes(cls, dfList: List[str]) -> None:
@@ -57,7 +51,7 @@ class Verifier:
         data = None
 
         compSystems = []
-        logger = HsnLogger()
+        logger = logging.getLogger('OutputLogger')
 
         for df in dfList:
             logger.info("Read data to Compare from: " + df)
@@ -84,5 +78,5 @@ class Verifier:
                 logger.info("Dataframes stimmen überein!")
                 print(df1.compare(df2))
             else:
-                logger.warn("Dataframes stimmen nicht überein!")
+                logger.warning("Dataframes stimmen nicht überein!")
                 print(df1.compare(df2))

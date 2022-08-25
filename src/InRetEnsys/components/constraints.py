@@ -1,4 +1,6 @@
 from typing import Union, List, Dict
+from pydantic import Field
+
 from InRetEnsys import InRetEnsysConfigContainer
 from InRetEnsys.types import Constraints
 
@@ -21,23 +23,142 @@ from InRetEnsys.types import Constraints
 #   @param upper_limit (integer) – maximum number of active flows in the list
 #   @param lower_limit (integer) – minimum number of active flows in the list
 class InRetEnsysConstraints(InRetEnsysConfigContainer):
-    typ: Union[None, Constraints] = None
-    var1: Union[None, object] = None
-    var2: Union[None, object] = None
-    factor1: Union[None, float] = None
-    name: Union[None, str] = None
-    keyword: Union[None, str] = None
-    quantity: Union[None, object] = None
-    limit_name: Union[None, str] = None
-    components: Union[None, List] = None
-    weights: Union[None, List[float]] = None
-    limit: Union[None, float] = None
-    flows: Union[None, List, dict] = None
-    constraint_name: Union[None, str] = None
-    upper_limit: Union[None, int] = None
-    lower_limit: Union[None, int] = None
+    typ: Constraints = Field(
+        None,
+        title='Typ',
+        description='Type of the constraint.',
+        lvl_visible=21,
+        lvl_edit=42
+    )
 
-    ##  Returns an dictionary of the given args of this object.
+    var1: object = Field(
+        None,
+        title='var1',
+        description='First variable, to be set to equal with Var2 and multiplied with factor1.',
+        lvl_visible=21,
+        lvl_edit=42
+    )
+
+    var2: object = Field(
+        None,
+        title='var2',
+        description='Second variable, to be set equal to (Var1 * factor1).',
+        lvl_visible=21,
+        lvl_edit=42
+    )
+
+    factor1: float = Field(
+        None,
+        title='factor1',
+        description='Factor to define the proportion between the variables.',
+        lvl_visible=21,
+        lvl_edit=42,
+        le=float("+inf"),
+        ge=0.0,
+        step=1e-3
+    )
+
+    name: str = Field(
+        None,
+        title='Name',
+        description='Optional name',
+        lvl_visible=21,
+        lvl_edit=42
+    )
+
+    keyword: str = Field(
+        None,
+        title='Keyword',
+        description='Keyword to consider (searches all NonConvexFlows)',
+        lvl_visible=21,
+        lvl_edit=42
+    )
+
+    quantity: object = Field(
+        None,
+        title='Quantity',
+        description='',
+        lvl_visible=21,
+        lvl_edit=42
+    )
+
+    limit_name: str = Field(
+        None,
+        title='Limit Name',
+        description='',
+        lvl_visible=21,
+        lvl_edit=42
+    )
+
+    components: List = Field(
+        None,
+        title='Components',
+        description='',
+        lvl_visible=21,
+        lvl_edit=42
+    )
+
+    weights: List[float] = Field(
+        None,
+        title='Weights',
+        description='',
+        lvl_visible=21,
+        lvl_edit=42,
+        le=float("+inf"),
+        ge=0.0,
+        step=1e-3
+    )
+
+    limit: float = Field(
+        None,
+        title='Limit',
+        description='',
+        lvl_visible=21,
+        lvl_edit=42,
+        le=float("+inf"),
+        ge=0,
+        step=1e-3
+    )
+
+    flows: Union[List, dict] = Field(
+        None,
+        title='Flows',
+        description='',
+        lvl_visible=21,
+        lvl_edit=42
+    )
+
+    constraint_name: str = Field(
+        None,
+        title='constraint name',
+        description='',
+        lvl_visible=21,
+        lvl_edit=42
+    )
+
+    upper_limit: int = Field(
+        None,
+        title='Upper Limit',
+        description='',
+        lvl_visible=21,
+        lvl_edit=42,
+        le=float("+inf"),
+        ge=0,
+        step=1e-3
+    )
+
+    lower_limit: int = Field(
+        None,
+        title='Lower Limit',
+        description='',
+        lvl_visible=21,
+        lvl_edit=42,
+        le=float("+inf"),
+        ge=0,
+        step=1e-3
+    )
+
+    ##  Returns a dictionary of the given args of this object.
     #
     #   @param self The Object Pointer
     #   @return dictionary of kwargs 

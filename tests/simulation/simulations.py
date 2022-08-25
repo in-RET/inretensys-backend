@@ -9,7 +9,6 @@ import configs.OEMOF.oemof_basic_sample
 import configs.OEMOF.oemof_allround1_sample
 import configs.OEMOF.oemof_allround2_sample
 import configs.OEMOF.oemof_allround3_sample
-import configs.OEMOF.oemof_allround3_sample
 from output import PrintResults
 
 from InRetEnsys import ModelBuilder
@@ -18,8 +17,7 @@ from InRetEnsys import ModelBuilder
 def simulations(basic=False,
                 allround1=False,
                 allround2=False,
-                allround3=False,
-                swe=False
+                allround3=False
                 ):
     wkdir = os.getcwd()
     dumpdir = os.path.join(wkdir, "dumps")
@@ -72,9 +70,6 @@ def simulations(basic=False,
         configfile = configs.ENSYS.allround3_sample.CreateConfiguration()
         ModelBuilder(configfile, dumpfile)
 
-    if swe:
-        raise NotImplementedError
-
     if len(dumpfiles) > 0:
         for dumpfile in dumpfiles:
             output = os.path.basename(dumpfile).replace(".dump", "")
@@ -83,9 +78,8 @@ def simulations(basic=False,
                          dumpfile=dumpfile)
 
 
-simulations(basic=True,
+simulations(basic=False,
             allround1=True,
-            allround2=True,
-            allround3=True,
-            swe=False
+            allround2=False,
+            allround3=False
             )

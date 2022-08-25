@@ -41,7 +41,7 @@ def CreateConfiguration():
     demand_el = InRetEnsysSink(
         label="demand",
         inputs={bel.label: InRetEnsysFlow(
-            fix=data["demand_el"],
+            fix=data["demand_el"].tolist(),
             nominal_value=1
         )}
     )

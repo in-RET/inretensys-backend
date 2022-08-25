@@ -1,4 +1,5 @@
 from typing import Union, Dict
+from pydantic import Field
 from oemof import solph
 from InRetEnsys import InRetEnsysConfigContainer
 
@@ -13,13 +14,76 @@ from InRetEnsys import InRetEnsysConfigContainer
 #   @param offset: float = 0.0
 #   @param kwargs: Union[None, Dict] = None
 class InRetEnsysInvestment(InRetEnsysConfigContainer):
-    maximum: float = float("+inf")
-    minimum: float = 0.0
-    ep_costs: float = 0.0
-    existing: float = 0.0
-    nonconvex: bool = False
-    offset: float = 0.0
-    kwargs: Union[None, Dict] = None
+    maximum: float = Field(
+        float("+inf"),
+        title='Maximum',
+        description='Maximum of the Investment.',
+        lvl_visible=21,
+        lvl_edit=42,
+        le=float("+inf"),
+        ge=0.0,
+        step=1e-3
+    )
+
+    minimum: float = Field(
+        0.0,
+        title='Minimum',
+        description='Minimum of the Investment.',
+        lvl_visible=21,
+        lvl_edit=42,
+        le=float("+inf"),
+        ge=0.0,
+        step=1e-3
+    )
+
+    ep_costs: float = Field(
+        0.0,
+        title='EP Costs',
+        description='ep_costs',
+        lvl_visible=21,
+        lvl_edit=42,
+        le=float("+inf"),
+        ge=0.0,
+        step=1e-3
+    )
+
+    existing: float = Field(
+        0.0,
+        title='Existing',
+        description='Value of existing investment',
+        lvl_visible=21,
+        lvl_edit=42,
+        le=float("+inf"),
+        ge=0.0,
+        step=1e-3
+    )
+
+    nonconvex: bool = Field(
+        False,
+        title='Nonconvex',
+        description='Value to mark the Investment as Nonconvex',
+        lvl_visible=21,
+        lvl_edit=42
+    )
+
+    offset: float = Field(
+        0.0,
+        title='Offset',
+        description='Offset',
+        lvl_visible=21,
+        lvl_edit=42,
+        le=float("+inf"),
+        ge=0.0,
+        step=1e-3
+    )
+
+    kwargs: Dict = Field(
+        None,
+        title='kwargs',
+        description='Extra arguments for the object',
+        lvl_visible=21,
+        lvl_edit=42
+    )
 
     ##  Returns an oemof-object from the given args of this object.
     #

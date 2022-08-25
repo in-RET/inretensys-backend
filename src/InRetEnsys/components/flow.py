@@ -1,5 +1,5 @@
 from typing import Sequence, Union, Dict
-import pandas as pd
+from pydantic import Field
 from oemof import solph
 from InRetEnsys import InRetEnsysConfigContainer
 from InRetEnsys.components.investment import InRetEnsysInvestment
@@ -21,21 +21,130 @@ from InRetEnsys.components.nonconvex import InRetEnsysNonConvex
 #   @param nonconvex InRetEnsys-NonConvex-Object, if the Flow should be nonconvex. Non possible if the flow is an Investmentflow. 
 #   @param kwargs Keyword-Arguments for special Keywords, used by constraints.
 class InRetEnsysFlow(InRetEnsysConfigContainer):
-    nominal_value: Union[None, float] = None
+    nominal_value: float = Field(
+        None,
+        title='Nominal Value',
+        description='The nominal value of the flow. If this value is set the corresponding optimization variable of '
+                    'the flow object will be bounded by this value multiplied with min(lower bound)/max(upper bound).',
+        lvl_visible=21,
+        lvl_edit=42,
+        le=float("+inf"),
+        ge=0.0,
+        step=1e-3
+    )
+
     # numeric or sequence or None
-    fix: Union[None, float, Sequence, pd.Series] = None
+    fix: Union[float, Sequence[float]] = Field(
+        None,
+        title='Fix',
+        description='Normed fixed value for the flow variable. '
+                    'Will be multiplied with the nominal_value to get the absolute value',
+        lvl_visible=21,
+        lvl_edit=42,
+        le=float("+inf"),
+        ge=0.0,
+        step=1e-5
+    )
+
     # numeric or sequence
-    min: Union[None, float, Sequence, pd.Series] = None
+    min: Union[float, Sequence[float]] = Field(
+        None,
+        title='Minimum',
+        description='',
+        lvl_visible=21,
+        lvl_edit=42,
+        le=float("+inf"),
+        ge=0.0,
+        step=1e-3
+    )
+
     # numeric or sequence
-    max: Union[None, float, Sequence, pd.Series] = None
-    positive_gradient: Union[None, Dict] = None
-    negative_gradient: Union[None, Dict] = None
-    summed_max: Union[None, float] = None
-    summed_min: Union[None, float] = None
-    variable_costs: Union[None, float, Sequence, pd.Series] = None
-    investment: Union[None, InRetEnsysInvestment] = None
-    nonconvex: Union[None, InRetEnsysNonConvex] = None
-    kwargs: Union[None, Dict] = None
+    max: Union[float, Sequence[float]] = Field(
+        None,
+        title='Maximum',
+        description='',
+        lvl_visible=21,
+        lvl_edit=42,
+        le=float("+inf"),
+        ge=0.0,
+        step=1e-3
+    )
+
+    positive_gradient: Dict = Field(
+        None,
+        title='Positive Gradient',
+        description='',
+        lvl_visible=21,
+        lvl_edit=42
+    )
+    negative_gradient: Dict = Field(
+        None,
+        title='Negative Gradient',
+        description='',
+        lvl_visible=21,
+        lvl_edit=42
+    )
+
+    summed_max: float = Field(
+        None,
+        title='Summed Maximum',
+        description='Specific maximum value summed over all timesteps. '
+                    'Will be multiplied with the nominal_value to get the absolute limit.',
+        lvl_visible=21,
+        lvl_edit=42,
+        le=float("+inf"),
+        ge=0.0,
+        step=1e-3
+    )
+
+    summed_min: float = Field(
+        None,
+        title='Summed Minimum',
+        description='Specific minimum value summed over all timesteps. '
+                    'Will be multiplied with the nominal_value to get the absolute limit.',
+        lvl_visible=21,
+        lvl_edit=42,
+        le=float("+inf"),
+        ge=0.0,
+        step=1e-3
+    )
+
+    variable_costs: Union[float, Sequence[float]] = Field(
+        None,
+        title='Variable Costs',
+        description='The costs associated with one unit of the flow.',
+        lvl_visible=21,
+        lvl_edit=42,
+        le=float("+inf"),
+        ge=0.0,
+        step=1e-3
+    )
+
+    investment: InRetEnsysInvestment = Field(
+        None,
+        title='Investment',
+        description='Object indicating if a nominal_value of the flow is determined by the optimization problem.',
+        lvl_visible=21,
+        lvl_edit=42
+    )
+
+    nonconvex: InRetEnsysNonConvex = Field(
+        None,
+        title='Nonconvex',
+        description='If a nonconvex flow object is added here, the flow constraints will be altered significantly as '
+                    'the mathematical model for the flow will be different, i.e. constraint etc. from NonConvexFlow '
+                    'will be used instead of Flow. ',
+        lvl_visible=21,
+        lvl_edit=42
+    )
+
+    kwargs: Dict = Field(
+        None,
+        title='kwargs',
+        description='Extra arguments for the object',
+        lvl_visible=21,
+        lvl_edit=42
+    )
 
     ##  Returns an oemof-object from the given args of this object.
     #

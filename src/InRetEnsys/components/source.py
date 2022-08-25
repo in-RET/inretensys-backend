@@ -1,5 +1,6 @@
 from typing import Dict
 from oemof import solph
+from pydantic import Field
 from InRetEnsys.common.config import InRetEnsysConfigContainer
 from InRetEnsys.components.flow import InRetEnsysFlow
 
@@ -9,8 +10,21 @@ from InRetEnsys.components.flow import InRetEnsysFlow
 #   @param label: str = "Default Sink"
 #   @param outputs: Dict[str, InRetEnsysFlow]
 class InRetEnsysSource(InRetEnsysConfigContainer):
-    label: str = "Default Source"
-    outputs: Dict[str, InRetEnsysFlow]
+    label: str = Field(
+        "Default Source",
+        title='Label',
+        description='Label',
+        lvl_visible=21,
+        lvl_edit=42
+    )
+
+    outputs: Dict[str, InRetEnsysFlow] = Field(
+        ...,
+        title='Outputs',
+        description='Outputs',
+        lvl_visible=21,
+        lvl_edit=42
+    )
 
     ##  Returns an oemof-object from the given args of this object.
     #

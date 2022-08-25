@@ -1,5 +1,6 @@
 from typing import Dict
 from oemof import solph
+from pydantic import Field
 
 from InRetEnsys.common.config import InRetEnsysConfigContainer
 from InRetEnsys.components.flow import InRetEnsysFlow
@@ -12,10 +13,37 @@ from InRetEnsys.components.flow import InRetEnsysFlow
 #   @param outputs: Dict[str, InRetEnsysFlow] = None
 #   @param conversion_factors: Dict = None
 class InRetEnsysTransformer(InRetEnsysConfigContainer):
-    label: str = "Default Transformer"
-    inputs: Dict[str, InRetEnsysFlow] = None
-    outputs: Dict[str, InRetEnsysFlow] = None
-    conversion_factors: Dict = None
+    label: str = Field(
+        "Default Transformer",
+        title='Label',
+        description='Label',
+        lvl_visible=21,
+        lvl_edit=42
+    )
+
+    inputs: Dict[str, InRetEnsysFlow] = Field(
+        ...,
+        title='Inputs',
+        description='Inputs',
+        lvl_visible=21,
+        lvl_edit=42
+    )
+
+    outputs: Dict[str, InRetEnsysFlow] = Field(
+        ...,
+        title='Outputs',
+        description='Outputs',
+        lvl_visible=21,
+        lvl_edit=42
+    )
+
+    conversion_factors: Dict = Field(
+        ...,
+        title='Conversion Factors',
+        description='Dictionary with all conversion factors. <Bus.Label> : Float',
+        lvl_visible=21,
+        lvl_edit=42
+    )
 
     ##  Returns an oemof-object from the given args of this object.
     #

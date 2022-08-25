@@ -32,7 +32,7 @@ def CreateConfiguration():
     pv = InRetEnsysSource(
         label="pv",
         outputs={bel.label: InRetEnsysFlow(
-            fix=data["pv"],
+            fix=data["pv"].tolist(),
             nominal_value=582000
         )},
     )
@@ -40,7 +40,7 @@ def CreateConfiguration():
     wind = InRetEnsysSource(
         label="wind",
         outputs={bel.label: InRetEnsysFlow(
-            fix=data["wind"],
+            fix=data["wind"].tolist(),
             nominal_value=1000000
         )},
     )
@@ -54,7 +54,7 @@ def CreateConfiguration():
     demand_bel = InRetEnsysSink(
         label="demand",
         inputs={bel.label: InRetEnsysFlow(
-            fix=data["demand_el"],
+            fix=data["demand_el"].tolist(),
             nominal_value=1
         )},
     )

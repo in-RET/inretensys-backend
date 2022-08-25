@@ -16,6 +16,13 @@ else:
 
 wkdir = os.getcwd()
 dumpdir = os.path.join(wkdir, "dumps")
+logdir = os.path.join(wkdir, "logs")
+
+if not os.path.exists(dumpdir):
+    os.makedirs(dumpdir)
+
+if not os.path.exists(logdir):
+    os.makedirs(logdir)
 
 if configfile is not None:
     dumpfile = os.path.join(dumpdir, os.path.basename(configfile).replace(".bin", "") + ".dump")
@@ -27,10 +34,10 @@ else:
     raise Exception("Configuration not given!")
 
 filename = os.path.basename(configfile.replace(".bin", ""))
-pr.dump_stats("logs/" + filename + ".cprof")
+pr.dump_stats(os.path.join(logdir, filename + ".cprof"))
 
-with open("logs/" + filename + ".prof", "w") as f:
-    ps = pstats.Stats("logs/" + filename + ".cprof", stream=f)
+with open(os.path.join(logdir, filename + ".prof"), "w") as f:
+    ps = pstats.Stats(os.path.join(logdir, filename + ".cprof"), stream=f)
     ps.strip_dirs().sort_stats('tottime').print_stats()
 
-os.remove("logs/" + filename + ".cprof")
+os.remove(os.path.join(logdir, filename + ".cprof"))

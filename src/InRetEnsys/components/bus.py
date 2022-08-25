@@ -1,4 +1,6 @@
 from oemof import solph
+from pydantic import Field
+
 from InRetEnsys import InRetEnsysConfigContainer
 
 
@@ -7,8 +9,20 @@ from InRetEnsys import InRetEnsysConfigContainer
 #   @param label The Label of the Bus, must be named for further references in flows.
 #   @param balanced If 'True' the input is equal the output of the bus.
 class InRetEnsysBus(InRetEnsysConfigContainer):
-    label: str
-    balanced: bool = True
+    label: str = Field(
+        title='Label',
+        description='Name of the Bus',
+        lvl_visible=21,
+        lvl_edit=42
+    )
+
+    balanced: bool = Field(
+        True,
+        title='balanced',
+        description='If Balanced, then Input == Output',
+        lvl_visible=21,
+        lvl_edit=42
+    )
 
     ##  Returns an oemof-object from the given args of this object.
     #
