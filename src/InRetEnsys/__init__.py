@@ -42,7 +42,7 @@ from .types import Constraints
 from .types import Solver
 from .types import Frequencies
 
-__all__ = ['InRetEnsysConfigContainer', 'InRetEnsysFlow', 'InRetEnsysBus', 'InRetEnsysSink', 'InRetEnsysSource',
+__all__ = ['InRetEnsysFlow', 'InRetEnsysBus', 'InRetEnsysSink', 'InRetEnsysSource',
            'InRetEnsysNonConvex', 'InRetEnsysInvestment', 'InRetEnsysTransformer',
            'InRetEnsysEnergysystem', 'InRetEnsysStorage', 'InRetEnsysConstraints', 'InRetEnsysModel']
 

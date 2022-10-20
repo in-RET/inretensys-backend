@@ -2,10 +2,10 @@ from setuptools import setup, find_packages
 
 setup(
     name="InRetEnsys",
-    version="0.2a1",
+    version="0.2a2",
     author="Andreas Lubojanski",
     author_email="andreas@lubojanski.com",
-    description="InRetEnsys is a backend to build energysystem from abstrac configcontainers for oemof.solph.",
+    description="InRetEnsys is a backend to build energysystems from abstract configcontainers for oemof.solph.",
     long_description="file: README.md",
     long_description_content_type="text/markdown",
     license="MIT",
