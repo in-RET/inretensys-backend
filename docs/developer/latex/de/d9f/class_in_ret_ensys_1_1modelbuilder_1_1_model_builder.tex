@@ -1,0 +1,71 @@
+\hypertarget{class_in_ret_ensys_1_1modelbuilder_1_1_model_builder}{}\doxysection{In\+Ret\+Ensys.\+modelbuilder.\+Model\+Builder Class Reference}
+\label{class_in_ret_ensys_1_1modelbuilder_1_1_model_builder}\index{InRetEnsys.modelbuilder.ModelBuilder@{InRetEnsys.modelbuilder.ModelBuilder}}
+
+
+Init Modelbuilder, load and optimise the configuration.  
+
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_in_ret_ensys_1_1modelbuilder_1_1_model_builder_a440b2866ae1c698862a5dacfb2f8d2fb}\label{class_in_ret_ensys_1_1modelbuilder_1_1_model_builder_a440b2866ae1c698862a5dacfb2f8d2fb}} 
+None {\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self, str Config\+File, str Dump\+File, str wdir, str logdir, str dumpdir)
+\item 
+def \mbox{\hyperlink{class_in_ret_ensys_1_1modelbuilder_1_1_model_builder_a576783eb79f15a4388183d5e2e19c49e}{Build\+Energy\+System}} (self, \mbox{\hyperlink{class_in_ret_ensys_1_1components_1_1energysystem_1_1_in_ret_ensys_energysystem}{In\+Ret\+Ensys\+Energysystem}} es, str file, str solver, bool solver\+\_\+verbose, Dict cmdline\+\_\+opts, logger)
+\begin{DoxyCompactList}\small\item\em Build an energysystem from the config. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_in_ret_ensys_1_1modelbuilder_1_1_model_builder_a26f4ddf244a860e96bf1aa1561e916d4}\label{class_in_ret_ensys_1_1modelbuilder_1_1_model_builder_a26f4ddf244a860e96bf1aa1561e916d4}} 
+{\bfseries logger} = None
+\item 
+\mbox{\Hypertarget{class_in_ret_ensys_1_1modelbuilder_1_1_model_builder_a52a6b3165d0453784c424f951234ce9e}\label{class_in_ret_ensys_1_1modelbuilder_1_1_model_builder_a52a6b3165d0453784c424f951234ce9e}} 
+{\bfseries WORKING\+\_\+\+DIRECTORY} = os.\+getcwd()
+\item 
+\mbox{\Hypertarget{class_in_ret_ensys_1_1modelbuilder_1_1_model_builder_a8aeb3543b234b286cbe4208b09371832}\label{class_in_ret_ensys_1_1modelbuilder_1_1_model_builder_a8aeb3543b234b286cbe4208b09371832}} 
+{\bfseries LOGGING\+\_\+\+DIRECTORY} = os.\+path.\+join(WORKING\+\_\+\+DIRECTORY, \char`\"{}logs\char`\"{})
+\item 
+\mbox{\Hypertarget{class_in_ret_ensys_1_1modelbuilder_1_1_model_builder_a1c71eecbff7e921ca6f87b947f411bbe}\label{class_in_ret_ensys_1_1modelbuilder_1_1_model_builder_a1c71eecbff7e921ca6f87b947f411bbe}} 
+{\bfseries DUMPING\+\_\+\+DIRECTORY} = os.\+path.\+join(WORKING\+\_\+\+DIRECTORY, \char`\"{}dumps\char`\"{})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Init Modelbuilder, load and optimise the configuration. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Config\+File} & Path to the Configfile which contains the Ensys\+Configuration \\
+\hline
+{\em Dump\+File} & Path to the Dumpfile where the oemof-\/energysystem and the results should be stored. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_in_ret_ensys_1_1modelbuilder_1_1_model_builder_a576783eb79f15a4388183d5e2e19c49e}\label{class_in_ret_ensys_1_1modelbuilder_1_1_model_builder_a576783eb79f15a4388183d5e2e19c49e}} 
+\index{InRetEnsys.modelbuilder.ModelBuilder@{InRetEnsys.modelbuilder.ModelBuilder}!BuildEnergySystem@{BuildEnergySystem}}
+\index{BuildEnergySystem@{BuildEnergySystem}!InRetEnsys.modelbuilder.ModelBuilder@{InRetEnsys.modelbuilder.ModelBuilder}}
+\doxysubsubsection{\texorpdfstring{BuildEnergySystem()}{BuildEnergySystem()}}
+{\footnotesize\ttfamily def In\+Ret\+Ensys.\+modelbuilder.\+Model\+Builder.\+Build\+Energy\+System (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{\mbox{\hyperlink{class_in_ret_ensys_1_1components_1_1energysystem_1_1_in_ret_ensys_energysystem}{In\+Ret\+Ensys\+Energysystem}}}]{es,  }\item[{str}]{file,  }\item[{str}]{solver,  }\item[{bool}]{solver\+\_\+verbose,  }\item[{Dict}]{cmdline\+\_\+opts,  }\item[{}]{logger }\end{DoxyParamCaption})}
+
+
+
+Build an energysystem from the config. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em es} & energysystem from the binary config file \\
+\hline
+{\em file} & filename of the final dumpfile \\
+\hline
+{\em solver} & Solver to use for optimisation in Pyomo \\
+\hline
+{\em solver\+\_\+verbose} & Should the Solver print the output \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\+In\+Ret\+Ensys/modelbuilder.\+py\end{DoxyCompactItemize}

@@ -1,0 +1,57 @@
+site_name: inretensys-backend
+site_url: https://github.com/pyrokar1993/inretensys-backend
+site_author: Andreas Lubojanski
+
+# Repository
+repo_name: pyrokar1993/inretensys-backend
+repo_url: https://github.com/pyrokar1993/inretensys-backend
+
+markdown_extensions:
+    - toc:
+        permalink: true
+    - pymdownx.highlight:
+          anchor_linenums: true
+          use_pygments: true
+    - pymdownx.inlinehilite
+    - pymdownx.snippets
+    - pymdownx.superfences:
+        custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+nav:
+    - Home: user/index.md
+    - 'Common':
+        - 'Konfigurationscontainer': user/common/config.md
+        - 'Modelbuilder': user/common/modelbuilder.md
+    - 'Components':
+        - 'Energysystem': user/components/energysystem.md
+        - 'Bus': user/components/bus.md
+        - 'Flow': user/components/flow.md
+        - 'Sink': user/components/sink.md
+        - 'Source': user/components/source.md
+        - 'Storage': user/components/storage.md
+        - 'Transformer': user/components/transformer.md
+        - 'Investment': user/components/investment.md
+        - 'NonConvex': user/components/nonconvex.md
+    - 'About':
+        - 'About': user/about.md
+        - 'Release Notes': user/release-notes.md
+theme:
+    name: material
+    icon:
+        repo: fontawesome/brands/github
+    palette:
+        scheme: slate
+        primary: teal
+        accent: teal
+    language: de
+extra_css:
+  - stylesheets/extra.css
+extra:
+    social:
+        - icon: fontawesome/solid/envelope
+          link: mailto:andreas.lubojanski@hs-nordhausen.de
+    generator: true
+copyright: Copyright &copy; 2022 Andreas Lubojanski
+    

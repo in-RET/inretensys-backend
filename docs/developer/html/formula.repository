@@ -1,0 +1,2 @@
+\_form#0=83x13:$Var1 * factor1$
+\_form#1=104x29:\[ {\sum_{i \in IF}  P_i \cdot w_i \leq limit} \]
