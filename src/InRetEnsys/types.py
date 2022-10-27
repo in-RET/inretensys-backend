@@ -65,6 +65,9 @@ class Solver(Enum):
     ## Gurobi MILP Solver
     gurobi_direct = 'gurobi_direct'
 
+    ## Gurobis MILP Solver
+    gurobi_persistent = 'gurobi_persistent'
+
     ## GNU Linear Programming Kit Solver
     glpk = 'glpk'
 

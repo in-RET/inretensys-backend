@@ -1,11 +1,10 @@
-import datetime
 import logging
 
 
 class InRetEnsysLogger:
     logger = None
 
-    def __init__(self, name, filename="logs/" + str(datetime.datetime.now()) + ".log", level=logging.INFO):
+    def __init__(self, name, filename, level=logging.INFO):
         logging.basicConfig(filename=filename,
                             format='%(asctime)s %(message)s',
                             filemode='w')

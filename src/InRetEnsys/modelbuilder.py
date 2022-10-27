@@ -1,15 +1,18 @@
-import os.path
-import time
-import pandas as pd
-import pickle
 import json
-
+import os.path
+import pickle
+import time
 from typing import Dict
-from oemof import solph
 
+import gurobipy as gp
+import pandas as pd
+import pyomo.environ as pyoenv
+from gurobipy import GRB
 from InRetEnsys import InRetEnsysEnergysystem, InRetEnsysModel
+from InRetEnsys.callback import SolverCallback
 from InRetEnsys.common.log import InRetEnsysLogger
-from InRetEnsys.types import Frequencies, Solver, Constraints
+from InRetEnsys.types import Constraints, Frequencies, Solver
+from oemof import solph
 
 
 ##  Init Modelbuilder, load and optimise the configuration.
@@ -71,6 +74,8 @@ class ModelBuilder:
             solver = 'gurobi'
         elif model.solver is Solver.gurobi_direct:
             solver = 'gurobi_direct'
+        elif model.solver is Solver.gurobi_persistent:
+            solver = 'gurobi_persistent'
         elif model.solver is Solver.cbc:
             solver = 'cbc'
         elif model.solver is Solver.glpk:
@@ -85,7 +90,7 @@ class ModelBuilder:
         else:
             cmdline_opts = {}
 
-        self.BuildEnergySystem(model.energysystem, DumpFile, solver, model.solver_verbose, cmdline_opts=cmdline_opts, logger=self.logger)
+        self.BuildEnergySystem(model.energysystem, DumpFile, model.solver, model.solver_verbose, cmdline_opts=cmdline_opts, logger=self.logger)
 
     ##  Build an energysystem from the config.
     #
@@ -93,7 +98,7 @@ class ModelBuilder:
     #   @param file filename of the final dumpfile
     #   @param solver Solver to use for optimisation in Pyomo
     #   @param solver_verbose Should the Solver print the output
-    def BuildEnergySystem(self, es: InRetEnsysEnergysystem, file: str, solver: str, solver_verbose: bool, cmdline_opts: Dict, logger):
+    def BuildEnergySystem(self, es: InRetEnsysEnergysystem, file: str, solver: Solver, solver_verbose: bool, cmdline_opts: Dict, logger):
         logger.info("Build an Energysystem from config file.")
         filename = os.path.basename(file)
 
@@ -175,23 +180,49 @@ class ModelBuilder:
 
                 elif constr.typ == Constraints.equate_variables:
                     solph.constraints.equate_variables(model=model, **kwargs)
-
+        
+        ### Create Logfile for Solver
+        logfile = os.path.join(self.LOGGING_DIRECTORY, filename.replace(".dump", "_solver.log"))
+        logger.info("Logfile: " + self.LOGGING_DIRECTORY)
+        
+        ### Store LP files
+        lp_filename = os.path.join(self.DUMPING_DIRECTORY, filename.replace(".dump", ".lp"))
+        
+        logger.info("Store lp-file in {0}.".format(lp_filename))
+        model.write(lp_filename, io_options={"symbolic_solver_labels": True})
+        ### Set Environmental Variables for the solver
+        # map kwargs for pyomo.enviroment and later usage
+        solve_kwargs = {"tee": solver_verbose, "save_results": True}
+        cmdline_opts["logfile"] = logfile
+        
         ##########################################################################
         # solving...
         ##########################################################################
         logger.info("Solve the optimization problem.")
         
-        logfile = os.path.join(self.LOGGING_DIRECTORY, filename.replace(".dump", "_solver.log"))
-        logger.info("Logfile: " + self.LOGGING_DIRECTORY)
-
-        cmdline_opts["logfile"] = logfile
-
         t_start = time.time()
-        model.solve(solver=solver,
-                    solve_kwargs={"tee": solver_verbose},
-                    cmdline_options=cmdline_opts)
-        t_end = time.time()
 
+        if solver == Solver.gurobi_persistent: 
+            # create optimizer with pyomo.environment
+            opt = pyoenv.SolverFactory(solver.value, solver_io='lp')
+
+            # set command line options
+            options = opt.options
+            for k in cmdline_opts:
+                options[k] = cmdline_opts[k]
+
+            opt.set_instance(model)
+            opt.set_callback(SolverCallback)
+            solver_results = opt.solve(**solve_kwargs)
+
+            model.es.results = solver_results
+        else:
+            model.solve(solver=solver.value,
+                        solve_kwargs=solve_kwargs,
+                        cmdline_options=cmdline_opts)
+        
+        t_end = time.time()
+        
         logger.info("Completed after " + str(round(t_end - t_start, 2)) + " seconds.")
         logger.info("Store the energy system with the results.")
 

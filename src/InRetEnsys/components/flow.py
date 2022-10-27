@@ -1,9 +1,10 @@
-from typing import Sequence, Union, Dict
-from pydantic import Field
-from oemof import solph
+from typing import Dict, Sequence, Union
+
 from InRetEnsys import InRetEnsysConfigContainer
 from InRetEnsys.components.investment import InRetEnsysInvestment
 from InRetEnsys.components.nonconvex import InRetEnsysNonConvex
+from oemof import solph
+from pydantic import Field
 
 
 ##  Container which contains the params for an oemof-flow
@@ -115,9 +116,9 @@ class InRetEnsysFlow(InRetEnsysConfigContainer):
         description='The costs associated with one unit of the flow.',
         lvl_visible=21,
         lvl_edit=42,
-        le=float("+inf"),
-        ge=0.0,
-        step=1e-3
+        #le=float("+inf"),
+        #ge=0.0,
+        #step=1e-3
     )
 
     investment: InRetEnsysInvestment = Field(

@@ -1,9 +1,9 @@
-# About ENSYS
+# About inretensys-backend
 
-## The Software
+## Software
 to be done.
 
-## The team behind Ensys
+## Team
 See [Institut für Regnerative Energietechnik](https://www.hs-nordhausen.de/forschung/inret/)
 
 ## oemof.solph
