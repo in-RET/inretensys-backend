@@ -1,9 +1,10 @@
 from typing import Dict
-from oemof import solph
-from pydantic import Field
+
 from InRetEnsys.common.config import InRetEnsysConfigContainer
 from InRetEnsys.components.flow import InRetEnsysFlow
 from InRetEnsys.components.investment import InRetEnsysInvestment
+from oemof import solph
+from pydantic import Field
 
 
 ##  Container which contains the params for an oemof-genericstorage

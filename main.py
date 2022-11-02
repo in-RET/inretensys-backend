@@ -1,7 +1,10 @@
+import logging
 import os
 import sys
+from pathlib import Path
 
 from InRetEnsys import ModelBuilder
+from InRetEnsys.common.log import InRetEnsysLogger
 
 args = sys.argv[1:]
 
@@ -20,10 +23,18 @@ if configfile is not None and workdir is not None:
 
     if tmpfilename.find(".json") > 0:
         dumpfile = os.path.join(dumpdir, tmpfilename.replace(".json", ".dump"))
+        logfile = os.path.join(logdir, tmpfilename.replace(".json", ".log"))
     elif tmpfilename.find(".bin") > 0:
         dumpfile = os.path.join(dumpdir, tmpfilename.replace(".bin", ".dump"))
+        logfile = os.path.join(logdir, tmpfilename.replace(".bin", ".log"))
     else:
         raise Exception("Fileformat is not valid!")
+
+    if not os.path.exists(logfile):
+        os.makedirs(os.path.dirname(logfile))   
+        Path(logfile).touch()
+
+    InRetEnsysLogger(name="logger", filename=logfile, level=logging.DEBUG)
 
     ModelBuilder(configfile, dumpfile, workdir, logdir, dumpdir)
 else:

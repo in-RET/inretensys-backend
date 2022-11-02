@@ -1,5 +1,3 @@
-from typing import Union, List
-from pydantic import Field
 from InRetEnsys.common.config import InRetEnsysConfigContainer
 from InRetEnsys.components.bus import InRetEnsysBus
 from InRetEnsys.components.constraints import InRetEnsysConstraints
@@ -8,6 +6,9 @@ from InRetEnsys.components.sink import InRetEnsysSink
 from InRetEnsys.components.source import InRetEnsysSource
 from InRetEnsys.components.transformer import InRetEnsysTransformer
 from InRetEnsys.types import Frequencies
+from pydantic import Field
+from typing import Union, List
+
 
 
 ##  Container which contains the params for an InRetEnergysystem

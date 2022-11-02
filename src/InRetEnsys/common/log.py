@@ -2,33 +2,31 @@ import logging
 
 
 class InRetEnsysLogger:
-    logger = None
-
     def __init__(self, name, filename, level=logging.INFO):
         logging.basicConfig(filename=filename,
                             format='%(asctime)s %(message)s',
-                            filemode='w')
+                            filemode='w',
+                            level=level)
 
-        self.logger = logging.getLogger(name)
-        self.logger.setLevel(level)
+        logging.getLogger(name)
 
-    def debug(self, msg):
+    def debug(msg):
         msg = "[----D] " + msg
-        self.logger.debug(msg)
+        logging.debug(msg=msg)
 
-    def info(self, msg):
+    def info(msg):
         msg = "[---I-] " + msg
-        self.logger.info(msg)
+        logging.info(msg=msg)
 
-    def warn(self, msg):
+    def warn(msg):
         msg = "[--W--] " + msg
-        self.logger.warning(msg)
+        logging.warning(msg=msg)
 
-    def error(self, msg):
+    def error(msg):
         msg = "[-E---] " + msg
-        self.logger.error(msg)
+        logging.error(msg=msg)
 
-    def critical(self, msg):
+    def critical(msg):
         msg = "[C----] " + msg
-        self.logger.critical(msg)
+        logging.critical(msg=msg)
 

@@ -1,8 +1,8 @@
-from typing import Union, List, Dict
-from pydantic import Field
+from typing import Dict, List, Union
 
 from InRetEnsys import InRetEnsysConfigContainer
 from InRetEnsys.types import Constraints
+from pydantic import Field
 
 
 ##  Container which contains the params for constraints

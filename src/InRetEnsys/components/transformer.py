@@ -1,4 +1,5 @@
 from typing import Dict
+
 from oemof import solph
 from pydantic import Field
 

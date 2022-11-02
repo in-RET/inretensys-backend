@@ -1,4 +1,5 @@
 from enum import Enum
+
 ##  File which contains all enumeration of the package.
 #   
 #   @file

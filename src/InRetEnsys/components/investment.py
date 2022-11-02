@@ -1,7 +1,8 @@
-from typing import Union, Dict
-from pydantic import Field
-from oemof import solph
+from typing import Dict
+
 from InRetEnsys import InRetEnsysConfigContainer
+from oemof import solph
+from pydantic import Field
 
 
 ##  Container which contains the params for an oemof-investment
