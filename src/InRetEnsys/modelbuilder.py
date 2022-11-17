@@ -9,10 +9,11 @@ import pandas as pd
 import pyomo.environ as pyoenv
 from gurobipy import GRB
 from InRetEnsys import InRetEnsysEnergysystem, InRetEnsysModel
-from InRetEnsys.callback import SolverCallback
+from InRetEnsys.callback import SolverCallback, persistentSolverCallback
 from InRetEnsys.common.log import InRetEnsysLogger
 from InRetEnsys.types import Constraints, Frequencies, Solver
 from oemof import solph
+from pyrsistent import v
 
 
 ##  Init Modelbuilder, load and optimise the configuration.
@@ -20,7 +21,6 @@ from oemof import solph
 #   @param ConfigFile Path to the Configfile which contains the EnsysConfiguration
 #   @param DumpFile Path to the Dumpfile where the oemof-energysystem and the results should be stored.
 class ModelBuilder:
-    logger = None
     WORKING_DIRECTORY = os.getcwd()
     LOGGING_DIRECTORY = os.path.join(WORKING_DIRECTORY, "logs")
     DUMPING_DIRECTORY = os.path.join(WORKING_DIRECTORY, "dumps")
@@ -67,30 +67,14 @@ class ModelBuilder:
         else:
             raise Exception("Fileformat is not valid!")
 
-        self.logger = InRetEnsysLogger("OutputLogger", logfile)
-        self.logger.info("Start Building and solving")
-
-        if model.solver is Solver.gurobi:
-            solver = 'gurobi'
-        elif model.solver is Solver.gurobi_direct:
-            solver = 'gurobi_direct'
-        elif model.solver is Solver.gurobi_persistent:
-            solver = 'gurobi_persistent'
-        elif model.solver is Solver.cbc:
-            solver = 'cbc'
-        elif model.solver is Solver.glpk:
-            solver = 'glpk'
-        elif model.solver is Solver.cplex:
-            solver = 'cplex'
-        else:
-            solver = 'gurobi'
+        InRetEnsysLogger.info("Start Building and solving")
 
         if hasattr(model, "solver_kwargs"):
             cmdline_opts = model.solver_kwargs
         else:
             cmdline_opts = {}
 
-        self.BuildEnergySystem(model.energysystem, DumpFile, model.solver, model.solver_verbose, cmdline_opts=cmdline_opts, logger=self.logger)
+        self.BuildEnergySystem(model.energysystem, DumpFile, model.solver, model.solver_verbose, cmdline_opts=cmdline_opts)
 
     ##  Build an energysystem from the config.
     #
@@ -98,8 +82,8 @@ class ModelBuilder:
     #   @param file filename of the final dumpfile
     #   @param solver Solver to use for optimisation in Pyomo
     #   @param solver_verbose Should the Solver print the output
-    def BuildEnergySystem(self, es: InRetEnsysEnergysystem, file: str, solver: Solver, solver_verbose: bool, cmdline_opts: Dict, logger):
-        logger.info("Build an Energysystem from config file.")
+    def BuildEnergySystem(self, es: InRetEnsysEnergysystem, file: str, solver: Solver, solver_verbose: bool, cmdline_opts: Dict):
+        InRetEnsysLogger.info("Build an Energysystem from config file.")
         filename = os.path.basename(file)
 
         ##########################################################################
@@ -132,7 +116,7 @@ class ModelBuilder:
         
         for attr in vars(es):
             if attr not in except_vars:
-                logger.info("Build " + attr)
+                InRetEnsysLogger.info("Build " + attr)
 
                 arg_value = getattr(es, attr)
 
@@ -142,12 +126,12 @@ class ModelBuilder:
                     if oemof_obj is not None:
                         oemof_es.add(oemof_obj)
 
-        logger.info("Build completed.")
+        InRetEnsysLogger.info("Build completed.")
 
         ##########################################################################
         # Initiate the energy system model
         ##########################################################################
-        logger.info("Initiate the energy system model.")
+        InRetEnsysLogger.info("Initiate the energy system model.")
         model = solph.Model(oemof_es)
 
         ##########################################################################
@@ -183,26 +167,26 @@ class ModelBuilder:
         
         ### Create Logfile for Solver
         logfile = os.path.join(self.LOGGING_DIRECTORY, filename.replace(".dump", "_solver.log"))
-        logger.info("Logfile: " + self.LOGGING_DIRECTORY)
+        InRetEnsysLogger.info("Logfile: " + self.LOGGING_DIRECTORY)
         
         ### Store LP files
         lp_filename = os.path.join(self.DUMPING_DIRECTORY, filename.replace(".dump", ".lp"))
         
-        logger.info("Store lp-file in {0}.".format(lp_filename))
+        InRetEnsysLogger.info("Store lp-file in {0}.".format(lp_filename))
         model.write(lp_filename, io_options={"symbolic_solver_labels": True})
         ### Set Environmental Variables for the solver
         # map kwargs for pyomo.enviroment and later usage
-        solve_kwargs = {"tee": solver_verbose, "save_results": True}
+        solve_kwargs = {"tee": solver_verbose}
         cmdline_opts["logfile"] = logfile
         
         ##########################################################################
         # solving...
         ##########################################################################
-        logger.info("Solve the optimization problem.")
+        InRetEnsysLogger.info("Solve the optimization problem.")
         
         t_start = time.time()
 
-        if solver == Solver.gurobi_persistent: 
+        if False: #solver == Solver.gurobi_persistent: 
             # create optimizer with pyomo.environment
             opt = pyoenv.SolverFactory(solver.value, solver_io='lp')
 
@@ -212,10 +196,27 @@ class ModelBuilder:
                 options[k] = cmdline_opts[k]
 
             opt.set_instance(model)
-            opt.set_callback(SolverCallback)
+            opt.set_callback(persistentSolverCallback)
             solver_results = opt.solve(**solve_kwargs)
 
             model.es.results = solver_results
+
+        elif False: # solver == Solver.gurobi
+            gp_model = gp.read(lp_filename)
+
+            gp_model._lastiter = -GRB.INFINITY
+            gp_model._lastnode = -GRB.INFINITY
+            gp_model._logfile = logfile
+            gp_model._vars = gp_model.getVars()
+
+            solver_results = gp_model.optimize(SolverCallback)
+
+            model.es.results = solver_results
+
+            json_filename = os.path.join(self.DUMPING_DIRECTORY, filename.replace(".dump", ".json"))
+            InRetEnsysLogger.info("Store json-file in {0}.".format(json_filename))
+            gp_model.write(json_filename)
+
         else:
             model.solve(solver=solver.value,
                         solve_kwargs=solve_kwargs,
@@ -223,8 +224,8 @@ class ModelBuilder:
         
         t_end = time.time()
         
-        logger.info("Completed after " + str(round(t_end - t_start, 2)) + " seconds.")
-        logger.info("Store the energy system with the results.")
+        InRetEnsysLogger.info("Completed after " + str(round(t_end - t_start, 2)) + " seconds.")
+        InRetEnsysLogger.info("Store the energy system with the results.")
 
         ##########################################################################
         # The processing module of the outputlib can be used to extract the results
@@ -234,7 +235,7 @@ class ModelBuilder:
         oemof_es.results["meta"] = solph.processing.meta_results(model)
         oemof_es.results["verification"] = solph.processing.create_dataframe(model)
         
-        logger.info("Dump file with results to: " + os.path.join(self.DUMPING_DIRECTORY, filename))
+        InRetEnsysLogger.info("Dump file with results to: " + os.path.join(self.DUMPING_DIRECTORY, filename))
 
         oemof_es.dump(dpath=self.DUMPING_DIRECTORY, filename=filename)
-        logger.info("Fin.")
+        InRetEnsysLogger.info("Fin.")
