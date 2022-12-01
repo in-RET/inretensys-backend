@@ -10,4 +10,3 @@ ADD main.py .
 
 # Old ENTRYPOINT from Gurobi-Solver Image
 ENTRYPOINT [ "python" ]
-CMD [ "main.py" ]

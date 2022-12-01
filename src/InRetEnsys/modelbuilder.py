@@ -30,7 +30,8 @@ class ModelBuilder:
                  DumpFile: str,
                  wdir: str, 
                  logdir: str,
-                 dumpdir: str
+                 dumpdir: str,
+                 only_lp: bool = False
                  ) -> None:
 
         self.WORKING_DIRECTORY = os.path.join(os.getcwd(), wdir)
@@ -74,7 +75,7 @@ class ModelBuilder:
         else:
             cmdline_opts = {}
 
-        self.BuildEnergySystem(model.energysystem, DumpFile, model.solver, model.solver_verbose, cmdline_opts=cmdline_opts)
+        self.BuildEnergySystem(model.energysystem, DumpFile, model.solver, model.solver_verbose, cmdline_opts=cmdline_opts, only_lp=only_lp)
 
     ##  Build an energysystem from the config.
     #
@@ -82,7 +83,7 @@ class ModelBuilder:
     #   @param file filename of the final dumpfile
     #   @param solver Solver to use for optimisation in Pyomo
     #   @param solver_verbose Should the Solver print the output
-    def BuildEnergySystem(self, es: InRetEnsysEnergysystem, file: str, solver: Solver, solver_verbose: bool, cmdline_opts: Dict):
+    def BuildEnergySystem(self, es: InRetEnsysEnergysystem, file: str, solver: Solver, solver_verbose: bool, cmdline_opts: dict, only_lp: bool):
         InRetEnsysLogger.info("Build an Energysystem from config file.")
         filename = os.path.basename(file)
 
@@ -179,63 +180,64 @@ class ModelBuilder:
         solve_kwargs = {"tee": solver_verbose}
         cmdline_opts["logfile"] = logfile
         
-        ##########################################################################
-        # solving...
-        ##########################################################################
-        InRetEnsysLogger.info("Solve the optimization problem.")
-        
-        t_start = time.time()
+        if not only_lp:
+            ##########################################################################
+            # solving...
+            ##########################################################################
+            InRetEnsysLogger.info("Solve the optimization problem.")
+            
+            t_start = time.time()
 
-        if False: #solver == Solver.gurobi_persistent: 
-            # create optimizer with pyomo.environment
-            opt = pyoenv.SolverFactory(solver.value, solver_io='lp')
+            if False: #solver == Solver.gurobi_persistent: 
+                # create optimizer with pyomo.environment
+                opt = pyoenv.SolverFactory(solver.value, solver_io='lp')
 
-            # set command line options
-            options = opt.options
-            for k in cmdline_opts:
-                options[k] = cmdline_opts[k]
+                # set command line options
+                options = opt.options
+                for k in cmdline_opts:
+                    options[k] = cmdline_opts[k]
 
-            opt.set_instance(model)
-            opt.set_callback(persistentSolverCallback)
-            solver_results = opt.solve(**solve_kwargs)
+                opt.set_instance(model)
+                opt.set_callback(persistentSolverCallback)
+                solver_results = opt.solve(**solve_kwargs)
 
-            model.es.results = solver_results
+                model.es.results = solver_results
 
-        elif False: # solver == Solver.gurobi
-            gp_model = gp.read(lp_filename)
+            elif False: # solver == Solver.gurobi
+                gp_model = gp.read(lp_filename)
 
-            gp_model._lastiter = -GRB.INFINITY
-            gp_model._lastnode = -GRB.INFINITY
-            gp_model._logfile = logfile
-            gp_model._vars = gp_model.getVars()
+                gp_model._lastiter = -GRB.INFINITY
+                gp_model._lastnode = -GRB.INFINITY
+                gp_model._logfile = logfile
+                gp_model._vars = gp_model.getVars()
 
-            solver_results = gp_model.optimize(SolverCallback)
+                solver_results = gp_model.optimize(SolverCallback)
 
-            model.es.results = solver_results
+                model.es.results = solver_results
 
-            json_filename = os.path.join(self.DUMPING_DIRECTORY, filename.replace(".dump", ".json"))
-            InRetEnsysLogger.info("Store json-file in {0}.".format(json_filename))
-            gp_model.write(json_filename)
+                json_filename = os.path.join(self.DUMPING_DIRECTORY, filename.replace(".dump", ".json"))
+                InRetEnsysLogger.info("Store json-file in {0}.".format(json_filename))
+                gp_model.write(json_filename)
 
-        else:
-            model.solve(solver=solver.value,
-                        solve_kwargs=solve_kwargs,
-                        cmdline_options=cmdline_opts)
-        
-        t_end = time.time()
-        
-        InRetEnsysLogger.info("Completed after " + str(round(t_end - t_start, 2)) + " seconds.")
-        InRetEnsysLogger.info("Store the energy system with the results.")
+            else:
+                model.solve(solver=solver.value,
+                            solve_kwargs=solve_kwargs,
+                            cmdline_options=cmdline_opts)
+            
+            t_end = time.time()
+            
+            InRetEnsysLogger.info("Completed after " + str(round(t_end - t_start, 2)) + " seconds.")
+            InRetEnsysLogger.info("Store the energy system with the results.")
 
-        ##########################################################################
-        # The processing module of the outputlib can be used to extract the results
-        # from the model transfer them into a homogeneous structured dictionary.
-        ##########################################################################
-        oemof_es.results["main"] = solph.processing.results(model)
-        oemof_es.results["meta"] = solph.processing.meta_results(model)
-        oemof_es.results["verification"] = solph.processing.create_dataframe(model)
-        
-        InRetEnsysLogger.info("Dump file with results to: " + os.path.join(self.DUMPING_DIRECTORY, filename))
+            ##########################################################################
+            # The processing module of the outputlib can be used to extract the results
+            # from the model transfer them into a homogeneous structured dictionary.
+            ##########################################################################
+            oemof_es.results["main"] = solph.processing.results(model)
+            oemof_es.results["meta"] = solph.processing.meta_results(model)
+            oemof_es.results["verification"] = solph.processing.create_dataframe(model)
+            
+            InRetEnsysLogger.info("Dump file with results to: " + os.path.join(self.DUMPING_DIRECTORY, filename))
 
-        oemof_es.dump(dpath=self.DUMPING_DIRECTORY, filename=filename)
-        InRetEnsysLogger.info("Fin.")
+            oemof_es.dump(dpath=self.DUMPING_DIRECTORY, filename=filename)
+            InRetEnsysLogger.info("Fin.")
