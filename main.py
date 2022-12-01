@@ -14,7 +14,7 @@ parser = argparse.ArgumentParser(
 
 parser.add_argument('file', help="Filepath of the configuration.")
 parser.add_argument('-wdir', '--workingdirectory', help="Path to the workingdirectory to use.", default=None)   
-parser.add_argument('-olp', '--only_lp_file', action='store_true', help="If choosen, only the lp-file is stored.", default=False)
+parser.add_argument('-olp', '--only_lp_file', action='store_true', help="If choosen, only the lp-file is stored.", default=False, required=False)
 
 args = parser.parse_args()
 
@@ -44,7 +44,6 @@ if not os.path.exists(logfile):
     Path(logfile).touch()
 
 InRetEnsysLogger(name="logger", filename=logfile, level=logging.DEBUG)
-
 
 try:
     if args.only_lp_file:

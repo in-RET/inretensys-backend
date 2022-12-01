@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="InRetEnsys",
-    version="0.2a2",
+    version="0.2a3",
     author="Andreas Lubojanski",
     author_email="andreas@lubojanski.com",
     description="InRetEnsys is a backend to build energysystems from abstract configcontainers for oemof.solph.",
@@ -22,5 +22,5 @@ setup(
         "License :: OSI Approved :: MIT License"
         "Operating System :: OS Independent"
     ],
-    install_requires=['pydantic', 'oemof.solph']
+    install_requires=['pydantic', 'oemof.solph', 'pyrsistent']
 )
