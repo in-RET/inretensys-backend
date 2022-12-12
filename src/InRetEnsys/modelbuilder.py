@@ -2,18 +2,12 @@ import json
 import os.path
 import pickle
 import time
-from typing import Dict
 
-import gurobipy as gp
 import pandas as pd
-import pyomo.environ as pyoenv
-from gurobipy import GRB
 from InRetEnsys import InRetEnsysEnergysystem, InRetEnsysModel
-from InRetEnsys.callback import SolverCallback, persistentSolverCallback
 from InRetEnsys.common.log import InRetEnsysLogger
 from InRetEnsys.types import Constraints, Frequencies, Solver
 from oemof import solph
-from pyrsistent import v
 
 
 ##  Init Modelbuilder, load and optimise the configuration.
@@ -187,43 +181,10 @@ class ModelBuilder:
             InRetEnsysLogger.info("Solve the optimization problem.")
             
             t_start = time.time()
-
-            if False: #solver == Solver.gurobi_persistent: 
-                # create optimizer with pyomo.environment
-                opt = pyoenv.SolverFactory(solver.value, solver_io='lp')
-
-                # set command line options
-                options = opt.options
-                for k in cmdline_opts:
-                    options[k] = cmdline_opts[k]
-
-                opt.set_instance(model)
-                opt.set_callback(persistentSolverCallback)
-                solver_results = opt.solve(**solve_kwargs)
-
-                model.es.results = solver_results
-
-            elif False: # solver == Solver.gurobi
-                gp_model = gp.read(lp_filename)
-
-                gp_model._lastiter = -GRB.INFINITY
-                gp_model._lastnode = -GRB.INFINITY
-                gp_model._logfile = logfile
-                gp_model._vars = gp_model.getVars()
-
-                solver_results = gp_model.optimize(SolverCallback)
-
-                model.es.results = solver_results
-
-                json_filename = os.path.join(self.DUMPING_DIRECTORY, filename.replace(".dump", ".json"))
-                InRetEnsysLogger.info("Store json-file in {0}.".format(json_filename))
-                gp_model.write(json_filename)
-
-            else:
-                model.solve(solver=solver.value,
-                            solve_kwargs=solve_kwargs,
-                            cmdline_options=cmdline_opts)
-            
+            model.solve(solver=solver.value,
+                        solve_kwargs=solve_kwargs,
+                        cmdline_options=cmdline_opts)
+        
             t_end = time.time()
             
             InRetEnsysLogger.info("Completed after " + str(round(t_end - t_start, 2)) + " seconds.")
