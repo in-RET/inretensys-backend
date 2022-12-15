@@ -1,3 +1,5 @@
+from typing import List, Union
+
 from InRetEnsys.common.config import InRetEnsysConfigContainer
 from InRetEnsys.components.bus import InRetEnsysBus
 from InRetEnsys.components.constraints import InRetEnsysConstraints
@@ -7,8 +9,6 @@ from InRetEnsys.components.source import InRetEnsysSource
 from InRetEnsys.components.transformer import InRetEnsysTransformer
 from InRetEnsys.types import Frequencies
 from pydantic import Field
-from typing import Union, List
-
 
 
 ##  Container which contains the params for an InRetEnergysystem
@@ -24,7 +24,7 @@ from typing import Union, List
 #   @param time_steps
 class InRetEnsysEnergysystem(InRetEnsysConfigContainer):
     busses: List[InRetEnsysBus] = Field(
-        None,
+        [],
         title='Busses',
         description='List of all busses.',
         lvl_visible=21,
@@ -32,7 +32,7 @@ class InRetEnsysEnergysystem(InRetEnsysConfigContainer):
     )
     
     sinks: List[InRetEnsysSink] = Field(
-        None,
+        [],
         title='Sinks',
         description='List of all sinks.',
         lvl_visible=21,
@@ -40,7 +40,7 @@ class InRetEnsysEnergysystem(InRetEnsysConfigContainer):
     )
 
     sources: List[InRetEnsysSource] = Field(
-        None,
+        [],
         title='Sources',
         description='List of all Sources.',
         lvl_visible=21,
@@ -48,7 +48,7 @@ class InRetEnsysEnergysystem(InRetEnsysConfigContainer):
     )
 
     transformers: List[InRetEnsysTransformer] = Field(
-        None,
+        [],
         title='Transformers',
         description='List of all transformers.',
         lvl_visible=21,
@@ -56,7 +56,7 @@ class InRetEnsysEnergysystem(InRetEnsysConfigContainer):
     )
 
     storages: List[InRetEnsysStorage] = Field(
-        None,
+        [],
         title='Storages',
         description='List of all storages.',
         lvl_visible=21,
@@ -64,7 +64,7 @@ class InRetEnsysEnergysystem(InRetEnsysConfigContainer):
     )
 
     constraints: List[InRetEnsysConstraints] = Field(
-        None,
+        [],
         title='Constraints',
         description='List of all constraints.',
         lvl_visible=21,
@@ -80,7 +80,6 @@ class InRetEnsysEnergysystem(InRetEnsysConfigContainer):
     )
 
     start_date: str = Field(
-        None,
         title='Start Date',
         description='',
         lvl_visible=21,
@@ -88,7 +87,6 @@ class InRetEnsysEnergysystem(InRetEnsysConfigContainer):
     )
 
     time_steps: int = Field(
-        None,
         title='Time Steps',
         description='Number of timesteps from Startdate',
         lvl_visible=21,
@@ -96,3 +94,19 @@ class InRetEnsysEnergysystem(InRetEnsysConfigContainer):
         ge=0,
         le=float("+inf")
     )
+
+    def add(self, elem: Union[InRetEnsysSink, InRetEnsysSource, InRetEnsysBus, InRetEnsysStorage, InRetEnsysTransformer, InRetEnsysConstraints]):
+        if type(elem) is InRetEnsysSink:
+            self.sinks.append(elem)
+        elif type(elem) is InRetEnsysSource:
+            self.sources.append(elem)
+        elif type(elem) is InRetEnsysBus:
+            self.busses.append(elem)
+        elif type(elem) is InRetEnsysStorage:
+            self.storages.append(elem)
+        elif type(elem) is InRetEnsysTransformer:
+            self.transformers.append(elem)
+        elif type(elem) is InRetEnsysConstraints:
+            self.constraints.append(elem)
+        else:
+            raise Exception("Unknown Type given!")
