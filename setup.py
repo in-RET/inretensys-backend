@@ -1,8 +1,8 @@
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 setup(
     name="InRetEnsys",
-    version="0.2a3",
+    version="0.2a4",
     author="Andreas Lubojanski",
     author_email="andreas@lubojanski.com",
     description="InRetEnsys is a backend to build energysystems from abstract configcontainers for oemof.solph.",
