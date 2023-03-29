@@ -2057,9 +2057,15 @@
                             "existing": 0.0,
                             "nonconvex": false,
                             "offset": 0.0,
-                            "my_invest_limit": 1
+                            "custom_attributes":
+                                {
+                                    "my_invest_limit": 1
+                                }                            
                         },
-                        "emission_factor": 0.3
+                        "custom_attributes":
+                        {
+                            "emission_factor": 0.3
+                        }                        
                     }
                 }
             },
@@ -2071,7 +2077,10 @@
                         "nonconvex": {
                             "initial_status": 0
                         },
-                        "emission_factor": 0.01
+                        "custom_attributes":
+                        {
+                            "emission_factor": 0.01
+                        }
                     }
                 }
             }

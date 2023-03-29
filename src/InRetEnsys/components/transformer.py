@@ -53,7 +53,7 @@ class InRetEnsysTransformer(InRetEnsysConfigContainer):
     #   @param self The Object Pointer
     #   @param energysystem The oemof-Energysystem to reference other objects i.e. for flows.
     #   @return solph.Transformer-Object (oemof)
-    def to_oemof(self, energysystem: solph.EnergySystem) -> solph.Transformer:
+    def to_oemof(self, energysystem: solph.EnergySystem) -> solph.components.Transformer:
         kwargs = self.build_kwargs(energysystem)
 
-        return solph.Transformer(**kwargs)
+        return solph.components.Transformer(**kwargs)

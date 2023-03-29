@@ -205,7 +205,7 @@ class InRetEnsysStorage(InRetEnsysConfigContainer):
     #   @param self The Object Pointer
     #   @param energysystem The oemof-Energysystem to reference other objects i.e. for flows.
     #   @return solph.GenericStorage-Object (oemof)
-    def to_oemof(self, energysystem: solph.EnergySystem) -> solph.GenericStorage:
+    def to_oemof(self, energysystem: solph.EnergySystem) -> solph.components.GenericStorage:
         kwargs = self.build_kwargs(energysystem)
 
-        return solph.GenericStorage(**kwargs)
+        return solph.components.GenericStorage(**kwargs)

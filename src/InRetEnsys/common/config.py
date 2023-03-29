@@ -59,9 +59,14 @@ class InRetEnsysConfigContainer(BaseModel):
                     kwargs[key] = value.to_oemof(energysystem)
 
             elif key == "investment":
+                #print(value)
+                # key in ["offset", "nonconvex", "existing", "ep_costs", "existing", "minimum", "maximum"]:
+                #for std_attr in vars(value):
+                #    print(std_attr)
+
                 kwargs[key] = value.to_oemof(energysystem)
 
-            else:
+            else: 
                 kwargs[key] = value
 
         return kwargs

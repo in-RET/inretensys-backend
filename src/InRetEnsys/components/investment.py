@@ -78,13 +78,21 @@ class InRetEnsysInvestment(InRetEnsysConfigContainer):
         step=1e-3
     )
 
-    kwargs: Dict = Field(
-        None,
-        title='kwargs',
-        description='Extra arguments for the object',
+    custom_attributes: dict = Field(
+        {},
+        title="Custom Attributes",
+        description="Custom Attributes as dictionary for custom investment limits.",
         lvl_visible=21,
         lvl_edit=42
     )
+
+    #kwargs: Dict = Field(
+    #    None,
+    #    title='kwargs',
+    #    description='Extra arguments for the object',
+    #    lvl_visible=21,
+    #    lvl_edit=42
+    #)
 
     ##  Returns an oemof-object from the given args of this object.
     #

@@ -139,10 +139,10 @@ class InRetEnsysFlow(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    kwargs: Dict = Field(
-        None,
-        title='kwargs',
-        description='Extra arguments for the object',
+    custom_attributes: dict = Field(
+        {},
+        title="Custom Attributes",
+        description="Custom Attributes as dictionary for custom investment limits.",
         lvl_visible=21,
         lvl_edit=42
     )
