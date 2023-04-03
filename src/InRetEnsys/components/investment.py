@@ -13,7 +13,7 @@ from pydantic import Field
 #   @param existing: float = 0.0
 #   @param nonconvex: bool = False
 #   @param offset: float = 0.0
-#   @param kwargs: Union[None, Dict] = None
+#   @param custom_attributes: Union[None, Dict] = None
 class InRetEnsysInvestment(InRetEnsysConfigContainer):
     maximum: float = Field(
         float("+inf"),

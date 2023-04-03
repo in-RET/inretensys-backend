@@ -20,7 +20,7 @@ from pydantic import Field
 #   @param variable_costs 
 #   @param investement InRetEnsys-Investment-Object, if the Flow should be optimized for an Investmentlimit.
 #   @param nonconvex InRetEnsys-NonConvex-Object, if the Flow should be nonconvex. Non possible if the flow is an Investmentflow. 
-#   @param kwargs Keyword-Arguments for special Keywords, used by constraints.
+#   @param custom_attributes Keyword-Arguments for special Keywords, used by constraints.
 class InRetEnsysFlow(InRetEnsysConfigContainer):
     nominal_value: float = Field(
         None,
