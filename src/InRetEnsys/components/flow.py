@@ -158,3 +158,7 @@ class InRetEnsysFlow(InRetEnsysConfigContainer):
         kwargs = self.build_kwargs(energysystem)
 
         return solph.Flow(**kwargs)
+    
+
+class SensitivityInRetEnsysFlow(InRetEnsysFlow):
+    pass
