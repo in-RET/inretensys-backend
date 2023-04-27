@@ -1,8 +1,10 @@
+import logging
+import os
 import unittest
 
 from oemof import solph
 from InRetEnsys import *
-
+from InRetEnsys.common import log
 
 class components(unittest.TestCase):
 
@@ -183,3 +185,4 @@ class components(unittest.TestCase):
 
         for attr in oe_nonconvex.__dict__:
             self.assertEqual(getattr(oe_nonconvex, attr), getattr(ie_nonconvex, attr))
+
