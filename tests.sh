@@ -1,3 +1,4 @@
+#!/bin/bash
 coverage erase
 coverage run -a --branch main.py
 coverage run -a --branch main.py -wdir tmp/allround1 config.failure
