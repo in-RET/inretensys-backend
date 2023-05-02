@@ -46,7 +46,7 @@ class InRetEnsysModel(InRetEnsysConfigContainer):
     @classmethod
     @validator('energysystem')
     def es_is_not_none(cls, v):
-        if v is None:
+        if v is None: # pragma: no cover
             raise ValueError("Energysystem can not be 'None'.")
 
-        return v
+        return v # pragma: no cover

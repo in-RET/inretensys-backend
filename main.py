@@ -45,15 +45,7 @@ if not os.path.exists(logfile):
 
 InRetEnsysLogger(name="logger", filename=logfile, level=logging.DEBUG)
 
-try:
-    if args.only_lp_file:
-        ModelBuilder(configfile, dumpfile, workdir, logdir, dumpdir, True)
-    else:
-        ModelBuilder(configfile, dumpfile, workdir, logdir, dumpdir)
-except:
-    raise Exception("Configuration and/or Workingdirectory incorrect!")
-
-
-
-
-
+if args.only_lp_file:
+    ModelBuilder(configfile, dumpfile, workdir, logdir, dumpdir, True)
+else:
+    ModelBuilder(configfile, dumpfile, workdir, logdir, dumpdir)
