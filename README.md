@@ -1,5 +1,6 @@
 # InRetEnsys
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/415669eb789c42208e2d76489b3e826f)](https://www.codacy.com/gh/pyrokar1993/hsn.oemof.web.configurator/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=pyrokar1993/hsn.oemof.web.configurator&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/c8a4262a7fe54ec2b1499943226b1708)](https://app.codacy.com/gh/in-RET/inretensys-backend/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/c8a4262a7fe54ec2b1499943226b1708)](https://app.codacy.com/gh/in-RET/inretensys-backend/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_coverage)
 
 Package to Map oemof.solph-Classes to abstract classes for further use.
 
