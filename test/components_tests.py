@@ -1,10 +1,9 @@
-import logging
-import os
 import unittest
 
 from oemof import solph
 from InRetEnsys import *
-from InRetEnsys.common import log
+from InRetEnsys.components import *
+from InRetEnsys.types import Frequencies
 
 class components(unittest.TestCase):
 
@@ -186,3 +185,42 @@ class components(unittest.TestCase):
         for attr in oe_nonconvex.__dict__:
             self.assertEqual(getattr(oe_nonconvex, attr), getattr(ie_nonconvex, attr))
 
+
+    def test_energysystem_add(self):
+        ie_es = InRetEnsysEnergysystem(frequenz=Frequencies.quarter_hourly, start_date="1/1/2022", time_steps=8192)
+
+        ie_sink = InRetEnsysSink(
+            label="Testsink",
+            inputs={"ie_bus": InRetEnsysFlow(nominal_value=1024.42)}
+        )
+        ie_source = InRetEnsysSource(
+            label="Testsource",
+            outputs={"ie_bus": InRetEnsysFlow(nominal_value=1024.42)}
+        )
+        ie_bus = InRetEnsysBus(label="testbus")
+        ie_storage = InRetEnsysStorage(
+            label="Storage",
+            inputs={"ie_in": InRetEnsysFlow()},
+            outputs={"ie_out": InRetEnsysFlow()},
+            inflow_conversion_factor=0.8,
+            outflow_conversion_factor=0.42
+        )
+        ie_transformer = InRetEnsysTransformer(
+            label="Transformer",
+            inputs={"ie_in": InRetEnsysFlow()},
+            outputs={"ie_out": InRetEnsysFlow()},
+            conversion_factors={
+                "ie_in": 0.8,
+                "ie_out": 0.42
+            }
+        )
+        ie_constraints = InRetEnsysConstraints()
+        ie_invest = InRetEnsysInvestment(maximum=1234, minimum=0, existing=512)
+
+        ie_es.add(ie_sink)
+        ie_es.add(ie_source)
+        ie_es.add(ie_bus)
+        ie_es.add(ie_storage)
+        ie_es.add(ie_transformer)
+        ie_es.add(ie_constraints)
+        ie_es.add(ie_invest)

@@ -8,9 +8,9 @@ setup(
     description="InRetEnsys is a backend to build energysystems from abstract configcontainers for oemof.solph.",
     long_description="file: README.md",
     long_description_content_type="text/markdown",
-    license="MIT",
-    package_dir={"": "src"},
-    packages=find_packages(where="src"),
+    license="aGPL",
+    package_dir={"": "InRetEnsys"},
+    packages=find_packages(where=""),
     python_requires=">= 3.7",
     include_package_data=True,
     classifiers=[

@@ -137,4 +137,4 @@ backup/
 configs/
 logs/
 work/
-test/
+tmp/
