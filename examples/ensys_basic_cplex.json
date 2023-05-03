@@ -26383,6 +26383,6 @@
         "start_date": "1/1/2012",
         "time_steps": 1344
     },
-    "solver": "gurobi",
+    "solver": "cplex",
     "solver_verbose": false
 }
