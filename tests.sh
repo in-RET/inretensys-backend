@@ -8,3 +8,4 @@ coverage run -a --branch main.py -wdir tmp/allround1 -olp examples/ensys_allroun
 coverage run -a --branch -m unittest discover
 coverage report
 coverage html
+coverage xml
