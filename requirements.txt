@@ -3,6 +3,7 @@ build==0.10.0
 coverage==7.2.5
 dill==0.3.6
 gurobipy==10.0.1
+-e git+https://github.com/in-RET/inretensys-backend.git@82c14a38603edd439ee3c9d31a8893096f8cdc69#egg=InRetEnsys
 networkx==3.0
 nose==1.3.7
 numpy==1.24.2
