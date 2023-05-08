@@ -9,8 +9,8 @@ setup(
     long_description="file: README.md",
     long_description_content_type="text/markdown",
     license="aGPL",
-    package_dir={"": "InRetEnsys"},
-    packages=find_packages(where=""),
+    package_dir={"InRetEnsys": ""},
+    #packages=find_packages(where=""),
     python_requires=">= 3.7",
     include_package_data=True,
     classifiers=[
