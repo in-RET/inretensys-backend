@@ -6,10 +6,6 @@ from pathlib import Path
 from InRetEnsys import ModelBuilder
 from InRetEnsys.common.log import InRetEnsysLogger
 
-from oemof.solph._console_scripts import check_oemof_installation
-
-#check_oemof_installation()
-
 parser = argparse.ArgumentParser(
     prog = 'main.py',
     description='InRetEnsys Backend.',
