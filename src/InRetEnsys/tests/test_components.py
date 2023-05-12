@@ -223,4 +223,4 @@ class components(unittest.TestCase):
         ie_es.add(ie_storage)
         ie_es.add(ie_transformer)
         ie_es.add(ie_constraints)
-        ie_es.add(ie_invest)
+        self.assertRaises(Exception, ie_es.add)
