@@ -33,7 +33,7 @@ class InRetEnsysSource(InRetEnsysConfigContainer):
     #   @param self The Object Pointer
     #   @param energysystem The oemof-Energysystem to reference other objects i.e. for flows.
     #   @return solph.Source-Object (oemof)
-    def to_oemof(self, energysystem: solph.EnergySystem) -> solph.Source:
+    def to_oemof(self, energysystem: solph.EnergySystem) -> solph.components.Source:
         kwargs = self.build_kwargs(energysystem)
 
-        return solph.Source(**kwargs)
+        return solph.components.Source(**kwargs)

@@ -13,7 +13,7 @@ from pydantic import Field
 #   @param existing: float = 0.0
 #   @param nonconvex: bool = False
 #   @param offset: float = 0.0
-#   @param kwargs: Union[None, Dict] = None
+#   @param custom_attributes: Union[None, Dict] = None
 class InRetEnsysInvestment(InRetEnsysConfigContainer):
     maximum: float = Field(
         float("+inf"),
@@ -78,13 +78,21 @@ class InRetEnsysInvestment(InRetEnsysConfigContainer):
         step=1e-3
     )
 
-    kwargs: Dict = Field(
-        None,
-        title='kwargs',
-        description='Extra arguments for the object',
+    custom_attributes: dict = Field(
+        {},
+        title="Custom Attributes",
+        description="Custom Attributes as dictionary for custom investment limits.",
         lvl_visible=21,
         lvl_edit=42
     )
+
+    #kwargs: Dict = Field(
+    #    None,
+    #    title='kwargs',
+    #    description='Extra arguments for the object',
+    #    lvl_visible=21,
+    #    lvl_edit=42
+    #)
 
     ##  Returns an oemof-object from the given args of this object.
     #

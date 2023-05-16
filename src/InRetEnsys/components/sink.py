@@ -35,7 +35,7 @@ class InRetEnsysSink(InRetEnsysConfigContainer):
     #   @param self The Object Pointer
     #   @param energysystem The oemof-Energysystem to reference other objects i.e. for flows.
     #   @return solph.Sink-Object (oemof)
-    def to_oemof(self, energysystem: solph.EnergySystem) -> solph.Sink:
+    def to_oemof(self, energysystem: solph.EnergySystem) -> solph.components.Sink:
         kwargs = self.build_kwargs(energysystem)
 
-        return solph.Sink(**kwargs)
+        return solph.components.Sink(**kwargs)

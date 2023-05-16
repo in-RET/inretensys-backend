@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "InRetEnsys"
+version = "0.2a5"
+dependencies = ['pydantic', 'oemof.solph>=0.5.0', 'pyrsistent']
+authors=[
+    {name = "Andreas Lubojanski", email = "andreas.lubojanski@hs-nordhausen.de"}
+]
+description = "InRetEnsys is a backend to build energysystems from abstract configcontainers for oemof.solph."
+dynamic = ["readme"]
+license={text = "aGPL"}
+requires-python=">=3.7"
+classifiers=[
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent"
+]
+
+[tool.setuptools.dynamic]
+readme = {file = ["README.md"], content_type = "text/markdown"}
+
+[tool.setuptools]
+package-dir = {"" = "src"}

@@ -20,7 +20,7 @@ from pydantic import Field
 #   @param variable_costs 
 #   @param investement InRetEnsys-Investment-Object, if the Flow should be optimized for an Investmentlimit.
 #   @param nonconvex InRetEnsys-NonConvex-Object, if the Flow should be nonconvex. Non possible if the flow is an Investmentflow. 
-#   @param kwargs Keyword-Arguments for special Keywords, used by constraints.
+#   @param custom_attributes Keyword-Arguments for special Keywords, used by constraints.
 class InRetEnsysFlow(InRetEnsysConfigContainer):
     nominal_value: float = Field(
         None,
@@ -139,10 +139,10 @@ class InRetEnsysFlow(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    kwargs: Dict = Field(
-        None,
-        title='kwargs',
-        description='Extra arguments for the object',
+    custom_attributes: dict = Field(
+        {},
+        title="Custom Attributes",
+        description="Custom Attributes as dictionary for custom investment limits.",
         lvl_visible=21,
         lvl_edit=42
     )
@@ -158,3 +158,7 @@ class InRetEnsysFlow(InRetEnsysConfigContainer):
         kwargs = self.build_kwargs(energysystem)
 
         return solph.Flow(**kwargs)
+    
+
+class SensitivityInRetEnsysFlow(InRetEnsysFlow):
+    pass

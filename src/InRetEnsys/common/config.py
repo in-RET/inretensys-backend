@@ -58,10 +58,10 @@ class InRetEnsysConfigContainer(BaseModel):
                 else:
                     kwargs[key] = value.to_oemof(energysystem)
 
-            elif key == "investment":
+            elif key == "investment":                
                 kwargs[key] = value.to_oemof(energysystem)
 
-            else:
+            else: 
                 kwargs[key] = value
 
         return kwargs

@@ -1,4 +1,5 @@
 import json
+import logging
 import os.path
 import pickle
 import time
@@ -7,7 +8,7 @@ import pandas as pd
 from InRetEnsys import InRetEnsysEnergysystem, InRetEnsysModel
 from InRetEnsys.common.log import InRetEnsysLogger
 from InRetEnsys.types import Constraints, Frequencies, Solver
-from oemof import solph
+from oemof import solph, tools
 
 
 ##  Init Modelbuilder, load and optimise the configuration.
@@ -54,14 +55,17 @@ class ModelBuilder:
             raise Exception("Fileformat is not valid!")       
 
 
+
         logfile = os.path.basename(ConfigFile)
         if logfile.find(".json") > 0:
-            logfile = os.path.join(self.LOGGING_DIRECTORY, logfile.replace(".json", ".log"))
+            logfile = logfile.replace(".json", ".log")
         elif logfile.find(".bin") > 0:
-            logfile = os.path.join(self.LOGGING_DIRECTORY, logfile.replace(".bin", ".log"))
+            logfile = logfile.replace(".bin", ".log")
         else:
-            raise Exception("Fileformat is not valid!")
-
+            raise Exception("Fileformat is not valid!")       
+      
+        tools.logger.define_logging(logpath=self.LOGGING_DIRECTORY, logfile=logfile, file_level=logging.INFO, screen_level=logging.INFO)
+        
         InRetEnsysLogger.info("Start Building and solving")
 
         if hasattr(model, "solver_kwargs"):
@@ -127,7 +131,7 @@ class ModelBuilder:
         # Initiate the energy system model
         ##########################################################################
         InRetEnsysLogger.info("Initiate the energy system model.")
-        model = solph.Model(oemof_es)
+        model = solph.Model(oemof_es, debug=False)
 
         ##########################################################################
         # Add Constraints to the model
@@ -196,7 +200,7 @@ class ModelBuilder:
             ##########################################################################
             oemof_es.results["main"] = solph.processing.results(model)
             oemof_es.results["meta"] = solph.processing.meta_results(model)
-            oemof_es.results["verification"] = solph.processing.create_dataframe(model)
+            oemof_es.results["df"] = solph.processing.create_dataframe(model)
             
             InRetEnsysLogger.info("Dump file with results to: " + os.path.join(self.DUMPING_DIRECTORY, filename))
 
