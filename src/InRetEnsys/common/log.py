@@ -29,4 +29,3 @@ class InRetEnsysLogger:
     def critical(msg):
         msg = "[C----] " + msg
         logging.critical(msg=msg)
-
