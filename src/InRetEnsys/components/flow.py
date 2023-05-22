@@ -140,7 +140,7 @@ class InRetEnsysFlow(InRetEnsysConfigContainer):
     )
 
     custom_attributes: dict = Field(
-        {},
+        None,
         title="Custom Attributes",
         description="Custom Attributes as dictionary for custom investment limits.",
         lvl_visible=21,

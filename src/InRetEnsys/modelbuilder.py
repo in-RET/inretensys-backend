@@ -126,6 +126,10 @@ class ModelBuilder:
                         oemof_es.add(oemof_obj)
 
         InRetEnsysLogger.info("Build completed.")
+        
+        #pre_dump_file = open(os.path.join(self.DUMPING_DIRECTORY, filename.replace(".dump", "_pre-dump.dump")), "wt")
+        #json_str = json.dumps(oemof_es.__dict__)
+        #pickle.dump(json_str, pre_dump_file)
 
         ##########################################################################
         # Initiate the energy system model
