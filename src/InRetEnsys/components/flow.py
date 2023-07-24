@@ -28,10 +28,7 @@ class InRetEnsysFlow(InRetEnsysConfigContainer):
         description='The nominal value of the flow. If this value is set the corresponding optimization variable of '
                     'the flow object will be bounded by this value multiplied with min(lower bound)/max(upper bound).',
         lvl_visible=21,
-        lvl_edit=42,
-        le=float("+inf"),
-        ge=0.0,
-        step=1e-3
+        lvl_edit=42
     )
 
     # numeric or sequence or None
@@ -41,10 +38,7 @@ class InRetEnsysFlow(InRetEnsysConfigContainer):
         description='Normed fixed value for the flow variable. '
                     'Will be multiplied with the nominal_value to get the absolute value',
         lvl_visible=21,
-        lvl_edit=42,
-        le=float("+inf"),
-        ge=0.0,
-        step=1e-5
+        lvl_edit=42
     )
 
     # numeric or sequence
@@ -53,10 +47,7 @@ class InRetEnsysFlow(InRetEnsysConfigContainer):
         title='Minimum',
         description='',
         lvl_visible=21,
-        lvl_edit=42,
-        le=float("+inf"),
-        ge=0.0,
-        step=1e-3
+        lvl_edit=42
     )
 
     # numeric or sequence
@@ -65,10 +56,7 @@ class InRetEnsysFlow(InRetEnsysConfigContainer):
         title='Maximum',
         description='',
         lvl_visible=21,
-        lvl_edit=42,
-        le=float("+inf"),
-        ge=0.0,
-        step=1e-3
+        lvl_edit=42
     )
 
     positive_gradient: Dict = Field(
@@ -92,10 +80,7 @@ class InRetEnsysFlow(InRetEnsysConfigContainer):
         description='Specific maximum value summed over all timesteps. '
                     'Will be multiplied with the nominal_value to get the absolute limit.',
         lvl_visible=21,
-        lvl_edit=42,
-        le=float("+inf"),
-        ge=0.0,
-        step=1e-3
+        lvl_edit=42
     )
 
     summed_min: float = Field(
@@ -104,10 +89,7 @@ class InRetEnsysFlow(InRetEnsysConfigContainer):
         description='Specific minimum value summed over all timesteps. '
                     'Will be multiplied with the nominal_value to get the absolute limit.',
         lvl_visible=21,
-        lvl_edit=42,
-        le=float("+inf"),
-        ge=0.0,
-        step=1e-3
+        lvl_edit=42
     )
 
     variable_costs: Union[float, Sequence[float]] = Field(
@@ -115,10 +97,7 @@ class InRetEnsysFlow(InRetEnsysConfigContainer):
         title='Variable Costs',
         description='The costs associated with one unit of the flow.',
         lvl_visible=21,
-        lvl_edit=42,
-        #le=float("+inf"),
-        #ge=0.0,
-        #step=1e-3
+        lvl_edit=42
     )
 
     investment: InRetEnsysInvestment = Field(

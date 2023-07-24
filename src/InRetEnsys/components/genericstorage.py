@@ -55,10 +55,7 @@ class InRetEnsysStorage(InRetEnsysConfigContainer):
         title='nominal storage capacity',
         description='',
         lvl_visible=21,
-        lvl_edit=42,
-        le=float("+inf"),
-        ge=0.0,
-        step=1e-3
+        lvl_edit=42
     )
 
     invest_relation_input_capacity: float = Field(
@@ -66,10 +63,7 @@ class InRetEnsysStorage(InRetEnsysConfigContainer):
         title='invest relation input capacity',
         description='',
         lvl_visible=21,
-        lvl_edit=42,
-        le=float("+inf"),
-        ge=0.0,
-        step=1e-3
+        lvl_edit=42
     )
 
     invest_relation_output_capacity: float = Field(
@@ -77,10 +71,7 @@ class InRetEnsysStorage(InRetEnsysConfigContainer):
         title='invest relation output capacity',
         description='',
         lvl_visible=21,
-        lvl_edit=42,
-        le=float("+inf"),
-        ge=0.0,
-        step=1e-3
+        lvl_edit=42
     )
 
     invest_relation_input_output: float = Field(
@@ -88,10 +79,7 @@ class InRetEnsysStorage(InRetEnsysConfigContainer):
         title='invest relation input output',
         description='',
         lvl_visible=21,
-        lvl_edit=42,
-        le=float("+inf"),
-        ge=0.0,
-        step=1e-3
+        lvl_edit=42
     )
 
     initial_storage_level: float = Field(
@@ -99,10 +87,7 @@ class InRetEnsysStorage(InRetEnsysConfigContainer):
         title='initial storage level',
         description='',
         lvl_visible=21,
-        lvl_edit=42,
-        le=float("+inf"),
-        ge=0.0,
-        step=1e-3
+        lvl_edit=42
     )
 
     balanced: bool = Field(
@@ -118,10 +103,7 @@ class InRetEnsysStorage(InRetEnsysConfigContainer):
         title='loss rate',
         description='',
         lvl_visible=21,
-        lvl_edit=42,
-        le=float("+inf"),
-        ge=0.0,
-        step=1e-3
+        lvl_edit=42
     )
 
     fixed_losses_relative: float = Field(
@@ -129,10 +111,7 @@ class InRetEnsysStorage(InRetEnsysConfigContainer):
         title='fixed losses relative',
         description='',
         lvl_visible=21,
-        lvl_edit=42,
-        le=float("+inf"),
-        ge=0.0,
-        step=1e-3
+        lvl_edit=42
     )
 
     fixed_losses_absolute: float = Field(
@@ -140,10 +119,7 @@ class InRetEnsysStorage(InRetEnsysConfigContainer):
         title='Fixed losses absolute',
         description='',
         lvl_visible=21,
-        lvl_edit=42,
-        le=float("+inf"),
-        ge=0.0,
-        step=1e-3
+        lvl_edit=42
     )
 
     inflow_conversion_factor: float = Field(

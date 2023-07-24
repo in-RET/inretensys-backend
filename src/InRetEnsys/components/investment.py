@@ -20,10 +20,7 @@ class InRetEnsysInvestment(InRetEnsysConfigContainer):
         title='Maximum',
         description='Maximum of the Investment.',
         lvl_visible=21,
-        lvl_edit=42,
-        le=float("+inf"),
-        ge=0.0,
-        step=1e-3
+        lvl_edit=42
     )
 
     minimum: float = Field(
@@ -31,10 +28,7 @@ class InRetEnsysInvestment(InRetEnsysConfigContainer):
         title='Minimum',
         description='Minimum of the Investment.',
         lvl_visible=21,
-        lvl_edit=42,
-        le=float("+inf"),
-        ge=0.0,
-        step=1e-3
+        lvl_edit=42
     )
 
     ep_costs: float = Field(
@@ -42,10 +36,7 @@ class InRetEnsysInvestment(InRetEnsysConfigContainer):
         title='EP Costs',
         description='ep_costs',
         lvl_visible=21,
-        lvl_edit=42,
-        le=float("+inf"),
-        ge=0.0,
-        step=1e-3
+        lvl_edit=42
     )
 
     existing: float = Field(
@@ -53,10 +44,7 @@ class InRetEnsysInvestment(InRetEnsysConfigContainer):
         title='Existing',
         description='Value of existing investment',
         lvl_visible=21,
-        lvl_edit=42,
-        le=float("+inf"),
-        ge=0.0,
-        step=1e-3
+        lvl_edit=42
     )
 
     nonconvex: bool = Field(
@@ -72,10 +60,7 @@ class InRetEnsysInvestment(InRetEnsysConfigContainer):
         title='Offset',
         description='Offset',
         lvl_visible=21,
-        lvl_edit=42,
-        le=float("+inf"),
-        ge=0.0,
-        step=1e-3
+        lvl_edit=42
     )
 
     custom_attributes: dict = Field(

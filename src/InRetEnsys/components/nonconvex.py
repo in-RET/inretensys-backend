@@ -33,10 +33,7 @@ class InRetEnsysNonConvex(InRetEnsysConfigContainer):
         title='Startups Costs',
         description='',
         lvl_visible=21,
-        lvl_edit=42,
-        le=float("+inf"),
-        ge=0.0,
-        step=1e-3
+        lvl_edit=42
     )
 
     shutdown_costs: float = Field(
@@ -44,10 +41,7 @@ class InRetEnsysNonConvex(InRetEnsysConfigContainer):
         title='Shutdown Costs',
         description='',
         lvl_visible=21,
-        lvl_edit=42,
-        le=float("+inf"),
-        ge=0.0,
-        step=1e-3
+        lvl_edit=42
     )
     
     activity_costs: float = Field(
@@ -55,10 +49,7 @@ class InRetEnsysNonConvex(InRetEnsysConfigContainer):
         title='Activity Costs',
         description='',
         lvl_visible=21,
-        lvl_edit=42,
-        le=float("+inf"),
-        ge=0.0,
-        step=1e-3
+        lvl_edit=42
     )
 
     minimum_uptime: int = Field(
@@ -66,20 +57,14 @@ class InRetEnsysNonConvex(InRetEnsysConfigContainer):
         title='Minimum Uptime',
         description='',
         lvl_visible=21,
-        lvl_edit=42,
-        le=float("+inf"),
-        ge=0,
-        step=1e-3
+        lvl_edit=42
     )
     minimum_downtime: int = Field(
         None,
         title='Minimum Downtime',
         description='',
         lvl_visible=21,
-        lvl_edit=42,
-        le=float("+inf"),
-        ge=0,
-        step=1e-3
+        lvl_edit=42
     )
 
     maximum_startups: int = Field(
@@ -87,10 +72,7 @@ class InRetEnsysNonConvex(InRetEnsysConfigContainer):
         title='Maximum Startups',
         description='',
         lvl_visible=21,
-        lvl_edit=42,
-        le=float("+inf"),
-        ge=0,
-        step=1e-3
+        lvl_edit=42
     )
 
     maximum_shutdowns: int = Field(
@@ -98,10 +80,7 @@ class InRetEnsysNonConvex(InRetEnsysConfigContainer):
         title='Maximum Shutdowns',
         description='',
         lvl_visible=21,
-        lvl_edit=42,
-        le=float("+inf"),
-        ge=0,
-        step=1e-3
+        lvl_edit=42
     )
 
     # 0/False = off, 1/True = on
@@ -110,10 +89,7 @@ class InRetEnsysNonConvex(InRetEnsysConfigContainer):
         title='initial Status',
         description='',
         lvl_visible=21,
-        lvl_edit=42,
-        le=float("+inf"),
-        ge=0,
-        step=1e-3
+        lvl_edit=42
     )
     positive_gradient: Dict = Field(
         None,

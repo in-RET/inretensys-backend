@@ -90,9 +90,7 @@ class InRetEnsysEnergysystem(InRetEnsysConfigContainer):
         title='Time Steps',
         description='Number of timesteps from Startdate',
         lvl_visible=21,
-        lvl_edit=42,
-        ge=0,
-        le=float("+inf")
+        lvl_edit=42
     )
 
     def add(self, elem: Union[InRetEnsysSink, InRetEnsysSource, InRetEnsysBus, InRetEnsysStorage, InRetEnsysTransformer, InRetEnsysConstraints]):

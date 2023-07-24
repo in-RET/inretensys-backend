@@ -52,10 +52,7 @@ class InRetEnsysConstraints(InRetEnsysConfigContainer):
         title='factor1',
         description='Factor to define the proportion between the variables.',
         lvl_visible=21,
-        lvl_edit=42,
-        le=float("+inf"),
-        ge=0.0,
-        step=1e-3
+        lvl_edit=42
     )
 
     name: str = Field(
@@ -103,10 +100,7 @@ class InRetEnsysConstraints(InRetEnsysConfigContainer):
         title='Weights',
         description='',
         lvl_visible=21,
-        lvl_edit=42,
-        le=float("+inf"),
-        ge=0.0,
-        step=1e-3
+        lvl_edit=42
     )
 
     limit: float = Field(
@@ -114,10 +108,7 @@ class InRetEnsysConstraints(InRetEnsysConfigContainer):
         title='Limit',
         description='',
         lvl_visible=21,
-        lvl_edit=42,
-        le=float("+inf"),
-        ge=0,
-        step=1e-3
+        lvl_edit=42
     )
 
     flows: Union[List, dict] = Field(
@@ -141,10 +132,7 @@ class InRetEnsysConstraints(InRetEnsysConfigContainer):
         title='Upper Limit',
         description='',
         lvl_visible=21,
-        lvl_edit=42,
-        le=float("+inf"),
-        ge=0,
-        step=1e-3
+        lvl_edit=42
     )
 
     lower_limit: int = Field(
@@ -152,10 +140,7 @@ class InRetEnsysConstraints(InRetEnsysConfigContainer):
         title='Lower Limit',
         description='',
         lvl_visible=21,
-        lvl_edit=42,
-        le=float("+inf"),
-        ge=0,
-        step=1e-3
+        lvl_edit=42
     )
 
     ##  Returns a dictionary of the given args of this object.
