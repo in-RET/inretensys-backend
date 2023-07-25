@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "InRetEnsys"
 version = "0.2a5"
-dependencies = ['pydantic', 'oemof.solph>=0.5.0', 'pyrsistent']
+dependencies = ['pydantic>=2.0', 'oemof.solph>=0.5.0', 'pyrsistent']
 authors=[
     {name = "Andreas Lubojanski", email = "andreas.lubojanski@hs-nordhausen.de"}
 ]
