@@ -7,8 +7,8 @@ RUN apt install coinor-cbc coinor-libcbc-dev -y
 # Install InRetEnsys with all dependencies, wheels are nice!
 WORKDIR /app
 
-COPY dist/InRetEnsys-0.2a5-py3-none-any.whl .
-RUN pip install InRetEnsys-0.2a5-py3-none-any.whl
+COPY dist/InRetEnsys-0.2a6-py3-none-any.whl .
+RUN pip install InRetEnsys-0.2a6-py3-none-any.whl
 
 # Add Files
 COPY main.py .
