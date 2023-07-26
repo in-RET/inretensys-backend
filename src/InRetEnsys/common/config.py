@@ -8,15 +8,15 @@ from pydantic import BaseModel, Extra
 ##  container for a configuration
 class InRetEnsysConfigContainer(BaseModel):
     ## pydantic root validator to check and filter all none-type values.
-    @pydantic.model_validator(mode='before')
-    def check(cls, values):
-        retVal = {}
+    @pydantic.model_validator(mode='after')
+    def check(cls, data: any) -> any:
+        #print(data)
 
-        for value in values:
-            if values[value] is not None:
-                retVal[value] = values[value]
+        #for value in values:
+        #    if values[value] is None:
+        #        del values[value]
 
-        return retVal
+        return data
 
     ##  pydantic subclass to add special configurations.
     class Config:
@@ -39,29 +39,30 @@ class InRetEnsysConfigContainer(BaseModel):
 
         for key in args:
             value = args[key]
-            if key in special_keys:
-                oemof_io = {}
-                io_keys = list(value.keys())
+            if value is not None:
+                if key in special_keys:
+                    oemof_io = {}
+                    io_keys = list(value.keys())
 
-                for io_key in io_keys:
-                    bus = energysystem.groups[io_key]
-                    if isinstance(value[io_key], float) or isinstance(value[io_key], list):
-                        oemof_io[bus] = value[io_key]
+                    for io_key in io_keys:
+                        bus = energysystem.groups[io_key]
+                        if isinstance(value[io_key], float) or isinstance(value[io_key], list):
+                            oemof_io[bus] = value[io_key]
+                        else:
+                            oemof_io[bus] = value[io_key].to_oemof(energysystem)
+
+                    kwargs[key] = oemof_io
+
+                elif key == "nonconvex":
+                    if isinstance(value, bool):
+                        kwargs[key] = value
                     else:
-                        oemof_io[bus] = value[io_key].to_oemof(energysystem)
+                        kwargs[key] = value.to_oemof(energysystem)
 
-                kwargs[key] = oemof_io
-
-            elif key == "nonconvex":
-                if isinstance(value, bool):
-                    kwargs[key] = value
-                else:
+                elif key == "investment":                
                     kwargs[key] = value.to_oemof(energysystem)
 
-            elif key == "investment":                
-                kwargs[key] = value.to_oemof(energysystem)
-
-            else: 
-                kwargs[key] = value
+                else: 
+                    kwargs[key] = value
 
         return kwargs

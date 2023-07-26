@@ -151,6 +151,7 @@ class InRetEnsysConstraints(InRetEnsysConfigContainer):
         args = {}
         for var in vars(self):
             if var != "typ":
-                args[var] = vars(self)[var]
+                if vars(self)[var] is not None:
+                    args[var] = vars(self)[var]
 
         return args

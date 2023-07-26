@@ -33,9 +33,6 @@ tmpfilename: str = os.path.basename(configfile)
 if tmpfilename.find(".json") > 0:
     dumpfile = os.path.join(dumpdir, tmpfilename.replace(".json", ".dump"))
     logfile = os.path.join(logdir, tmpfilename.replace(".json", ".log"))
-elif tmpfilename.find(".bin") > 0:
-    dumpfile = os.path.join(dumpdir, tmpfilename.replace(".bin", ".dump"))
-    logfile = os.path.join(logdir, tmpfilename.replace(".bin", ".log"))
 else:
     raise Exception("Fileformat is not valid!")
 

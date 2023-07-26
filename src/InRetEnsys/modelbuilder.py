@@ -42,33 +42,22 @@ class ModelBuilder:
             os.makedirs(self.DUMPING_DIRECTORY)
 
         # handle various filetypes 
+        logfile = os.path.basename(ConfigFile)
+
         if ConfigFile.find(".json") > 0:
+            logfile = logfile.replace(".json", ".log")
+
             xf = open(ConfigFile, 'rt')
             model_dict = json.load(xf)
             model = InRetEnsysModel(**model_dict)
             xf.close()
-        elif ConfigFile.find(".bin") > 0:
-            xf = open(ConfigFile, 'rb')
-            model = pickle.load(xf)
-            xf.close()
         else:
             raise Exception("Fileformat is not valid!")       
 
-
-
-        logfile = os.path.basename(ConfigFile)
-        if logfile.find(".json") > 0:
-            logfile = logfile.replace(".json", ".log")
-        elif logfile.find(".bin") > 0:
-            logfile = logfile.replace(".bin", ".log")
-        else:
-            raise Exception("Fileformat is not valid!")       
-      
         tools.logger.define_logging(logpath=self.LOGGING_DIRECTORY, logfile=logfile, file_level=logging.INFO, screen_level=logging.INFO)
-        
         InRetEnsysLogger.info("Start Building and solving")
 
-        if hasattr(model, "solver_kwargs"):
+        if hasattr(model, "solver_kwargs") and model.solver_kwargs is not None:
             cmdline_opts = model.solver_kwargs
         else:
             cmdline_opts = {}
@@ -140,6 +129,7 @@ class ModelBuilder:
         ##########################################################################
         # Add Constraints to the model
         ##########################################################################
+        InRetEnsysLogger.info("Adding constraints to the energy system model.")
         if hasattr(es, "constraints"):
             for constr in es.constraints:
                 kwargs = constr.to_oemof()
