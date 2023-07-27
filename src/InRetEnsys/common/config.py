@@ -8,7 +8,7 @@ from pydantic import BaseModel, Extra
 ##  container for a configuration
 class InRetEnsysConfigContainer(BaseModel):
     ## pydantic root validator to check and filter all none-type values.
-    @pydantic.model_validator(mode='after')
+    @pydantic.model_validator(mode='before')
     def check(cls, data: any) -> any:
         #print(data)
 
