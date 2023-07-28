@@ -1,10 +1,9 @@
-from typing import Dict
-
 from InRetEnsys.common.config import InRetEnsysConfigContainer
 from InRetEnsys.components.flow import InRetEnsysFlow
 from InRetEnsys.components.investment import InRetEnsysInvestment
 from oemof import solph
 from pydantic import Field
+from typing import Union
 
 
 ##  Container which contains the params for an oemof-genericstorage
@@ -35,7 +34,7 @@ class InRetEnsysStorage(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    inputs: Dict[str, InRetEnsysFlow] = Field(
+    inputs: dict[str, InRetEnsysFlow] = Field(
         ...,
         title='Inputs',
         description='',
@@ -43,14 +42,14 @@ class InRetEnsysStorage(InRetEnsysConfigContainer):
         lvl_edit=42
     )
     
-    outputs: Dict[str, InRetEnsysFlow] = Field(
+    outputs: dict[str, InRetEnsysFlow] = Field(
         ...,
         title='Outputs',
         description='',
         lvl_visible=21,
         lvl_edit=42
     )
-    nominal_storage_capacity: float = Field(
+    nominal_storage_capacity: Union[float, None] = Field(
         None,
         title='nominal storage capacity',
         description='',
@@ -58,7 +57,7 @@ class InRetEnsysStorage(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    invest_relation_input_capacity: float = Field(
+    invest_relation_input_capacity: Union[float, None] = Field(
         None,
         title='invest relation input capacity',
         description='',
@@ -66,7 +65,7 @@ class InRetEnsysStorage(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    invest_relation_output_capacity: float = Field(
+    invest_relation_output_capacity: Union[float, None] = Field(
         None,
         title='invest relation output capacity',
         description='',
@@ -74,7 +73,7 @@ class InRetEnsysStorage(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    invest_relation_input_output: float = Field(
+    invest_relation_input_output: Union[float, None] = Field(
         None,
         title='invest relation input output',
         description='',
@@ -82,7 +81,7 @@ class InRetEnsysStorage(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    initial_storage_level: float = Field(
+    initial_storage_level: Union[float, None] = Field(
         None,
         title='initial storage level',
         description='',
@@ -106,7 +105,7 @@ class InRetEnsysStorage(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    fixed_losses_relative: float = Field(
+    fixed_losses_relative: Union[float, None] = Field(
         None,
         title='fixed losses relative',
         description='',
@@ -114,7 +113,7 @@ class InRetEnsysStorage(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    fixed_losses_absolute: float = Field(
+    fixed_losses_absolute: Union[float, None] = Field(
         None,
         title='Fixed losses absolute',
         description='',
@@ -166,7 +165,7 @@ class InRetEnsysStorage(InRetEnsysConfigContainer):
         step=1e-3
     )
 
-    investment: InRetEnsysInvestment = Field(
+    investment: Union[InRetEnsysInvestment, None] = Field(
         None,
         title='Investment',
         description='',

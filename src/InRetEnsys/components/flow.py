@@ -1,4 +1,4 @@
-from typing import Dict, Sequence, Union
+from typing import Sequence, Union
 
 from InRetEnsys import InRetEnsysConfigContainer
 from InRetEnsys.components.investment import InRetEnsysInvestment
@@ -22,7 +22,7 @@ from pydantic import Field
 #   @param nonconvex InRetEnsys-NonConvex-Object, if the Flow should be nonconvex. Non possible if the flow is an Investmentflow. 
 #   @param custom_attributes Keyword-Arguments for special Keywords, used by constraints.
 class InRetEnsysFlow(InRetEnsysConfigContainer):
-    nominal_value: float = Field(
+    nominal_value: Union[float, None] = Field(
         None,
         title='Nominal Value',
         description='The nominal value of the flow. If this value is set the corresponding optimization variable of '
@@ -32,7 +32,7 @@ class InRetEnsysFlow(InRetEnsysConfigContainer):
     )
 
     # numeric or sequence or None
-    fix: Union[float, Sequence[float]] = Field(
+    fix: Union[float, Sequence[float], None] = Field(
         None,
         title='Fix',
         description='Normed fixed value for the flow variable. '
@@ -42,7 +42,7 @@ class InRetEnsysFlow(InRetEnsysConfigContainer):
     )
 
     # numeric or sequence
-    min: Union[float, Sequence[float]] = Field(
+    min: Union[float, Sequence[float], None] = Field(
         None,
         title='Minimum',
         description='',
@@ -51,7 +51,7 @@ class InRetEnsysFlow(InRetEnsysConfigContainer):
     )
 
     # numeric or sequence
-    max: Union[float, Sequence[float]] = Field(
+    max: Union[float, Sequence[float], None] = Field(
         None,
         title='Maximum',
         description='',
@@ -59,14 +59,14 @@ class InRetEnsysFlow(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    positive_gradient: Dict = Field(
+    positive_gradient: Union[dict, None] = Field(
         None,
         title='Positive Gradient',
         description='',
         lvl_visible=21,
         lvl_edit=42
     )
-    negative_gradient: Dict = Field(
+    negative_gradient: Union[dict, None] = Field(
         None,
         title='Negative Gradient',
         description='',
@@ -74,7 +74,7 @@ class InRetEnsysFlow(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    summed_max: float = Field(
+    summed_max: Union[float, None] = Field(
         None,
         title='Summed Maximum',
         description='Specific maximum value summed over all timesteps. '
@@ -83,7 +83,7 @@ class InRetEnsysFlow(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    summed_min: float = Field(
+    summed_min: Union[float, None] = Field(
         None,
         title='Summed Minimum',
         description='Specific minimum value summed over all timesteps. '
@@ -92,7 +92,7 @@ class InRetEnsysFlow(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    variable_costs: Union[float, Sequence[float]] = Field(
+    variable_costs: Union[float, Sequence[float], None] = Field(
         None,
         title='Variable Costs',
         description='The costs associated with one unit of the flow.',
@@ -100,7 +100,7 @@ class InRetEnsysFlow(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    investment: InRetEnsysInvestment = Field(
+    investment: Union[InRetEnsysInvestment, None] = Field(
         None,
         title='Investment',
         description='Object indicating if a nominal_value of the flow is determined by the optimization problem.',
@@ -108,7 +108,7 @@ class InRetEnsysFlow(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    nonconvex: InRetEnsysNonConvex = Field(
+    nonconvex: Union[InRetEnsysNonConvex, None] = Field(
         None,
         title='Nonconvex',
         description='If a nonconvex flow object is added here, the flow constraints will be altered significantly as '
@@ -118,7 +118,7 @@ class InRetEnsysFlow(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    custom_attributes: dict = Field(
+    custom_attributes: Union[dict, None] = Field(
         None,
         title="Custom Attributes",
         description="Custom Attributes as dictionary for custom investment limits.",

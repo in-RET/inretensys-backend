@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Union
 
 from InRetEnsys import InRetEnsysConfigContainer
 from oemof import solph
@@ -28,7 +28,7 @@ from pydantic import Field
 #   @param positive_gradient: Dict] = None
 #   @param negative_gradient: Dict] = None
 class InRetEnsysNonConvex(InRetEnsysConfigContainer):
-    startup_costs: float = Field(
+    startup_costs: Union[float, None] = Field(
         None,
         title='Startups Costs',
         description='',
@@ -36,7 +36,7 @@ class InRetEnsysNonConvex(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    shutdown_costs: float = Field(
+    shutdown_costs: Union[float, None] = Field(
         None,
         title='Shutdown Costs',
         description='',
@@ -44,7 +44,7 @@ class InRetEnsysNonConvex(InRetEnsysConfigContainer):
         lvl_edit=42
     )
     
-    activity_costs: float = Field(
+    activity_costs: Union[float, None] = Field(
         None,
         title='Activity Costs',
         description='',
@@ -52,14 +52,14 @@ class InRetEnsysNonConvex(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    minimum_uptime: int = Field(
+    minimum_uptime: Union[int, None] = Field(
         None,
         title='Minimum Uptime',
         description='',
         lvl_visible=21,
         lvl_edit=42
     )
-    minimum_downtime: int = Field(
+    minimum_downtime: Union[int, None] = Field(
         None,
         title='Minimum Downtime',
         description='',
@@ -67,7 +67,7 @@ class InRetEnsysNonConvex(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    maximum_startups: int = Field(
+    maximum_startups: Union[int, None] = Field(
         None,
         title='Maximum Startups',
         description='',
@@ -75,7 +75,7 @@ class InRetEnsysNonConvex(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    maximum_shutdowns: int = Field(
+    maximum_shutdowns: Union[int, None] = Field(
         None,
         title='Maximum Shutdowns',
         description='',
@@ -91,7 +91,7 @@ class InRetEnsysNonConvex(InRetEnsysConfigContainer):
         lvl_visible=21,
         lvl_edit=42
     )
-    positive_gradient: Dict = Field(
+    positive_gradient: Union[dict, None] = Field(
         None,
         title='positive Gradient',
         description='',
@@ -99,7 +99,7 @@ class InRetEnsysNonConvex(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    negative_gradient: Dict = Field(
+    negative_gradient: Union[dict, None] = Field(
         None,
         title='negative Gradient',
         description='',

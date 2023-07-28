@@ -1,5 +1,3 @@
-from typing import Dict
-
 from InRetEnsys import InRetEnsysConfigContainer
 from oemof import solph
 from pydantic import Field

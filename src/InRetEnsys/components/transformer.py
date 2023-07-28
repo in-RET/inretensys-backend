@@ -1,5 +1,3 @@
-from typing import Dict
-
 from oemof import solph
 from pydantic import Field
 
@@ -22,7 +20,7 @@ class InRetEnsysTransformer(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    inputs: Dict[str, InRetEnsysFlow] = Field(
+    inputs: dict[str, InRetEnsysFlow] = Field(
         ...,
         title='Inputs',
         description='Inputs',
@@ -30,7 +28,7 @@ class InRetEnsysTransformer(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    outputs: Dict[str, InRetEnsysFlow] = Field(
+    outputs: dict[str, InRetEnsysFlow] = Field(
         ...,
         title='Outputs',
         description='Outputs',
@@ -38,7 +36,7 @@ class InRetEnsysTransformer(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    conversion_factors: Dict = Field(
+    conversion_factors: dict = Field(
         ...,
         title='Conversion Factors',
         description='Dictionary with all conversion factors. <Bus.Label> : Float',

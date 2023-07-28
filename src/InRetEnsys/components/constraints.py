@@ -1,4 +1,4 @@
-from typing import Dict, List, Union
+from typing import Union
 
 from InRetEnsys import InRetEnsysConfigContainer
 from InRetEnsys.types import Constraints
@@ -23,7 +23,7 @@ from pydantic import Field
 #   @param upper_limit (integer) – maximum number of active flows in the list
 #   @param lower_limit (integer) – minimum number of active flows in the list
 class InRetEnsysConstraints(InRetEnsysConfigContainer):
-    typ: Constraints = Field(
+    typ: Union[Constraints, None] = Field(
         None,
         title='Typ',
         description='Type of the constraint.',
@@ -31,7 +31,7 @@ class InRetEnsysConstraints(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    var1: object = Field(
+    var1: Union[object, None] = Field(
         None,
         title='var1',
         description='First variable, to be set to equal with Var2 and multiplied with factor1.',
@@ -39,7 +39,7 @@ class InRetEnsysConstraints(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    var2: object = Field(
+    var2: Union[object, None] = Field(
         None,
         title='var2',
         description='Second variable, to be set equal to (Var1 * factor1).',
@@ -47,7 +47,7 @@ class InRetEnsysConstraints(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    factor1: float = Field(
+    factor1: Union[float, None]= Field(
         None,
         title='factor1',
         description='Factor to define the proportion between the variables.',
@@ -55,7 +55,7 @@ class InRetEnsysConstraints(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    name: str = Field(
+    name: Union[str, None] = Field(
         None,
         title='Name',
         description='Optional name',
@@ -63,7 +63,7 @@ class InRetEnsysConstraints(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    keyword: str = Field(
+    keyword: Union[str, None] = Field(
         None,
         title='Keyword',
         description='Keyword to consider (searches all NonConvexFlows)',
@@ -71,7 +71,7 @@ class InRetEnsysConstraints(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    quantity: object = Field(
+    quantity: Union[object, None] = Field(
         None,
         title='Quantity',
         description='',
@@ -79,7 +79,7 @@ class InRetEnsysConstraints(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    limit_name: str = Field(
+    limit_name: Union[str, None] = Field(
         None,
         title='Limit Name',
         description='',
@@ -87,7 +87,7 @@ class InRetEnsysConstraints(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    components: List = Field(
+    components: Union[list, None] = Field(
         None,
         title='Components',
         description='',
@@ -95,7 +95,7 @@ class InRetEnsysConstraints(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    weights: List[float] = Field(
+    weights: Union[list[float], None] = Field(
         None,
         title='Weights',
         description='',
@@ -103,7 +103,7 @@ class InRetEnsysConstraints(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    limit: float = Field(
+    limit: Union[float, None] = Field(
         None,
         title='Limit',
         description='',
@@ -111,7 +111,7 @@ class InRetEnsysConstraints(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    flows: Union[List, dict] = Field(
+    flows: Union[list, dict, None] = Field(
         None,
         title='Flows',
         description='',
@@ -119,7 +119,7 @@ class InRetEnsysConstraints(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    constraint_name: str = Field(
+    constraint_name: Union[str, None] = Field(
         None,
         title='constraint name',
         description='',
@@ -127,7 +127,7 @@ class InRetEnsysConstraints(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    upper_limit: int = Field(
+    upper_limit: Union[int, None] = Field(
         None,
         title='Upper Limit',
         description='',
@@ -135,7 +135,7 @@ class InRetEnsysConstraints(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    lower_limit: int = Field(
+    lower_limit: Union[int, None] = Field(
         None,
         title='Lower Limit',
         description='',
@@ -147,7 +147,7 @@ class InRetEnsysConstraints(InRetEnsysConfigContainer):
     #
     #   @param self The Object Pointer
     #   @return dictionary of kwargs 
-    def to_oemof(self) -> Dict[str, dict]:
+    def to_oemof(self) -> dict[str, dict]:
         args = {}
         for var in vars(self):
             if var != "typ":

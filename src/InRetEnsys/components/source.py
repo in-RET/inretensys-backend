@@ -1,4 +1,3 @@
-from typing import Dict
 from oemof import solph
 from pydantic import Field
 from InRetEnsys.common.config import InRetEnsysConfigContainer
@@ -18,7 +17,7 @@ class InRetEnsysSource(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    outputs: Dict[str, InRetEnsysFlow] = Field(
+    outputs: dict[str, InRetEnsysFlow] = Field(
         ...,
         title='Outputs',
         description='Outputs',

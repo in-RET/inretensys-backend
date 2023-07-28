@@ -1,5 +1,3 @@
-from typing import Dict
-
 from oemof import solph
 from pydantic import Field
 
@@ -20,7 +18,7 @@ class InRetEnsysSink(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    inputs: Dict[str, InRetEnsysFlow] = Field(
+    inputs: dict[str, InRetEnsysFlow] = Field(
         ...,
         title='Inputs',
         description='Inputs',

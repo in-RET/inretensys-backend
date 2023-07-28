@@ -1,4 +1,4 @@
-from typing import Dict, Union
+from typing import Union
 
 from pydantic import validator, Field
 from InRetEnsys import InRetEnsysConfigContainer, InRetEnsysEnergysystem
@@ -35,7 +35,7 @@ class InRetEnsysModel(InRetEnsysConfigContainer):
         lvl_edit=42
     )
 
-    solver_kwargs: Dict[str, Union[bool, str, int, float]] = Field(
+    solver_kwargs: Union[dict[str, Union[bool, str, int, float]], None] = Field(
         None,
         title='Solver Extra Arguments',
         description='Extra arguments for the Solver (MIP_GAP etc.)',
