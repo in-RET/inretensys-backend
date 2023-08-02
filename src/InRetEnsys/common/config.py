@@ -2,21 +2,26 @@ from typing import Dict
 
 import pydantic
 from oemof import solph
-from pydantic import BaseModel, Extra
+from pydantic import BaseModel, Extra, model_validator
 
 
 ##  container for a configuration
 class InRetEnsysConfigContainer(BaseModel):
-    ## pydantic root validator to check and filter all none-type values.
-    @pydantic.model_validator(mode='before')
-    def check(cls, data: any) -> any:
-        #print(data)
 
-        #for value in values:
-        #    if values[value] is None:
-        #        del values[value]
+    @model_validator(mode='after')
+    def remove_empty(self):
 
-        return data
+        delList = []
+
+        for attribute in self.__dict__:
+            if self.__dict__[attribute] is None:
+                delList.append(attribute)
+
+        for item in delList:
+            delattr(self, item)
+
+        return self
+
 
     ##  pydantic subclass to add special configurations.
     class Config:
