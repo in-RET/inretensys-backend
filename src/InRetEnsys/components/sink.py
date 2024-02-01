@@ -1,8 +1,7 @@
-from oemof import solph
-from pydantic import Field
-
 from InRetEnsys.common.config import InRetEnsysConfigContainer
 from InRetEnsys.components.flow import InRetEnsysFlow
+from oemof import solph
+from pydantic import Field
 
 
 ##  Container which contains the params for an InRetEnsys-Sink-Object

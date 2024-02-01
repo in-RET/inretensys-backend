@@ -1,6 +1,5 @@
 from typing import Dict
 
-import pydantic
 from oemof import solph
 from pydantic import BaseModel, Extra, model_validator
 

@@ -1,8 +1,8 @@
 from typing import Union
 
-from pydantic import validator, Field
 from InRetEnsys import InRetEnsysConfigContainer, InRetEnsysEnergysystem
 from InRetEnsys.types import Solver
+from pydantic import validator, Field
 
 
 ##  Container which contains the params for an InRetEnsys-Model

@@ -1,9 +1,10 @@
 import unittest
 
-from oemof import solph
 from InRetEnsys import *
 from InRetEnsys.components import *
 from InRetEnsys.types import Frequencies
+from oemof import solph
+
 
 class components(unittest.TestCase):
 
