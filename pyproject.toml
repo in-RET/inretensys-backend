@@ -6,12 +6,16 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "InRetEnsys"
 version = "0.2a7"
-dependencies = ['pydantic>=2.0', 'oemof.solph>=0.5.0', 'pyrsistent']
+dependencies = [
+    'pydantic>=2.0',
+    'oemof.solph==0.5.2',
+    'pyrsistent'
+]
 authors=[
     {name = "Andreas Lubojanski", email = "andreas.lubojanski@hs-nordhausen.de"}
 ]
 description = "InRetEnsys is a backend to build energysystems from abstract configcontainers for oemof.solph."
-dynamic = ["readme"]
+dynamic = ['readme']
 license={text = "aGPL"}
 requires-python=">=3.8"
 classifiers=[
@@ -25,7 +29,7 @@ classifiers=[
 ]
 
 [tool.setuptools.dynamic]
-readme = {file = ["README.md"], content_type = "text/markdown"}
+readme = {file = ['README.md'], content-type = "text/markdown"}
 
 [tool.setuptools]
 package-dir = {"" = "src"}
