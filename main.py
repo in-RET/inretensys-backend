@@ -1,14 +1,12 @@
 import argparse
-import logging
 import os
 from pathlib import Path
 
-from InRetEnsys import ModelBuilder
-from InRetEnsys.common.log import InRetEnsysLogger
+from ensys_solph_wrapper.common.modelbuilder import ModelBuilder
 
 parser = argparse.ArgumentParser(
     prog = 'main.py',
-    description='InRetEnsys Backend.',
+    description='inret-oemof.solph-wrapper is a tool to create oemof.solph models based on a json configuration file. The tool is developed at the In.RET - Institut für regenerative Energietechnik.',
     epilog = 'In.RET - Institut für regenerative Energietechnik'
 )
 
@@ -39,8 +37,6 @@ else:
 if not os.path.exists(logfile):
     os.makedirs(os.path.dirname(logfile))   
     Path(logfile).touch()
-
-InRetEnsysLogger(name="logger", filename=logfile, level=logging.DEBUG)
 
 if args.only_lp_file:
     ModelBuilder(configfile, dumpfile, workdir, logdir, dumpdir, True)

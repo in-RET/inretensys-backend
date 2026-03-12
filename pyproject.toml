@@ -2,34 +2,31 @@
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
-
 [project]
-name = "InRetEnsys"
-version = "0.2a7"
+name = "ensys-solph-wrapper"
+version = "0.3.0"
 dependencies = [
     'pydantic>=2.0',
-    'oemof.solph==0.5.2',
+    'oemof.solph==0.6.3',
     'pyrsistent'
 ]
 authors=[
     {name = "Andreas Lubojanski", email = "andreas.lubojanski@hs-nordhausen.de"}
 ]
-description = "InRetEnsys is a backend to build energysystems from abstract configcontainers for oemof.solph."
-dynamic = ['readme']
-license={text = "aGPL"}
-requires-python=">=3.8"
+description = "ensys-solph-wrapper is a wrapper to map oemof.solph classes to abstract configcontainers for with type verification."
+readme = "README.md"
+requires-python = ">=3.9"
 classifiers=[
     "Development Status :: 3 - Alpha",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent"
 ]
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
 
-[tool.setuptools.dynamic]
-readme = {file = ['README.md'], content-type = "text/markdown"}
+
+[project.urls]
+Homepage = "https://github.com/in-RET/ensys-solph-wrapper"
+Issues = "https://github.com/in-RET/ensys-solph-wrapper/issues"
 
 [tool.setuptools]
 package-dir = {"" = "src"}
