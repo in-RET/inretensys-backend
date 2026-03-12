@@ -1,13 +1,8 @@
 import pytest
 from oemof import solph
 
-from ensys.components.bus import EnBus
-from ensys.components.constraints import EnConstraints
-from ensys.components.converter import EnConverter
-from ensys.components.energysystem import EnEnergysystem
-from ensys.components.genericstorage import EnGenericStorage
-from ensys.components.sink import EnSink
-from ensys.components.source import EnSource
+from ensys.wrapper.components import EnBus, EnConverter, EnGenericStorage, EnConstraints, EnSink, EnEnergysystem, \
+    EnSource
 
 
 @pytest.fixture

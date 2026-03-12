@@ -3,7 +3,7 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "ensys-solph-wrapper"
+name = "ensys.wrapper"
 version = "0.3.0"
 dependencies = [
     'pydantic>=2.0',
@@ -13,7 +13,7 @@ dependencies = [
 authors=[
     {name = "Andreas Lubojanski", email = "andreas.lubojanski@hs-nordhausen.de"}
 ]
-description = "ensys-solph-wrapper is a wrapper to map oemof.solph classes to abstract configcontainers for with type verification."
+description = "ensys-wrapper is a wrapper to map oemof.solph classes to abstract configcontainers for with type verification."
 readme = "README.md"
 requires-python = ">=3.9"
 classifiers=[

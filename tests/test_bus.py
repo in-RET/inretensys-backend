@@ -1,6 +1,6 @@
 from oemof import solph
 
-from inret.solph.wrapper import EnBus
+from ensys.wrapper.components import EnBus
 
 def test_bus():
     es = solph.EnergySystem()

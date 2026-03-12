@@ -1,7 +1,3 @@
-from .bus import EnBus
-from .constraints import EnConstraints
-from .converter import EnConverter
-from .energysystem import EnEnergysystem
 from .flow import EnFlow
 from .genericstorage import EnGenericStorage
 from .investment import EnInvestment
@@ -9,3 +5,7 @@ from .model import EnModel
 from .nonconvex import EnNonConvex
 from .sink import EnSink
 from .source import EnSource
+from .bus import EnBus
+from .constraints import EnConstraints
+from .converter import EnConverter
+from .energysystem import EnEnergysystem

@@ -1,8 +1,7 @@
 import pytest
 from pydantic import ValidationError
 
-from ensys.components.flow import EnFlow
-from ensys.components.genericstorage import EnGenericStorage
+from ensys.wrapper.components import EnGenericStorage, EnFlow
 
 
 @pytest.fixture

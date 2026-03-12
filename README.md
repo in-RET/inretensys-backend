@@ -11,18 +11,18 @@ This package comes with an CLI-Interface to start and simulate energymodels.
 To configurate an energymodel use therefore the following classes. Beginning with the components and adding them afterwards to an energysystem and energymodel.
 
 Possible Classes:
-- InRetEnsysBus
-- InRetEnsysSink
-- InRetEnsysSource
-- InRetEnsysTransformer
-- InRetEnsysStorage
-- InRetEnsysEnergysystem
-- InRetEnsysModel
+- EnBus
+- EnSink
+- EnSource
+- EnConverter
+- EnStorage
+- EnEnergysystem
+- EnModel
 
 ### External Start
 To start the application it is necessary to define the following classes (and dump them into a file):
-- InRetEnsysModel
-- InRetEnsysEnergysystem
+- EnModel
+- EnEnergysystem
 
 ```bash
 python main.py [-olp] [-wdir WORKINGDIRECTORY] configfile

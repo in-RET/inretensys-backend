@@ -1,7 +1,7 @@
 import pytest
 from oemof import solph
 
-from ensys.components import EnSource, EnFlow
+from ensys.wrapper.components import EnSource, EnFlow
 from .fixtures import sample_oe_energysystem, mock_oe_energysystem
 
 
